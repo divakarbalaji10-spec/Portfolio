@@ -1,1301 +1,560 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Divakar Balaji — Web Developer | Backend Developer</title>
+<meta name="description" content="Portfolio of Divakar Balaji, a web developer focused on backend systems: admissions, fees, payments, attendance and AI search.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS (edit colours here) ============ */
+:root{
+  /* LIGHT THEME (default) */
+  --bg:#f5f8fc; --bg2:#ffffff; --ink:#0f1b2a; --muted:#52657d;
+  --gold:#0e7490; --gold-soft:rgba(14,116,144,.08);
+  --green:#047857; --line:rgba(14,116,144,.22);
+  --glass:rgba(255,255,255,.75);
+  --hdr:rgba(245,248,252,.82); --overlay:rgba(15,27,42,.55);
+  --grid:rgba(14,116,144,.06); --glow:rgba(14,116,144,.10);
+  --on-accent:#ffffff; --accent-hover:#155e75;
+  --chipg-line:rgba(4,120,87,.4); --chipg-ink:#065f46;
+  --serif:'Space Grotesk',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  --sans:'Manrope',system-ui,sans-serif;
+  color-scheme:light;
+}
+/* DARK THEME: follows the visitor's system setting */
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#05080f; --bg2:#0a111c; --ink:#e6f1ff; --muted:#8497b0;
+    --gold:#22d3ee; --gold-soft:rgba(34,211,238,.10);
+    --green:#34d399; --line:rgba(34,211,238,.20);
+    --glass:rgba(255,255,255,.035);
+    --hdr:rgba(5,8,15,.75); --overlay:rgba(2,4,8,.82);
+    --grid:rgba(34,211,238,.04); --glow:rgba(34,211,238,.10);
+    --on-accent:#031014; --accent-hover:#67e8f9;
+    --chipg-line:rgba(52,211,153,.45); --chipg-ink:#a7f3d0;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg) linear-gradient(var(--grid) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/48px 48px;background-attachment:fixed;color:var(--ink);font:400 16px/1.7 var(--sans);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.1;letter-spacing:-.02em}
+h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:.4em}
+section{padding:96px 0}
+.wrap{width:min(1120px,92%);margin:auto}
+.lead{color:var(--muted);max-width:60ch}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 
-    <meta charset="UTF-8">
+/* ============ BUTTONS ============ */
+.btn{display:inline-flex;align-items:center;gap:.5em;padding:.75em 1.4em;border:1px solid var(--line);
+  border-radius:999px;font-weight:500;font-size:.95rem;background:var(--glass);color:var(--ink);cursor:pointer;
+  transition:.25s;font-family:inherit}
+.btn:hover{border-color:var(--gold);transform:translateY(-2px)}
+.btn.primary{background:var(--gold);color:var(--on-accent);border-color:var(--gold)}
+.btn.primary:hover{background:var(--accent-hover)}
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+/* ============ NAV ============ */
+header{position:fixed;inset:0 0 auto;z-index:50;backdrop-filter:blur(14px);background:var(--hdr);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:var(--mono);font-size:1.1rem;font-weight:500;color:var(--gold)}
+nav ul{display:flex;gap:28px;list-style:none}
+nav ul a{font-size:.9rem;color:var(--muted);transition:.2s}
+nav ul a:hover,nav ul a.on{color:var(--gold)}
+.burger{display:none;background:none;border:1px solid var(--line);color:var(--ink);width:42px;height:38px;border-radius:8px;font-size:1.2rem;cursor:pointer}
 
-    <meta name="theme-color"
-          content="#080a09">
+/* ============ HERO ============ */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:110px;
+  background:radial-gradient(60% 50% at 80% 30%,var(--glow),transparent 70%)}
+.hero .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(3rem,8vw,6rem);letter-spacing:.01em}
+.role{font-family:var(--mono);font-size:1rem;color:var(--gold);margin:.5rem 0 1.2rem}
+.hero p{color:var(--muted);max-width:52ch;margin-bottom:1.8rem}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:1.6rem}
+.social{display:flex;gap:12px}
+.social a{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;transition:.25s;color:var(--muted)}
+.social a:hover{color:var(--gold);border-color:var(--gold)}
+.social svg{width:18px;height:18px;fill:currentColor}
+.portrait{position:relative;justify-self:center;width:min(340px,80%)}
+.portrait::before{content:"";position:absolute;inset:-12px 12px 12px -12px;border:1px solid var(--gold);opacity:.55;border-radius:12px}
+.portrait img{position:relative;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 30%;
+  border-radius:12px;filter:saturate(.9) contrast(1.03)}
 
-    <meta name="description"
-          content="Divakar Balaji — Web Developer | Backend Developer">
+/* ============ SIGNATURE (scroll-written) ============ */
+.sigwrap{height:300vh;padding:0;position:relative;border-block:1px solid var(--line)}
+.sigstick{position:sticky;top:0;height:100vh;display:grid;place-content:center;justify-items:center;gap:18px;text-align:center}
+.sigstick svg{width:min(720px,88vw);height:auto;overflow:visible}
+.sigstick small{color:var(--muted);letter-spacing:.04em}
+.sig path{fill:none;stroke:var(--gold);stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.progress{width:140px;height:2px;background:var(--line);position:relative}
+.progress i{position:absolute;inset:0;background:var(--gold);transform-origin:left;transform:scaleX(0)}
 
-    <title>
-        Divakar Balaji — Web Developer | Backend Developer
-    </title>
+/* ============ ABOUT / SKILLS ============ */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.about ul{list-style:none;display:grid;gap:12px;margin-top:8px}
+.about li{padding-left:26px;position:relative}
+.about li::before{content:"";position:absolute;left:0;top:.7em;width:14px;height:1px;background:var(--green)}
+.grid{display:grid;gap:18px}
+.skills{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:32px}
+.box{padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--glass);backdrop-filter:blur(8px)}
+.box h3{font-size:1.5rem;color:var(--gold);margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);padding:.25em .8em;border:1px solid var(--line);border-radius:999px;font-size:.85rem;color:var(--ink)}
+.chip.g{border-color:var(--chipg-line);color:var(--chipg-ink)}
 
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
+/* ============ PROJECTS ============ */
+.projects{grid-template-columns:repeat(auto-fill,minmax(320px,1fr));margin-top:32px}
+.card{text-align:left;padding:26px;border:1px solid var(--line);border-radius:14px;background:var(--glass);
+  color:inherit;cursor:pointer;transition:.3s;font:inherit;display:flex;flex-direction:column;gap:12px}
+.card:hover{border-color:var(--gold);transform:translateY(-4px);background:var(--gold-soft)}
+.card h3{font-size:1.55rem}
+.card p{color:var(--muted);font-size:.95rem}
+.card .prob{font-size:.88rem;color:var(--ink);border-left:2px solid var(--green);padding-left:12px}
+.card .more{font-family:var(--mono);margin-top:auto;color:var(--gold);font-size:.9rem}
 
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
+/* ============ EXPERIENCE / BUILD ============ */
+.exp{border-left:1px solid var(--line);padding-left:32px;margin-top:32px;position:relative}
+.exp::before{content:"";position:absolute;left:-5px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--gold)}
+.exp h3{font-size:1.7rem}
+.exp .meta{font-family:var(--mono);color:var(--gold);font-size:.92rem;margin:4px 0 14px}
+.exp ul{padding-left:18px;color:var(--muted);display:grid;gap:6px;max-width:75ch}
+.exp li::marker{color:var(--green)}
+.build{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:32px}
+.build .box h3{font-size:1.3rem;color:var(--ink)}
+.build .box p{color:var(--muted);font-size:.92rem}
 
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-          rel="stylesheet">
+/* ============ CONTACT / FOOTER ============ */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.contact ul{list-style:none;margin-top:20px;display:grid;gap:10px}
+.contact li span{color:var(--muted);display:inline-block;width:90px;font-size:.9rem}
+form{display:grid;gap:14px}
+input,textarea{width:100%;padding:.85em 1em;background:var(--glass);border:1px solid var(--line);border-radius:10px;color:var(--ink);font:inherit}
+input:focus,textarea:focus{outline:none;border-color:var(--gold)}
+footer{border-top:1px solid var(--line);padding:48px 0 32px;text-align:center}
+footer .sig-foot{width:min(240px,60vw);margin:0 auto 14px}
+footer p{color:var(--muted);font-size:.9rem}
+footer .social{justify-content:center;margin:16px 0}
 
-    <link rel="stylesheet"
-          href="style.css">
+/* ============ MODALS (shared) ============ */
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:var(--overlay);
+  backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.modal.show{opacity:1;visibility:visible}
+.pm{width:min(860px,100%);max-height:90vh;overflow:auto;background:var(--bg2);border:1px solid var(--line);
+  border-radius:16px;padding:36px;transform:translateY(24px) scale(.98);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.modal.show .pm{transform:none}
+.pm h2{margin-bottom:6px}
+.pm h4{color:var(--gold);font-family:var(--serif);font-size:1.25rem;margin:22px 0 6px}
+.pm p,.pm li{color:var(--muted)}
+.pm ul{padding-left:18px}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:8px}
+.shot{aspect-ratio:16/10;border:1px dashed var(--line);border-radius:10px;display:grid;place-items:center;
+  color:var(--muted);font-size:.8rem;text-align:center;padding:10px;overflow:hidden}
+.shot img{width:100%;height:100%;object-fit:cover}
+.x{position:absolute;top:16px;right:16px}
 
+/* ============ RESUME LETTER ============ */
+#letter{perspective:1600px}
+.stage{position:relative;width:min(640px,100%);max-height:94vh}
+.paper{position:relative;background:#eaf2f9;color:#0f1a24;border-radius:6px;padding:40px 44px 28px;max-height:78vh;overflow:auto;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);transform-origin:center;
+  clip-path:inset(44% 4% 44% 4%);transform:rotateX(22deg) scale(.7);opacity:0;
+  transition:clip-path 1s cubic-bezier(.65,0,.2,1) .15s,transform 1s cubic-bezier(.2,.8,.2,1) .15s,opacity .3s}
+#letter.open .paper{clip-path:inset(0);transform:none;opacity:1}
+.paper h2{font-size:2.2rem;color:#0a1218}
+.paper .sub{color:#0e6e82;font-weight:500;margin-bottom:14px}
+.paper h4{font-family:var(--serif);font-size:1.2rem;color:#0e6e82;margin:16px 0 4px;border-bottom:1px solid rgba(14,110,130,.3)}
+.paper p,.paper li{font-size:.92rem;color:#24323f;line-height:1.55}
+.paper ul{padding-left:18px}
+.paper .sig path{stroke:#0a1218;stroke-width:6}
+.paper .sig{width:190px;margin-top:12px}
+.crease{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.25),transparent);
+  top:33%;opacity:1;transition:opacity 1.2s 1s;pointer-events:none}
+.crease.b{top:66%}
+#letter.open .crease{opacity:.15}
+.seal{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px;border-radius:50%;z-index:2;
+  background:radial-gradient(circle at 35% 30%,#67e8f9,#0e7490);display:grid;place-items:center;
+  font:700 1.3rem var(--serif);color:#031014;box-shadow:0 4px 14px rgba(0,0,0,.5);transition:.5s}
+#letter.open .seal{transform:scale(0);opacity:0}
+.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px;opacity:0;transition:opacity .5s 1.2s}
+#letter.open .actions{opacity:1}
+
+/* ============ REVEAL + MOTION ============ */
+.rv{opacity:0;transform:translateY(18px);transition:.7s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:860px){
+  .hero .wrap,.about,.contact{grid-template-columns:1fr}
+  .portrait{order:-1;width:min(240px,60%)}
+  .burger{display:block}
+  nav ul{position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;background:var(--bg2);
+    border-bottom:1px solid var(--line);max-height:0;overflow:hidden;transition:max-height .35s}
+  nav ul.open{max-height:420px}
+  nav ul li a{display:block;padding:14px 4%}
+  section{padding:72px 0}
+  .pm{padding:26px 20px}.paper{padding:28px 22px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}*{transition-duration:.01s!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
 </head>
-
 <body>
 
-<div class="cursor-glow"></div>
-
-
-<!-- ================= HEADER ================= -->
-
-<header class="site-header">
-
-    <a href="#home"
-       class="brand">
-
-        <span>DB</span>
-
-    </a>
-
-
-    <nav class="nav"
-         id="nav">
-
-        <a href="#home"
-           class="active">
-            Home
-        </a>
-
-        <a href="#about">
-            About
-        </a>
-
-        <a href="#skills">
-            Skills
-        </a>
-
-        <a href="#projects">
-            Projects
-        </a>
-
-        <a href="#experience">
-            Experience
-        </a>
-
-        <a href="#resume">
-            Resume
-        </a>
-
-        <a href="#contact">
-            Contact
-        </a>
-
-    </nav>
-
-
-    <a href="#contact"
-       class="header-contact">
-
-        Let's talk ↗
-
-    </a>
-
-
-    <button class="menu-toggle"
-            id="menuToggle"
-            aria-label="Open navigation">
-
-        <span></span>
-        <span></span>
-
-    </button>
-
+<!-- ============ NAVIGATION ============ -->
+<header>
+  <nav class="wrap" aria-label="Main">
+    <a href="#home" class="logo" aria-label="Divakar Balaji home">&lt;DB/&gt;</a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
+    <ul id="menu">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#" data-resume>Resume</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 </header>
 
-
-
 <main>
-
-
-<!-- ================= HERO ================= -->
-
-<section class="hero section"
-         id="home">
-
-    <div class="hero-grid">
-
-
-        <div class="hero-copy reveal">
-
-            <p class="eyebrow">
-
-                <span></span>
-
-                WEB DEVELOPER · BACKEND FOCUSED
-
-            </p>
-
-
-            <h1>
-
-                Building the systems
-                <br>
-
-                behind
-                <em>real ideas.</em>
-
-            </h1>
-
-
-            <p class="hero-description">
-
-                I'm Divakar Balaji, a web developer with
-                a strong focus on backend development.
-
-                I enjoy building practical systems,
-                solving technical problems and learning
-                through real work.
-
-            </p>
-
-
-            <div class="hero-actions">
-
-                <a href="#projects"
-                   class="btn btn-primary">
-
-                    View My Projects
-
-                    <span>↗</span>
-
-                </a>
-
-
-                <button class="btn btn-outline"
-                        id="heroResume">
-
-                    View My Resume
-
-                    <span>↗</span>
-
-                </button>
-
-            </div>
-
-
-            <!-- SIGNATURE -->
-
-            <div class="hero-signature-wrap">
-
-                <p>
-                    My signature
-                </p>
-
-                <div class="signature-stage">
-
-                    <img src="assets/signature.png"
-                         class="signature"
-                         alt="Divakar Balaji handwritten signature">
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- HERO PHOTO -->
-
-        <div class="hero-visual reveal reveal-delay">
-
-            <div class="portrait-frame">
-
-                <div class="portrait-ring"></div>
-
-                <img src="assets/profile.jpg"
-                     alt="Divakar Balaji">
-
-                <div class="portrait-label">
-
-                    <span class="dot"></span>
-
-                    Available for opportunities
-
-                </div>
-
-            </div>
-
-
-            <div class="floating-code code-one">
-
-                PHP · API · SQL
-
-            </div>
-
-
-            <div class="floating-code code-two">
-
-                BUILD / DEBUG / IMPROVE
-
-            </div>
-
-        </div>
-
+<!-- ============ HERO ============ -->
+<section class="hero" id="home">
+  <div class="wrap">
+    <div>
+      <h1>Divakar<br>Balaji</h1>
+      <p class="role">Web Developer | Backend Developer</p>
+      <p>I build real-world web systems and solve practical problems: admissions, fees, payments, attendance and search. Backend first, with the frontend to finish the job.</p>
+      <div class="cta">
+        <a class="btn primary" href="#projects">View My Projects</a>
+        <button class="btn" data-resume>View My Resume</button>
+        <a class="btn" href="#contact">Contact Me</a>
+      </div>
+      <div class="social">
+        
+        <a href="https://github.com/divakarbalaji10-spec" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        <a href="https://www.linkedin.com/in/divakar-balaji-8233b7321" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg></a>
+      </div>
     </div>
-
-
-    <div class="hero-bottom">
-
-        <span>
-            Scroll to explore
-        </span>
-
-        <span class="scroll-line"></span>
-
-        <span>
-            01 — 07
-        </span>
-
-    </div>
-
+    <div class="portrait"><img src="assets/profile.jpg" alt="Portrait of Divakar Balaji" width="600" height="800"></div>
+  </div>
 </section>
 
-
-
-<!-- ================= ABOUT ================= -->
-
-<section class="section about"
-         id="about">
-
-    <div class="section-heading reveal">
-
-        <p class="eyebrow">
-
-            <span></span>
-
-            01 / ABOUT
-
-        </p>
-
-
-        <h2>
-
-            A developer who likes
-            <br>
-
-            <em>
-                building, not just showing.
-            </em>
-
-        </h2>
-
-    </div>
-
-
-    <div class="about-grid">
-
-
-        <div class="about-lead reveal">
-
-            <p>
-
-                I’m a web developer with a strong
-                interest in backend development.
-
-                My work is mostly about turning real
-                requirements into working systems —
-                from databases and APIs to the interfaces
-                people actually use.
-
-            </p>
-
-
-            <p>
-
-                I enjoy solving problems, learning from
-                mistakes and improving my skills while
-                working on practical applications rather
-                than only demo projects.
-
-            </p>
-
-        </div>
-
-
-
-        <div class="about-points reveal reveal-delay">
-
-
-            <div>
-
-                <span>01</span>
-
-                <strong>
-                    Real-world systems
-                </strong>
-
-                <small>
-                    Education, payments, attendance
-                    and management workflows.
-                </small>
-
-            </div>
-
-
-            <div>
-
-                <span>02</span>
-
-                <strong>
-                    Backend thinking
-                </strong>
-
-                <small>
-                    Databases, APIs, business logic
-                    and server-side development.
-                </small>
-
-            </div>
-
-
-            <div>
-
-                <span>03</span>
-
-                <strong>
-                    Keep improving
-                </strong>
-
-                <small>
-                    Learn from mistakes, understand
-                    the problem and build it better.
-                </small>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
+<!-- ============ SIGNATURE: written as you scroll ============ -->
+<section class="sigwrap" id="signature" aria-label="Handwritten signature">
+  <div class="sigstick">
+    <div class="sig" data-sig="scroll"></div>
+    <div class="progress"><i id="sigbar"></i></div>
+    <small>Keep scrolling. It signs as you go.</small>
+  </div>
 </section>
 
-
-
-<!-- ================= SKILLS ================= -->
-
-<section class="section skills"
-         id="skills">
-
-
-    <div class="section-heading split reveal">
-
-        <div>
-
-            <p class="eyebrow">
-
-                <span></span>
-
-                02 / SKILLS
-
-            </p>
-
-
-            <h2>
-
-                Tools I use to turn
-                <br>
-
-                <em>
-                    ideas into systems.
-                </em>
-
-            </h2>
-
-        </div>
-
-
-        <p class="section-note">
-
-            A practical stack built around backend
-            development, databases and end-to-end
-            web systems.
-
-        </p>
-
-    </div>
-
-
-
-    <div class="skills-grid">
-
-
-        <article class="skill-card reveal">
-
-            <span class="skill-number">
-                01
-            </span>
-
-            <h3>
-                Frontend
-            </h3>
-
-            <div class="skill-list">
-
-                <span>HTML</span>
-                <span>CSS</span>
-                <span>JavaScript</span>
-
-            </div>
-
-        </article>
-
-
-
-        <article class="skill-card featured reveal reveal-delay">
-
-            <span class="skill-number">
-                02
-            </span>
-
-            <h3>
-                Backend
-            </h3>
-
-            <div class="skill-list">
-
-                <span>PHP</span>
-                <span>MySQL</span>
-                <span>REST APIs</span>
-                <span>Backend Architecture</span>
-
-            </div>
-
-        </article>
-
-
-
-        <article class="skill-card reveal">
-
-            <span class="skill-number">
-                03
-            </span>
-
-            <h3>
-                Tools & Technologies
-            </h3>
-
-            <div class="skill-list">
-
-                <span>Git</span>
-                <span>AWS</span>
-                <span>Cloudflare</span>
-                <span>Apache</span>
-                <span>Android / Jetpack Compose</span>
-
-            </div>
-
-        </article>
-
-
-
-        <article class="skill-card reveal reveal-delay">
-
-            <span class="skill-number">
-                04
-            </span>
-
-            <h3>
-                Other Experience
-            </h3>
-
-            <div class="skill-list">
-
-                <span>AI / Vector Search</span>
-                <span>Payment Gateway Integration</span>
-                <span>PDF Generation</span>
-                <span>Biometric / Attendance</span>
-                <span>Database Applications</span>
-
-            </div>
-
-        </article>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- ================= PROJECTS ================= -->
-
-<section class="section projects"
-         id="projects">
-
-
-    <div class="section-heading split reveal">
-
-        <div>
-
-            <p class="eyebrow">
-
-                <span></span>
-
-                03 / SELECTED PROJECTS
-
-            </p>
-
-
-            <h2>
-
-                Systems built around
-                <br>
-
-                <em>
-                    actual problems.
-                </em>
-
-            </h2>
-
-        </div>
-
-
-        <p class="section-note">
-
-            Click a project to see the problem,
-            solution, features and my contribution.
-
-        </p>
-
-    </div>
-
-
-    <div class="projects-list"
-         id="projectList">
-
-    </div>
-
-</section>
-
-
-
-<!-- ================= EXPERIENCE ================= -->
-
-<section class="section experience"
-         id="experience">
-
-
-    <div class="section-heading reveal">
-
-        <p class="eyebrow">
-
-            <span></span>
-
-            04 / EXPERIENCE
-
-        </p>
-
-
-        <h2>
-
-            Hands-on work with
-            <br>
-
-            <em>
-                real products.
-            </em>
-
-        </h2>
-
-    </div>
-
-
-    <div class="experience-card reveal">
-
-
-        <div class="experience-top">
-
-            <div>
-
-                <p class="experience-kicker">
-                    DEVELOPMENT EXPERIENCE
-                </p>
-
-
-                <h3>
-
-                    SkyneTbee Artificial
-                    Intelligence Enterprise Pvt. Ltd.
-
-                </h3>
-
-
-                <p>
-
-                    Internship · 2 Years of
-                    Hands-on Experience
-
-                </p>
-
-            </div>
-
-
-            <span class="experience-badge">
-
-                Production-grade projects
-
-            </span>
-
-        </div>
-
-
-
-        <div class="experience-grid">
-
-
-            <div>
-                <span>01</span>
-
-                <p>
-                    Student admission and member
-                    management modules using PHP,
-                    MySQL, JavaScript, HTML and CSS.
-                </p>
-            </div>
-
-
-            <div>
-                <span>02</span>
-
-                <p>
-                    Online fee payment, receipt
-                    generation and fee management
-                    functionality.
-                </p>
-            </div>
-
-
-            <div>
-                <span>03</span>
-
-                <p>
-                    Examination, marks, performance
-                    and result management modules.
-                </p>
-            </div>
-
-
-            <div>
-                <span>04</span>
-
-                <p>
-                    Cash book, ledger and developer
-                    task/project management systems.
-                </p>
-            </div>
-
-
-            <div>
-                <span>05</span>
-
-                <p>
-                    Student house election system
-                    for candidates, voting and
-                    election results.
-                </p>
-            </div>
-
-
-            <div>
-                <span>06</span>
-
-                <p>
-                    Backend services for biometric
-                    attendance synchronization
-                    and MySQL storage.
-                </p>
-            </div>
-
-
-            <div>
-                <span>07</span>
-
-                <p>
-                    AI vector search and matching
-                    system for ranking relevant pages.
-                </p>
-            </div>
-
-
-            <div>
-                <span>08</span>
-
-                <p>
-                    AWS-based application/server
-                    deployment and storage workflows.
-                </p>
-            </div>
-
-
-            <div>
-                <span>09</span>
-
-                <p>
-                    Student ID card generation and
-                    Snap Talk student explanation
-                    and evaluation system.
-                </p>
-            </div>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- ================= WHAT I BUILD ================= -->
-
-<section class="section build"
-         id="build">
-
-
-    <div class="section-heading reveal">
-
-        <p class="eyebrow">
-
-            <span></span>
-
-            05 / WHAT I BUILD
-
-        </p>
-
-
-        <h2>
-
-            From business logic
-            <br>
-
-            to
-            <em>
-                working products.
-            </em>
-
-        </h2>
-
-    </div>
-
-
-    <div class="build-grid">
-
-
-        <article class="build-item reveal">
-
-            <span>01</span>
-
-            <h3>
-                Backend Systems
-            </h3>
-
-            <p>
-                Database-driven applications,
-                APIs and business workflows.
-            </p>
-
-        </article>
-
-
-        <article class="build-item reveal reveal-delay">
-
-            <span>02</span>
-
-            <h3>
-                Education Platforms
-            </h3>
-
-            <p>
-                Admission, fees, attendance,
-                marks and student management systems.
-            </p>
-
-        </article>
-
-
-        <article class="build-item reveal">
-
-            <span>03</span>
-
-            <h3>
-                Management Systems
-            </h3>
-
-            <p>
-                Custom administrative and
-                workflow-based applications.
-            </p>
-
-        </article>
-
-
-        <article class="build-item reveal reveal-delay">
-
-            <span>04</span>
-
-            <h3>
-                AI-Powered Search
-            </h3>
-
-            <p>
-                Vector-based search and matching
-                systems for better discovery.
-            </p>
-
-        </article>
-
-
-        <article class="build-item reveal">
-
-            <span>05</span>
-
-            <h3>
-                Payment Systems
-            </h3>
-
-            <p>
-                Payment integration, transaction
-                tracking and receipt generation.
-            </p>
-
-        </article>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- ================= RESUME ================= -->
-
-<section class="section resume-section"
-         id="resume">
-
-
-    <div class="resume-card reveal">
-
-
-        <div>
-
-            <p class="eyebrow">
-
-                <span></span>
-
-                06 / RESUME
-
-            </p>
-
-
-            <h2>
-
-                Not just a PDF.
-                <br>
-
-                <em>
-                    Open it like a letter.
-                </em>
-
-            </h2>
-
-
-            <p>
-
-                Take a quick look at my resume
-                through a small personal interaction.
-
-            </p>
-
-        </div>
-
-
-        <button class="btn btn-primary"
-                id="resumeButton">
-
-            Open My Resume
-
-            <span>↗</span>
-
-        </button>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- ================= CONTACT ================= -->
-
-<section class="section contact"
-         id="contact">
-
-
-    <div class="contact-card reveal">
-
-
-        <p class="eyebrow">
-
-            <span></span>
-
-            07 / CONTACT
-
-        </p>
-
-
-        <h2>
-
-            Let’s build
-            <br>
-
-            <em>
-                something useful.
-            </em>
-
-        </h2>
-
-
-        <p>
-
-            If you have a project, opportunity
-            or problem that needs a practical
-            web solution, let's talk.
-
-        </p>
-
-
-        <div class="contact-links">
-
-
-            <a href="mailto:divakarbalaji10@gmail.com">
-
-                <span>Email</span>
-
-                <strong>
-                    divakarbalaji10@gmail.com
-                </strong>
-
-                <i>↗</i>
-
-            </a>
-
-
-            <a href="tel:+916380054384">
-
-                <span>Phone</span>
-
-                <strong>
-                    +91 63800 54384
-                </strong>
-
-                <i>↗</i>
-
-            </a>
-
-
-            <a href="https://github.com/divakarbalaji10-spec"
-               target="_blank"
-               rel="noopener">
-
-                <span>GitHub</span>
-
-                <strong>
-                    divakarbalaji10-spec
-                </strong>
-
-                <i>↗</i>
-
-            </a>
-
-
-            <a href="https://www.linkedin.com/in/divakar-balaji-8233b7321"
-               target="_blank"
-               rel="noopener">
-
-                <span>LinkedIn</span>
-
-                <strong>
-                    Divakar Balaji
-                </strong>
-
-                <i>↗</i>
-
-            </a>
-
-
-        </div>
-
-    </div>
-
-</section>
-
+<!-- ============ ABOUT ============ -->
+<section id="about"><div class="wrap about rv">
+  <div>
+    <h2>About me</h2>
+    <p class="lead">I'm a web developer with a strong interest in backend development. My main strength is the backend, but I also work with frontend technologies and build complete end-to-end web systems.</p>
+    <p class="lead" style="margin-top:14px">I believe mistakes help me learn and improve, and I'm happiest when I'm learning something new.</p>
+  </div>
+  <div>
+    <h3 style="font-size:1.5rem;color:var(--gold)">What I enjoy</h3>
+    <ul>
+      <li>Building real-world applications</li>
+      <li>Solving technical problems</li>
+      <li>Learning from mistakes</li>
+      <li>Improving my development skills</li>
+      <li>Working on practical systems, not only demo projects</li>
+    </ul>
+  </div>
+</div></section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills"><div class="wrap rv">
+  <h2>Skills</h2>
+  <div class="grid skills">
+    <div class="box"><h3>Frontend</h3><div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span></div></div>
+    <div class="box"><h3>Backend</h3><div class="chips"><span class="chip g">PHP</span><span class="chip g">MySQL</span><span class="chip g">API Development</span><span class="chip g">Backend Architecture</span></div></div>
+    <div class="box"><h3>Tools &amp; Technologies</h3><div class="chips"><span class="chip">Git</span><span class="chip">AWS</span><span class="chip">Cloudflare</span><span class="chip">Apache</span><span class="chip">Android / Jetpack Compose</span></div></div>
+    <div class="box"><h3>Other Technical Experience</h3><div class="chips"><span class="chip">AI / Vector Search</span><span class="chip">Payment Gateway Integration</span><span class="chip">PDF Generation</span><span class="chip">Biometric / Attendance Systems</span><span class="chip">Database-driven applications</span></div></div>
+  </div>
+</div></section>
+
+<!-- ============ PROJECTS (cards are generated from the PROJECTS array below) ============ -->
+<section id="projects"><div class="wrap rv">
+  <h2>Projects</h2>
+  <p class="lead">Systems built for real users. Open any project for the problem, the solution and my part in it.</p>
+  <div class="grid projects" id="projectGrid"></div>
+</div></section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience"><div class="wrap rv">
+  <h2>Experience</h2>
+  <div class="exp">
+    <h3>SkyneTBee Artificial Intelligence Enterprise Pvt Ltd</h3>
+    <p class="meta">Internship · 2 years of hands-on experience · [Exact dates: add here]</p>
+    <ul>
+      <li>Developed and maintained student admission and member management modules (PHP, MySQL, JavaScript, HTML, CSS).</li>
+      <li>Built online fee payment, receipt generation and fee management.</li>
+      <li>Built examination, marks, performance and result management modules.</li>
+      <li>Developed cash book and ledger management modules, and Student ID card generation.</li>
+      <li>Built backend services that fetch attendance data from biometric servers, process and sync it, and store it in MySQL for the Sky Attendance Android app.</li>
+      <li>Developed the student house election system and the Snap Talk evaluation system.</li>
+      <li>Implemented an AI vector search and matching system for ranking relevant pages.</li>
+      <li>Worked with AWS services for deployment and storage.</li>
+    </ul>
+  </div>
+  <div class="exp" style="margin-top:28px">
+    <h3>B.Sc. Information Technology</h3>
+    <p class="meta">RD National College of Arts &amp; Science, Erode · 2024 – 2027 (expected graduation 2027)</p>
+  </div>
+</div></section>
+
+<!-- ============ WHAT I BUILD ============ -->
+<section id="build"><div class="wrap rv">
+  <h2>What I build</h2>
+  <div class="grid build">
+    <div class="box"><h3>Backend Systems</h3><p>Database-driven applications, APIs and business workflows.</p></div>
+    <div class="box"><h3>Education Platforms</h3><p>Admission, fees, attendance, marks and student management.</p></div>
+    <div class="box"><h3>Management Systems</h3><p>Custom administrative and workflow-based applications.</p></div>
+    <div class="box"><h3>AI-Powered Search</h3><p>Vector-based search and matching systems.</p></div>
+    <div class="box"><h3>Payment Systems</h3><p>Payment integration, transaction tracking and receipt generation.</p></div>
+  </div>
+</div></section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact"><div class="wrap contact rv">
+  <div>
+    <h2>Let's Build Something Together.</h2>
+    <p class="lead">Have a system in mind, or want to talk about backend work? Send a message.</p>
+    <ul>
+      <li><span>Email</span><a href="mailto:divakarbalaji10@gmail.com">divakarbalaji10@gmail.com</a></li>
+      <li><span>Phone</span><a href="tel:+916380054384">+91 63800 54384</a></li>
+      <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/divakar-balaji-8233b7321" target="_blank" rel="noopener">divakar-balaji-8233b7321</a></li>
+      <li><span>GitHub</span><a href="https://github.com/divakarbalaji10-spec" target="_blank" rel="noopener">divakarbalaji10-spec</a></li>
+    </ul>
+  </div>
+  <form id="contactForm">
+    <input name="name" placeholder="Your name" required aria-label="Your name">
+    <input name="email" type="email" placeholder="Your email" required aria-label="Your email">
+    <textarea name="msg" rows="5" placeholder="Your message" required aria-label="Your message"></textarea>
+    <button class="btn primary" type="submit">Send message</button>
+  </form>
+</div></section>
 </main>
 
-
-
-<!-- ================= FOOTER ================= -->
-
+<!-- ============ FOOTER ============ -->
 <footer>
-
-    <div>
-
-        <strong>
-            Divakar Balaji
-        </strong>
-
-        <span>
-            Web Developer · Backend Developer
-        </span>
-
-    </div>
-
-
-    <img src="assets/signature.png"
-         class="footer-signature"
-         alt="">
-
-
-    <span>
-        © 2026 Divakar Balaji
-    </span>
-
+  <div class="sig sig-foot" data-sig="footer"></div>
+  <h3 style="font-size:1.6rem">Divakar Balaji</h3>
+  <p>Web Developer | Backend Developer</p>
+  <div class="social">
+    <a href="https://github.com/divakarbalaji10-spec" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+    <a href="https://www.linkedin.com/in/divakar-balaji-8233b7321" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg></a>
+  </div>
+  <p>© 2026 Divakar Balaji</p>
 </footer>
 
-
-
-<!-- ================= PROJECT MODAL ================= -->
-
-<div class="modal"
-     id="projectModal"
-     aria-hidden="true">
-
-
-    <div class="modal-backdrop"
-         data-close-project>
-    </div>
-
-
-    <article class="project-modal">
-
-
-        <button class="modal-close"
-                data-close-project>
-
-            ×
-
-        </button>
-
-
-        <p class="eyebrow"
-           id="modalNumber">
-        </p>
-
-
-        <h2 id="modalTitle"></h2>
-
-
-        <p class="modal-summary"
-           id="modalSummary">
-        </p>
-
-
-        <div class="modal-grid">
-
-
-            <div>
-
-                <h4>
-                    Problem
-                </h4>
-
-                <p id="modalProblem"></p>
-
-            </div>
-
-
-            <div>
-
-                <h4>
-                    Solution
-                </h4>
-
-                <p id="modalSolution"></p>
-
-            </div>
-
-
-            <div>
-
-                <h4>
-                    Features
-                </h4>
-
-                <ul id="modalFeatures"></ul>
-
-            </div>
-
-
-            <div>
-
-                <h4>
-                    My contribution
-                </h4>
-
-                <p id="modalContribution"></p>
-
-            </div>
-
-
-        </div>
-
-
-        <div class="modal-tech"
-             id="modalTech">
-        </div>
-
-
-        <div class="project-screenshot-note">
-
-            Project screenshots can be added here later.
-
-        </div>
-
-    </article>
-
+<!-- ============ PROJECT MODAL ============ -->
+<div class="modal" id="pmodal" role="dialog" aria-modal="true" aria-labelledby="pm-title">
+  <div class="pm" style="position:relative">
+    <button class="btn x" data-close aria-label="Close">Close</button>
+    <div id="pbody"></div>
+  </div>
 </div>
 
-
-
-<!-- ================= RESUME MODAL ================= -->
-
-<div class="modal"
-     id="resumeModal"
-     aria-hidden="true">
-
-
-    <div class="modal-backdrop"
-         data-close-resume>
+<!-- ============ RESUME LETTER ============ -->
+<div class="modal" id="letter" role="dialog" aria-modal="true" aria-label="Resume">
+  <div class="stage">
+    <div class="paper">
+      <div class="crease"></div><div class="crease b"></div><div class="seal">DB</div>
+      <h2>Divakar B</h2>
+      <p class="sub">Full-Stack Web Developer | PHP Backend Developer</p>
+      <h4>Objective</h4>
+      <p>To keep improving my technical skills, learn new technologies and grow into a better developer who contributes to the company's growth.</p>
+      <h4>Experience</h4>
+      <p><strong>SkyneTBee AI Enterprise Pvt Ltd</strong>: Internship, 2 years hands-on. Admissions, fees, exams and results, attendance sync, house elections, Snap Talk, AI vector search, AWS deployment.</p>
+      <h4>Skills</h4>
+      <p>PHP, JavaScript, SQL, HTML5, CSS3 · MySQL, Microsoft SQL Server · REST APIs · VS Code, FileZilla, phpMyAdmin, SSMS</p>
+      <h4>Education</h4>
+      <p>B.Sc. Information Technology, RD National College of Arts &amp; Science, Erode (2024–2027)</p>
+      <div class="sig" data-sig="letter"></div>
     </div>
-
-
-    <article class="resume-modal">
-
-
-        <button class="modal-close"
-                data-close-resume>
-
-            ×
-
-        </button>
-
-
-        <div class="letter-shell"
-             id="letterShell">
-
-
-            <div class="letter-cover">
-
-                <span>
-                    DB
-                </span>
-
-                <strong>
-                    Curriculum Vitae
-                </strong>
-
-                <small>
-                    Divakar Balaji
-                </small>
-
-                <div class="cover-line"></div>
-
-            </div>
-
-
-            <div class="letter-page">
-
-
-                <div class="letter-head">
-
-                    <div>
-
-                        <small>
-                            CURRICULUM VITAE
-                        </small>
-
-                        <h3>
-                            Divakar Balaji
-                        </h3>
-
-                        <p>
-                            Web Developer · Backend Developer
-                        </p>
-
-                    </div>
-
-
-                    <span>
-                        2026
-                    </span>
-
-                </div>
-
-
-                <iframe
-                    src="assets/Divakar-Balaji-Resume.pdf"
-                    class="resume-preview"
-                    title="Divakar Balaji Resume">
-                </iframe>
-
-
-                <div class="letter-sign">
-
-                    <img src="assets/signature.png"
-                         alt="Divakar Balaji signature">
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="resume-actions">
-
-
-            <a href="assets/Divakar-Balaji-Resume.pdf"
-               target="_blank"
-               class="btn btn-primary">
-
-                View Full Resume ↗
-
-            </a>
-
-
-            <a href="assets/Divakar-Balaji-Resume.pdf"
-               download="Divakar-Balaji-Resume.pdf"
-               class="btn btn-outline">
-
-                Download Resume ↓
-
-            </a>
-
-
-        </div>
-
-
-    </article>
-
+    <div class="actions">
+      <a class="btn primary" href="assets/Divakar-Balaji-Resume.pdf" target="_blank" rel="noopener">View Full Resume</a>
+      <a class="btn" href="assets/Divakar-Balaji-Resume.pdf" download>Download Resume</a>
+      <button class="btn" data-close>Close</button>
+    </div>
+  </div>
 </div>
 
+<script>
+/* ============ PROJECT DATA (edit text here) ============ */
+const PROJECTS = [
+ {name:"Student House Voting & Election Management System",
+  short:"Manages house elections end to end: candidates, student voting and results.",
+  problem:"Paper-based house elections are slow to run and hard to count accurately.",
+  solution:"A web system where admins set up the election, students vote once, and results are tallied house by house.",
+  features:["Student voting","House-wise election management","Election administration","Result management"],
+  tech:["PHP","MySQL","JavaScript","HTML","CSS"],
+  role:"Developed the web-based student house election system covering candidates, voting and results.",shots:[]},
+ {name:"RD College / School Admission Management System",
+  short:"One workflow from first enquiry to a managed student record.",
+  problem:"Enquiries, admissions, fees and student records often live in separate places and fall out of sync.",
+  solution:"A connected flow: Enquiry → Admission Confirmation → Fee Management → Student/Member Management.",
+  features:["Enquiry tracking","Admission confirmation","Fee management","Student and member records","Student ID card generation"],
+  tech:["PHP","MySQL","JavaScript","HTML","CSS"],
+  role:"Developed and maintained the admission and member management modules.",shots:[]},
+ {name:"School Fee Management & Payment System",
+  short:"Fee generation and online payment, with PDF receipts.",
+  problem:"Manual fee collection makes it hard to know who has paid and to issue receipts quickly.",
+  solution:"Fees are generated and calculated per student, paid online, tracked by status, and receipted automatically.",
+  features:["Fee generation","Fee calculation","Payment processing","Payment gateway integration [gateway name]","Payment status tracking","Receipt PDF generation"],
+  tech:["PHP","MySQL","JavaScript","Payment Gateway API","PDF generation"],
+  role:"Built online fee payment, receipt generation and fee management functionality.",shots:[]},
+ {name:"Snap Talk",
+  short:"A student explanation and evaluation system with audio proof.",
+  problem:"Teachers need a practical way to check whether a student truly understood a topic, and keep a record of it.",
+  solution:"Teacher selects a student → student explains the topic taught → teacher evaluates → gives a star rating → audio proof is recorded.",
+  features:["Teacher assigns topics","Student explanation recording","Teacher evaluation","Star rating","Audio-based proof of participation"],
+  tech:["PHP","MySQL","JavaScript","Audio recording"],
+  role:"Developed the teacher-driven system for topics, recordings, star ratings and audio proof.",shots:[]},
+ {name:"AI Page Vector Search",
+  short:"Search that matches meaning, so pages are easier to find.",
+  problem:"Keyword search misses pages when the user's words differ from the page names.",
+  solution:"Page names are converted into vectors and stored in a database. A search query becomes a vector too, is compared with stored vectors, scored for similarity, and stronger matches are shown first.",
+  features:["Page names stored as vectors","Query converted to a vector","Similarity scoring","Results ranked by match strength"],
+  tech:["Vector embeddings","MySQL","PHP / JavaScript [confirm stack]"],
+  role:"Developed the semantic search and matching system.",shots:[]},
+ {name:"Canteen Management System",
+  short:"A real-world management system for canteen operations.",
+  problem:"[Describe the problem this solved]",
+  solution:"[Describe how the system works]",
+  features:["[Add feature]","[Add feature]","[Add feature]"],
+  tech:["PHP","MySQL","JavaScript [confirm]"],
+  role:"[Describe your contribution]",shots:[]}
+];
 
+/* ============ SIGNATURE STROKES (traced from your signature) ============ */
+const SIG_VIEWBOX = "470 280 1480 720";
+const SIG_PATHS = [
+ "M585,420 L590,490 C590,580 572,680 540,695 C505,680 495,590 520,500 C545,420 600,370 660,385 C700,400 690,450 640,520 C700,520 760,545 760,590 C755,640 680,685 600,712",
+ "M883,688 L884,689",
+ "M1100,925 C1020,880 975,700 980,560 C985,400 1050,300 1140,296 C1230,295 1260,390 1220,470 C1190,520 1090,540 1065,490 C1055,450 1120,430 1190,455 C1280,490 1340,560 1300,605 C1260,640 1180,640 1120,630 C1085,645 1065,690 1075,720 C1100,715 1135,640 1138,540 L1140,410",
+ "M1345,568 L1346,569",
+ "M1345,625 C1300,720 1200,870 1100,918",
+ "M1320,740 C1320,770 1370,750 1430,690 C1480,635 1540,625 1590,640 C1615,520 1610,360 1590,342 C1570,350 1560,550 1562,700 C1562,800 1580,830 1610,790 C1670,720 1730,620 1760,625 C1800,650 1830,705 1890,690 C1930,670 1930,600 1915,555 C1895,620 1870,760 1866,985",
+ "M962,912 C1200,850 1600,810 1830,805",
+ "M1100,915 C1300,880 1600,820 1788,787"
+];
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (s,c=document)=>c.querySelector(s), $$ = (s,c=document)=>[...c.querySelectorAll(s)];
 
-<script src="script.js"></script>
+/* Build signature SVGs and give every path a dash length */
+const sigs = $$('.sig').map(el=>{
+  el.innerHTML = `<svg viewBox="${SIG_VIEWBOX}" role="img" aria-label="Handwritten signature of Divakar Balaji">${SIG_PATHS.map(d=>`<path d="${d}"/>`).join('')}</svg>`;
+  const paths = $$('path',el);
+  const lens = paths.map(p=>Math.max(p.getTotalLength(),12));
+  const total = lens.reduce((a,b)=>a+b,0);
+  paths.forEach((p,i)=>{p.style.strokeDasharray=lens[i]+1;p.style.strokeDashoffset=lens[i]+1});
+  return {el,paths,lens,total,mode:el.dataset.sig,raf:0};
+});
+/* progress 0..1 → pen position across all strokes, in order */
+function drawSig(s,p){
+  let done = p*s.total, c = 0;
+  s.paths.forEach((path,i)=>{
+    const local = Math.min(1,Math.max(0,(done-c)/s.lens[i]));
+    path.style.strokeDashoffset = (s.lens[i]+1)*(1-local);
+    c += s.lens[i];
+  });
+}
+/* time-based writing (used inside the resume letter) */
+function playSig(s,ms=2600){
+  cancelAnimationFrame(s.raf);
+  if(reduced) return drawSig(s,1);
+  drawSig(s,0); const t0=performance.now();
+  (function tick(t){
+    const k=Math.min(1,(t-t0)/ms), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+    drawSig(s,e); if(k<1) s.raf=requestAnimationFrame(tick);
+  })(t0);
+}
 
+/* ============ SCROLL-DRIVEN SIGNATURE ============ */
+const sigMain = sigs.find(s=>s.mode==='scroll'), sigFoot = sigs.find(s=>s.mode==='footer'),
+      sigLetter = sigs.find(s=>s.mode==='letter'), bar = $('#sigbar'), wrapEl = $('#signature');
+let ticking=false, smooth=0;
+function onScroll(){
+  const r = wrapEl.getBoundingClientRect();
+  const target = Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
+  /* ease toward the target so the pen glides instead of jumping */
+  smooth += (target-smooth)*(reduced?1:.12);
+  drawSig(sigMain,Math.min(1,smooth*1.08)); bar.style.transform=`scaleX(${smooth})`;
+  const f = sigFoot.el.getBoundingClientRect();
+  drawSig(sigFoot,Math.min(1,Math.max(0,(innerHeight-f.top)/(innerHeight*.55))));
+  if(Math.abs(target-smooth)>.002) requestAnimationFrame(onScroll); else ticking=false;
+}
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});
+addEventListener('resize',onScroll); onScroll();
+
+/* ============ PROJECTS ============ */
+const grid = $('#projectGrid'), pm = $('#pmodal'), pbody = $('#pbody');
+grid.innerHTML = PROJECTS.map((p,i)=>`
+  <button class="card" data-i="${i}">
+    <h3>${p.name}</h3><p>${p.short}</p>
+    <p class="prob"><strong>Problem:</strong> ${p.problem}</p>
+    <div class="chips">${p.tech.map(t=>`<span class="chip g">${t}</span>`).join('')}</div>
+    <span class="more">View details</span>
+  </button>`).join('');
+grid.addEventListener('click',e=>{
+  const c=e.target.closest('.card'); if(!c) return;
+  const p=PROJECTS[c.dataset.i];
+  const shots = (p.shots.length?p.shots:['Screenshot 1','Screenshot 2']).map(s=>
+    p.shots.length?`<div class="shot"><img src="${s}" alt="${p.name} screenshot" loading="lazy"></div>`
+    :`<div class="shot">${s}<br>Add images in the shots array</div>`).join('');
+  pbody.innerHTML = `<h2 id="pm-title">${p.name}</h2><p>${p.short}</p>
+    <h4>Problem</h4><p>${p.problem}</p><h4>Solution</h4><p>${p.solution}</p>
+    <h4>Features</h4><ul>${p.features.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <h4>Technologies</h4><div class="chips">${p.tech.map(t=>`<span class="chip g">${t}</span>`).join('')}</div>
+    <h4>My role</h4><p>${p.role}</p><h4>Screenshots</h4><div class="shots">${shots}</div>`;
+  openModal(pm);
+});
+
+/* ============ MODALS ============ */
+let lastFocus;
+function openModal(m){lastFocus=document.activeElement;m.classList.add('show');document.body.style.overflow='hidden';$('[data-close]',m)?.focus()}
+function closeModal(m){m.classList.remove('show');document.body.style.overflow='';if(m.id==='letter'){m.classList.remove('open');cancelAnimationFrame(sigLetter.raf);drawSig(sigLetter,0)}lastFocus?.focus()}
+$$('.modal').forEach(m=>{
+  m.addEventListener('click',e=>{if(e.target===m||e.target.closest('[data-close]'))closeModal(m)});
+});
+addEventListener('keydown',e=>{if(e.key==='Escape')$$('.modal.show').forEach(closeModal)});
+
+/* Resume: open letter → unfold → write signature */
+const letter = $('#letter');
+$$('[data-resume]').forEach(b=>b.addEventListener('click',e=>{
+  e.preventDefault(); $('#menu').classList.remove('open');
+  openModal(letter);
+  setTimeout(()=>letter.classList.add('open'),80);
+  setTimeout(()=>playSig(sigLetter,2400),1100);
+}));
+
+/* ============ NAV, REVEAL, FORM ============ */
+const burger=$('#burger'), menu=$('#menu');
+burger.addEventListener('click',()=>{const o=menu.classList.toggle('open');burger.setAttribute('aria-expanded',o)});
+$$('#menu a:not([data-resume])').forEach(a=>a.addEventListener('click',()=>menu.classList.remove('open')));
+const links=$$('#menu a[href^="#"]:not([href="#"])');
+const spy=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+$$('main section[id]').forEach(s=>spy.observe(s));
+const rv=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rv.unobserve(e.target)}}),{threshold:.12});
+$$('.rv').forEach(el=>rv.observe(el));
+$('#contactForm').addEventListener('submit',e=>{
+  e.preventDefault(); const f=new FormData(e.target);
+  location.href=`mailto:divakarbalaji10@gmail.com?subject=${encodeURIComponent('Portfolio message from '+f.get('name'))}&body=${encodeURIComponent(f.get('msg')+'\n\nFrom: '+f.get('name')+' ('+f.get('email')+')')}`;
+});
+</script>
 </body>
-
 </html>
