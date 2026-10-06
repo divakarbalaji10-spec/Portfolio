@@ -1,730 +1,1417 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="color-scheme" content="light dark">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Divakar Balaji — Web Developer | Backend Developer</title>
-<meta name="description" content="Portfolio of Divakar Balaji, a web developer focused on backend systems: admissions, fees, payments, attendance and AI search.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-/* ============ TOKENS (edit colours here) ============ */
-:root{
-  --bg:#f5f8fc; --bg2:#ffffff; --ink:#0f1b2a; --muted:#52657d;
-  --gold:#0e7490; --gold-soft:rgba(14,116,144,.08);
-  --green:#047857; --line:rgba(14,116,144,.22);
-  --glass:rgba(255,255,255,.75);
-  --hdr:rgba(245,248,252,.82); --overlay:rgba(15,27,42,.55);
-  --grid:rgba(14,116,144,.06); --glow:rgba(14,116,144,.10);
-  --on-accent:#ffffff; --accent-hover:#155e75;
-  --chipg-line:rgba(4,120,87,.4); --chipg-ink:#065f46;
-  --serif:'Space Grotesk',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
-  --sans:'Manrope',system-ui,sans-serif;
-  color-scheme:light;
-}
-@media (prefers-color-scheme:dark){
-  :root{
-    --bg:#05080f; --bg2:#0a111c; --ink:#e6f1ff; --muted:#8497b0;
-    --gold:#22d3ee; --gold-soft:rgba(34,211,238,.10);
-    --green:#34d399; --line:rgba(34,211,238,.20);
-    --glass:rgba(255,255,255,.035);
-    --hdr:rgba(5,8,15,.75); --overlay:rgba(2,4,8,.82);
-    --grid:rgba(34,211,238,.04); --glow:rgba(34,211,238,.10);
-    --on-accent:#031014; --accent-hover:#67e8f9;
-    --chipg-line:rgba(52,211,153,.45); --chipg-ink:#a7f3d0;
-    color-scheme:dark;
-  }
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:70px}
-body{background:var(--bg) linear-gradient(var(--grid) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/48px 48px;background-attachment:fixed;color:var(--ink);font:400 16px/1.7 var(--sans);overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.1;letter-spacing:-.02em}
-h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:.4em}
-section{padding:96px 0}
-.wrap{width:min(1120px,92%);margin:auto}
-.lead{color:var(--muted);max-width:60ch}
-:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  <meta charset="utf-8">
+  <meta name="color-scheme" content="light dark">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Divakar Balaji — Web Developer | Backend Developer</title>
+  <meta name="description" content="Portfolio of Divakar Balaji, a web developer focused on backend systems: admissions, fees, payments, attendance and AI search.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ============ BUTTONS ============ */
-.btn{display:inline-flex;align-items:center;gap:.5em;padding:.75em 1.4em;border:1px solid var(--line);
-  border-radius:999px;font-weight:500;font-size:.95rem;background:var(--glass);color:var(--ink);cursor:pointer;
-  transition:.25s;font-family:inherit}
-.btn:hover{border-color:var(--gold);transform:translateY(-2px)}
-.btn.primary{background:var(--gold);color:var(--on-accent);border-color:var(--gold)}
-.btn.primary:hover{background:var(--accent-hover)}
+    :root {
+      --bg: #0b0f19;
+      --bg2: #131a2b;
+      --surface: #1a2236;
+      --surface-2: #222c45;
+      --ink: #f0f4ff;
+      --muted: #8b96b8;
+      --accent: #6c5ce7;
+      --accent-2: #00d2d3;
+      --accent-3: #fd79a8;
+      --line: #2a3550;
+      --glow: rgba(108,92,231,.35);
+      --glow-2: rgba(0,210,211,.25);
+      --on-accent: #fff;
+      --radius: 18px;
+      --radius-sm: 12px;
+    }
 
-/* ============ NAV ============ */
-header{position:fixed;inset:0 0 auto;z-index:50;backdrop-filter:blur(14px);background:var(--hdr);border-bottom:1px solid var(--line)}
-nav{display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{font-family:var(--mono);font-size:1.1rem;font-weight:500;color:var(--gold)}
-nav ul{display:flex;gap:28px;list-style:none}
-nav ul a{font-size:.9rem;color:var(--muted);transition:.2s}
-nav ul a:hover,nav ul a.on{color:var(--gold)}
-.burger{display:none;background:none;border:1px solid var(--line);color:var(--ink);width:42px;height:38px;border-radius:8px;font-size:1.2rem;cursor:pointer}
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 
-/* ============ HERO ============ */
-.hero{min-height:100vh;display:flex;align-items:center;padding-top:110px;
-  background:radial-gradient(60% 50% at 80% 30%,var(--glow),transparent 70%)}
-.hero .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:56px;align-items:center}
-.hero h1{font-size:clamp(3rem,8vw,6rem);letter-spacing:.01em}
-.role{font-family:var(--mono);font-size:1rem;color:var(--gold);margin:.5rem 0 1.2rem}
-.hero p{color:var(--muted);max-width:52ch;margin-bottom:1.8rem}
-.cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:1.6rem}
-.social{display:flex;gap:12px}
-.social a{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;transition:.25s;color:var(--muted)}
-.social a:hover{color:var(--gold);border-color:var(--gold)}
-.social svg{width:18px;height:18px;fill:currentColor}
-/* PORTRAIT (fixed: height:auto + 4/5 ratio so the photo is no longer stretched) */
-.portrait{position:relative;justify-self:center;width:min(340px,80%)}
-.portrait::before{content:"";position:absolute;inset:-12px 12px 12px -12px;border:1px solid var(--gold);opacity:.55;border-radius:12px}
-.portrait img{position:relative;display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 80%;
-  border-radius:12px;filter:saturate(.9) contrast(1.03)}
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+      overflow-x: hidden;
+      transition: background .4s ease, color .4s ease;
+    }
 
-/* ============ 3D BACKGROUND (hero) ============ */
-.hero{position:relative;overflow:hidden}
-.hero .wrap{position:relative;z-index:1}
-.bg3d{position:absolute;inset:0;perspective:900px;pointer-events:none;z-index:0}
-#net{position:absolute;inset:0;width:100%;height:100%;display:block}
-.floor{position:absolute;left:-60%;right:-60%;bottom:-8%;height:62%;transform:rotateX(70deg);transform-origin:50% 100%;
-  background:linear-gradient(var(--gold) 1px,transparent 1px) 0 0/64px 64px,linear-gradient(90deg,var(--gold) 1px,transparent 1px) 0 0/64px 64px;
-  opacity:.28;-webkit-mask-image:linear-gradient(transparent,#000 70%);mask-image:linear-gradient(transparent,#000 70%);
-  animation:floor 6s linear infinite}
-@keyframes floor{to{background-position:0 64px,0 0}}
-.scene{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .4s ease-out}
-.box,.portrait{transition:transform .25s ease-out,border-color .25s}
+    /* ===== 10 THEMES ===== */
+    [data-theme="0"] {
+      --bg:#0b0f19; --bg2:#131a2b; --surface:#1a2236; --surface-2:#222c45;
+      --ink:#f0f4ff; --muted:#8b96b8; --accent:#6c5ce7; --accent-2:#00d2d3; --accent-3:#fd79a8;
+      --line:#2a3550; --glow:rgba(108,92,231,.35); --glow-2:rgba(0,210,211,.25); --on-accent:#fff;
+    }
+    [data-theme="1"] {
+      --bg:#faf6f0; --bg2:#fffdf9; --surface:#ffffff; --surface-2:#f5efe6;
+      --ink:#1a1410; --muted:#7a6a5a; --accent:#c2410c; --accent-2:#0f766e; --accent-3:#be185d;
+      --line:#e0d5c5; --glow:rgba(194,65,12,.15); --glow-2:rgba(15,118,110,.12); --on-accent:#fff;
+    }
+    [data-theme="2"] {
+      --bg:#1a1a2e; --bg2:#22223b; --surface:#2a2a45; --surface-2:#34345a;
+      --ink:#e8e8ff; --muted:#9a9ac0; --accent:#e94560; --accent-2:#f5c542; --accent-3:#4ecca3;
+      --line:#3a3a5c; --glow:rgba(233,69,96,.3); --glow-2:rgba(245,197,66,.2); --on-accent:#fff;
+    }
+    [data-theme="3"] {
+      --bg:#f0f7f4; --bg2:#ffffff; --surface:#ffffff; --surface-2:#e6f2ed;
+      --ink:#0f2922; --muted:#4a6b5f; --accent:#0d9488; --accent-2:#7c3aed; --accent-3:#f59e0b;
+      --line:#c9e0d7; --glow:rgba(13,148,136,.15); --glow-2:rgba(124,58,237,.12); --on-accent:#fff;
+    }
+    [data-theme="4"] {
+      --bg:#0f0f0f; --bg2:#1a1a1a; --surface:#222222; --surface-2:#2d2d2d;
+      --ink:#f5f5f5; --muted:#a0a0a0; --accent:#fbbf24; --accent-2:#f97316; --accent-3:#ef4444;
+      --line:#333333; --glow:rgba(251,191,36,.25); --glow-2:rgba(249,115,22,.2); --on-accent:#0f0f0f;
+    }
+    [data-theme="5"] {
+      --bg:#fdf2f8; --bg2:#ffffff; --surface:#ffffff; --surface-2:#fce7f3;
+      --ink:#500724; --muted:#9d174d; --accent:#ec4899; --accent-2:#8b5cf6; --accent-3:#06b6d4;
+      --line:#fbcfe8; --glow:rgba(236,72,153,.15); --glow-2:rgba(139,92,246,.12); --on-accent:#fff;
+    }
+    [data-theme="6"] {
+      --bg:#0c1a2b; --bg2:#122438; --surface:#1a2f48; --surface-2:#223c5a;
+      --ink:#e0f2fe; --muted:#7ea8c4; --accent:#38bdf8; --accent-2:#34d399; --accent-3:#f472b6;
+      --line:#1e3a5f; --glow:rgba(56,189,248,.25); --glow-2:rgba(52,211,153,.2); --on-accent:#0c1a2b;
+    }
+    [data-theme="7"] {
+      --bg:#fefae0; --bg2:#fffdf5; --surface:#ffffff; --surface-2:#f5f0d8;
+      --ink:#283618; --muted:#606c38; --accent:#dda15e; --accent-2:#bc6c25; --accent-3:#606c38;
+      --line:#e5dcc0; --glow:rgba(221,161,94,.2); --glow-2:rgba(188,108,37,.15); --on-accent:#fff;
+    }
+    [data-theme="8"] {
+      --bg:#18181b; --bg2:#27272a; --surface:#2e2e33; --surface-2:#3f3f46;
+      --ink:#fafafa; --muted:#a1a1aa; --accent:#a78bfa; --accent-2:#f0abfc; --accent-3:#67e8f9;
+      --line:#3f3f46; --glow:rgba(167,139,250,.3); --glow-2:rgba(240,171,252,.2); --on-accent:#18181b;
+    }
+    [data-theme="9"] {
+      --bg:#f5f5f4; --bg2:#ffffff; --surface:#ffffff; --surface-2:#e7e5e4;
+      --ink:#1c1917; --muted:#78716c; --accent:#ea580c; --accent-2:#0891b2; --accent-3:#7c3aed;
+      --line:#d6d3d1; --glow:rgba(234,88,12,.12); --glow-2:rgba(8,145,178,.1); --on-accent:#fff;
+    }
 
-/* ============ SIGNATURE (scroll-written) ============ */
-.sigwrap{height:300vh;padding:0;position:relative;border-block:1px solid var(--line)}
-.sigstick{position:sticky;top:0;height:100vh;display:grid;place-content:center;justify-items:center;gap:18px;text-align:center}
-.sigstick svg{width:min(720px,88vw);height:auto;overflow:visible}
-.sigstick small{color:var(--muted);letter-spacing:.04em}
-.sig path{fill:none;stroke:var(--gold);stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
-.progress{width:140px;height:2px;background:var(--line);position:relative}
-.progress i{position:absolute;inset:0;background:var(--gold);transform-origin:left;transform:scaleX(0)}
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3, h4 { font-family: 'Syne', sans-serif; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+    h2 { font-size: clamp(2rem, 5vw, 3rem); }
+    section { padding: 100px 0; position: relative; }
+    .wrap { width: min(1200px, 92%); margin: auto; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
 
-/* ============ ABOUT / SKILLS ============ */
-.about{display:grid;grid-template-columns:1fr 1fr;gap:56px}
-.about ul{list-style:none;display:grid;gap:12px;margin-top:8px}
-.about li{padding-left:26px;position:relative}
-.about li::before{content:"";position:absolute;left:0;top:.7em;width:14px;height:1px;background:var(--green)}
-.grid{display:grid;gap:18px}
-.skills{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:32px}
-.box{padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--glass);backdrop-filter:blur(8px)}
-.box h3{font-size:1.5rem;color:var(--gold);margin-bottom:12px}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{font-family:var(--mono);padding:.25em .8em;border:1px solid var(--line);border-radius:999px;font-size:.85rem;color:var(--ink)}
-.chip.g{border-color:var(--chipg-line);color:var(--chipg-ink)}
+    /* ===== TOP PROGRESS ===== */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+      transform-origin: left; transform: scaleX(0); z-index: 999;
+      transition: transform .1s linear;
+    }
 
-/* ============ PROJECTS ============ */
-.projects{grid-template-columns:repeat(auto-fill,minmax(320px,1fr));margin-top:32px}
-.card{text-align:left;padding:26px;border:1px solid var(--line);border-radius:14px;background:var(--glass);
-  color:inherit;cursor:pointer;transition:.3s;font:inherit;display:flex;flex-direction:column;gap:12px}
-.card:hover{border-color:var(--gold);transform:translateY(-4px);background:var(--gold-soft)}
-.card h3{font-size:1.55rem}
-.card p{color:var(--muted);font-size:.95rem}
-.card .prob{font-size:.88rem;color:var(--ink);border-left:2px solid var(--green);padding-left:12px}
-.card .more{font-family:var(--mono);margin-top:auto;color:var(--gold);font-size:.9rem}
+    /* ===== NAV ===== */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 0;
+      transition: padding .3s, background .3s, backdrop-filter .3s;
+    }
+    header.scrolled {
+      padding: 8px 0;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--line);
+    }
+    nav { display: flex; align-items: center; justify-content: space-between; }
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo-mark {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid; place-items: center; color: var(--on-accent);
+      font-size: 0.95rem; font-weight: 800;
+      box-shadow: 0 8px 24px var(--glow);
+    }
+    nav ul { display: flex; gap: 4px; list-style: none; align-items: center; }
+    nav ul a {
+      font-size: 0.88rem; font-weight: 500; color: var(--muted);
+      padding: 8px 16px; border-radius: 10px; transition: all .25s;
+      position: relative;
+    }
+    nav ul a:hover { color: var(--ink); background: var(--surface-2); }
+    nav ul a.on { color: var(--on-accent); background: var(--accent); }
+    .burger {
+      display: none; background: var(--surface); border: 1px solid var(--line);
+      color: var(--ink); width: 44px; height: 44px; border-radius: 12px;
+      font-size: 1.2rem; cursor: pointer;
+    }
 
-/* ============ EXPERIENCE / BUILD ============ */
-.exp{border-left:1px solid var(--line);padding-left:32px;margin-top:32px;position:relative}
-.exp::before{content:"";position:absolute;left:-5px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--gold)}
-.exp h3{font-size:1.7rem}
-.exp .meta{font-family:var(--mono);color:var(--gold);font-size:.92rem;margin:4px 0 14px}
-.exp ul{padding-left:18px;color:var(--muted);display:grid;gap:6px;max-width:75ch}
-.exp li::marker{color:var(--green)}
-.build{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:32px}
-.build .box h3{font-size:1.3rem;color:var(--ink)}
-.build .box p{color:var(--muted);font-size:.92rem}
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 120px 0 80px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ""; position: absolute; top: -20%; right: -10%;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, var(--glow), transparent 70%);
+      filter: blur(60px); pointer-events: none; z-index: 0;
+    }
+    .hero::after {
+      content: ""; position: absolute; bottom: -20%; left: -10%;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, var(--glow-2), transparent 70%);
+      filter: blur(60px); pointer-events: none; z-index: 0;
+    }
+    .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 60px; align-items: center; }
 
-/* ============ CONTACT / FOOTER ============ */
-.contact{display:grid;grid-template-columns:1fr 1fr;gap:56px}
-.contact ul{list-style:none;margin-top:20px;display:grid;gap:10px}
-.contact li span{color:var(--muted);display:inline-block;width:90px;font-size:.9rem}
-.mail{display:grid;position:relative;min-height:380px}
-.mail>*{grid-area:1/1}
-.mailform{display:grid;gap:14px;align-content:start;padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--glass);
-  transition:transform .7s cubic-bezier(.65,0,.3,1),opacity .45s .3s}
-.mailform>*{transition:opacity .25s}
-.mail.folding .mailform{transform:scale(.55,.14);opacity:0;pointer-events:none}
-.mail.folding .mailform>*{opacity:0}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.fmsg{color:#ef4444;font-size:.9rem;min-height:1.3em}
-.envelope{justify-self:center;align-self:center;width:min(280px,82%);height:auto;overflow:visible;opacity:0;visibility:hidden;transform:scale(.85);
-  transition:opacity .4s .35s,transform .5s .35s,visibility 0s .35s}
-.mail.folding .envelope{opacity:1;visibility:visible;transform:none}
-.envelope .eb{fill:var(--bg2);stroke:var(--gold);stroke-width:1.5}
-.envelope .tint{fill:var(--gold-soft);stroke:none}
-.envelope .ef{fill:var(--bg2);stroke:var(--gold);stroke-width:1.5;stroke-linejoin:round}
-.envelope .el{fill:#eaf2f9;stroke:none}
-.envelope .ln{stroke:#7fb2c4;stroke-width:1.5}
-.env-letter{transform:translateY(-50px);transition:transform .6s cubic-bezier(.5,0,.2,1)}
-.env-flap{transform-box:fill-box;transform-origin:50% 0;transform:scaleY(-1);transition:transform .5s cubic-bezier(.5,0,.2,1) .35s}
-.mail.closing .env-letter{transform:none}
-.mail.closing .env-flap{transform:scaleY(1)}
-.mail.flying .envelope{transform:translate(150px,-170px) scale(.3) rotate(10deg);opacity:0;
-  transition:transform .9s cubic-bezier(.5,0,.8,.45),opacity .7s .2s}
-.sending{align-self:end;justify-self:center;font-family:var(--mono);font-size:.85rem;color:var(--muted);opacity:0;transition:opacity .3s;margin-bottom:24px}
-.mail.closing:not(.flying) .sending{opacity:1}
-.sent{align-self:center;justify-self:center;text-align:center;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .5s,transform .5s,visibility 0s .5s}
-.mail.done .sent{opacity:1;visibility:visible;transform:none;transition-delay:0s}
-.sent svg{width:84px;height:84px;margin-bottom:10px}
-.sent circle,.sent path{fill:none;stroke:var(--green);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.sent circle{stroke-dasharray:176;stroke-dashoffset:176}
-.sent path{stroke-dasharray:50;stroke-dashoffset:50}
-.mail.done .sent circle{animation:draw .7s .1s ease forwards}
-.mail.done .sent path{animation:draw .45s .75s ease forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-.sent h3{font-size:1.8rem}
-.sent p{color:var(--muted);margin:6px 0 16px}
-input,textarea{width:100%;padding:.85em 1em;background:var(--glass);border:1px solid var(--line);border-radius:10px;color:var(--ink);font:inherit}
-input:focus,textarea:focus{outline:none;border-color:var(--gold)}
-footer{border-top:1px solid var(--line);padding:48px 0 32px;text-align:center}
-footer .sig-foot{width:min(240px,60vw);margin:0 auto 14px}
-footer p{color:var(--muted);font-size:.9rem}
-footer .social{justify-content:center;margin:16px 0}
+    .badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 16px; border-radius: 100px;
+      background: var(--surface); border: 1px solid var(--line);
+      font-size: 0.82rem; color: var(--muted); margin-bottom: 24px;
+      font-weight: 500;
+    }
+    .badge .dot {
+      width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
+      box-shadow: 0 0 0 0 #22c55e; animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(34,197,94,.6); }
+      70% { box-shadow: 0 0 0 10px rgba(34,197,94,0); }
+      100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+    }
 
-/* ============ MODALS (shared) ============ */
-.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:var(--overlay);
-  backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
-.modal.show{opacity:1;visibility:visible}
-.pm{width:min(860px,100%);max-height:90vh;overflow:auto;background:var(--bg2);border:1px solid var(--line);
-  border-radius:16px;padding:36px;transform:translateY(24px) scale(.98);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
-.modal.show .pm{transform:none}
-.pm h2{margin-bottom:6px}
-.pm h4{color:var(--gold);font-family:var(--serif);font-size:1.25rem;margin:22px 0 6px}
-.pm p,.pm li{color:var(--muted)}
-.pm ul{padding-left:18px}
-.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:8px}
-.shot{aspect-ratio:16/10;border:1px dashed var(--line);border-radius:10px;display:grid;place-items:center;
-  color:var(--muted);font-size:.8rem;text-align:center;padding:10px;overflow:hidden}
-.shot img{width:100%;height:100%;object-fit:cover}
-.x{position:absolute;top:16px;right:16px}
+    .hero h1 {
+      font-size: clamp(2.6rem, 6.5vw, 5rem);
+      font-weight: 800; margin-bottom: 20px;
+      line-height: 1.02;
+    }
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero .role {
+      font-family: 'JetBrains Mono', monospace; font-size: 1rem;
+      color: var(--accent-2); margin-bottom: 22px;
+      min-height: 1.5em; font-weight: 500;
+    }
+    .hero .role::after { content: "▋"; animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .hero p.intro {
+      color: var(--muted); max-width: 52ch; margin-bottom: 32px;
+      font-size: 1.05rem; line-height: 1.7;
+    }
+    .cta-group { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 32px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 26px; border-radius: 100px;
+      font-weight: 600; font-size: 0.95rem; cursor: pointer;
+      border: none; font-family: inherit;
+      transition: all .3s cubic-bezier(.2,.8,.2,1);
+      position: relative; overflow: hidden;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: var(--on-accent);
+      box-shadow: 0 10px 30px var(--glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px var(--glow);
+    }
+    .btn-ghost {
+      background: var(--surface); color: var(--ink);
+      border: 1px solid var(--line);
+    }
+    .btn-ghost:hover {
+      background: var(--surface-2);
+      transform: translateY(-3px);
+      border-color: var(--accent);
+    }
 
-/* ============ RESUME LETTER ============ */
-#letter{perspective:1600px}
-.stage{position:relative;width:min(640px,100%);max-height:94vh}
-.paper{height:min(62vh,560px);position:relative;background:#eaf2f9;color:#0f1a24;border-radius:6px;padding:40px 44px 28px;overflow:auto;
-  box-shadow:0 30px 80px rgba(0,0,0,.6);transform-origin:center;
-  clip-path:inset(44% 4% 44% 4%);transform:rotateX(22deg) scale(.7);opacity:0;
-  transition:clip-path 1s cubic-bezier(.65,0,.2,1) .15s,transform 1s cubic-bezier(.2,.8,.2,1) .15s,opacity .3s}
-#letter.open .paper{clip-path:inset(0);transform:none;opacity:1}
-.paper h2{font-size:2.2rem;color:#0a1218}
-.paper .sub{color:#0e6e82;font-weight:500;margin-bottom:14px}
-.paper h4{font-family:var(--serif);font-size:1.2rem;color:#0e6e82;margin:16px 0 4px;border-bottom:1px solid rgba(14,110,130,.3)}
-.paper p,.paper li{font-size:.92rem;color:#24323f;line-height:1.55}
-.paper ul{padding-left:18px}
-.paper .sig path{stroke:#0a1218;stroke-width:6}
-.paper .sig{width:190px;margin-top:10px}
-.paper .close{margin-top:110px;font-family:var(--serif);font-size:1.1rem}
-.paper .hint{font-family:var(--mono);font-size:.72rem;color:#0e6e82;margin-top:10px}
-.crease{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.25),transparent);
-  top:33%;opacity:1;transition:opacity 1.2s 1s;pointer-events:none}
-.crease.b{top:66%}
-#letter.open .crease{opacity:.15}
-.seal{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px;border-radius:50%;z-index:2;
-  background:radial-gradient(circle at 35% 30%,#67e8f9,#0e7490);display:grid;place-items:center;
-  font:700 1.3rem var(--serif);color:#031014;box-shadow:0 4px 14px rgba(0,0,0,.5);transition:.5s}
-#letter.open .seal{transform:scale(0);opacity:0}
-.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px;opacity:0;transition:opacity .5s 1.2s}
-#letter.open .actions{opacity:1}
+    .social-row { display: flex; gap: 12px; }
+    .social-row a {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: grid; place-items: center;
+      background: var(--surface); border: 1px solid var(--line);
+      transition: all .3s;
+      color: var(--muted);
+    }
+    .social-row a:hover {
+      color: var(--on-accent); background: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px var(--glow);
+      border-color: var(--accent);
+    }
+    .social-row svg { width: 20px; height: 20px; fill: currentColor; }
 
-/* ============ REVEAL + MOTION ============ */
-.rv{opacity:0;transform:translateY(18px);transition:.7s cubic-bezier(.2,.8,.2,1)}
-.rv.in{opacity:1;transform:none}
+    /* ===== HERO PORTRAIT — 3D CARD FLIP ===== */
+    .hero-visual {
+      perspective: 1400px;
+      display: grid; place-items: center;
+      justify-self: center;
+    }
+    .flip-card {
+      width: min(380px, 88vw);
+      aspect-ratio: 4/5;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.9s cubic-bezier(.4,.2,.2,1);
+      cursor: pointer;
+    }
+    .flip-card:hover, .flip-card.flipped { transform: rotateY(180deg); }
+    .flip-face {
+      position: absolute; inset: 0;
+      border-radius: 24px; overflow: hidden;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border: 1px solid var(--line);
+      box-shadow: 0 30px 60px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.03);
+    }
+    .flip-front {
+      background: linear-gradient(145deg, var(--surface), var(--surface-2));
+      display: grid; place-items: center;
+    }
+    .flip-front .avatar {
+      width: 70%; aspect-ratio: 1; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3));
+      display: grid; place-items: center;
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(3rem, 8vw, 5rem);
+      color: var(--on-accent);
+      box-shadow: 0 20px 50px var(--glow);
+      position: relative;
+    }
+    .flip-front .avatar::after {
+      content: ""; position: absolute; inset: -12px;
+      border-radius: 50%; border: 2px dashed var(--accent-2);
+      animation: spin 20s linear infinite;
+      opacity: .5;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .flip-front .front-label {
+      position: absolute; bottom: 24px; left: 24px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+      color: var(--muted); letter-spacing: 0.05em;
+    }
+    .flip-back {
+      transform: rotateY(180deg);
+      background: linear-gradient(160deg, var(--surface-2), var(--surface));
+      padding: 32px;
+      display: flex; flex-direction: column; justify-content: center;
+      gap: 18px;
+    }
+    .flip-back h3 { font-size: 1.4rem; color: var(--accent-2); margin-bottom: 4px; }
+    .flip-back .back-line {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.88rem; color: var(--muted);
+      padding: 8px 0; border-bottom: 1px solid var(--line);
+    }
+    .flip-back .back-line:last-child { border-bottom: none; }
+    .flip-back .back-line b {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent); font-weight: 500; min-width: 60px;
+      font-size: 0.78rem;
+    }
+    .flip-hint {
+      position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
+      font-size: 0.78rem; color: var(--muted); white-space: nowrap;
+      font-family: 'JetBrains Mono', monospace;
+    }
 
-/* ============ RESPONSIVE ============ */
-@media(max-width:860px){
-  .hero .wrap,.about,.contact{grid-template-columns:1fr}
-  .portrait{order:-1;width:min(240px,60%)}
-  .burger{display:block}
-  nav ul{position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;background:var(--bg2);
-    border-bottom:1px solid var(--line);max-height:0;overflow:hidden;transition:max-height .35s}
-  nav ul.open{max-height:420px}
-  nav ul li a{display:block;padding:14px 4%}
-  section{padding:72px 0}
-  .pm{padding:26px 20px}.paper{padding:28px 22px}
-}
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}*{transition-duration:.01s!important}
-  .rv{opacity:1;transform:none}
-}
-</style>
+    /* ===== MARQUEE ===== */
+    .marquee {
+      padding: 24px 0; border-block: 1px solid var(--line);
+      background: var(--bg2); overflow: hidden;
+    }
+    .marquee-track {
+      display: flex; gap: 40px;
+      animation: scroll 30s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-track span {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 1.1rem; color: var(--muted);
+      display: inline-flex; align-items: center; gap: 40px;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .marquee-track span::after {
+      content: "◆"; color: var(--accent); font-size: 0.7rem;
+    }
+    @keyframes scroll { to { transform: translateX(-50%); } }
+
+    /* ===== SIGNATURE SCROLL SECTION ===== */
+    .sigwrap {
+      height: 300vh;
+      padding: 0;
+      position: relative;
+      border-bottom: 1px solid var(--line);
+      background: var(--bg2);
+    }
+    .sigstick {
+      position: sticky; top: 0; height: 100vh;
+      display: grid; place-content: center; justify-items: center;
+      gap: 24px; text-align: center;
+      perspective: 1200px;
+    }
+    .sigstick .sig-heading {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+    .sigstick .sig-heading .accent {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .sigstick .sig {
+      transform: rotateX(8deg) rotateY(-4deg);
+      transform-style: preserve-3d;
+      transition: transform .5s ease;
+    }
+    .sigstick .sig:hover {
+      transform: rotateX(0deg) rotateY(0deg) scale(1.03);
+    }
+    .sigstick svg {
+      width: min(720px, 88vw); height: auto;
+      overflow: visible;
+      filter: drop-shadow(0 20px 40px var(--glow));
+    }
+    .sigstick .sig path {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .sigstick small {
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+    .progress {
+      width: 200px; height: 6px;
+      border-radius: 100px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      position: relative; overflow: hidden;
+    }
+    .progress i {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transform-origin: left;
+      transform: scaleX(0);
+      border-radius: 100px;
+      box-shadow: 0 0 12px var(--glow);
+    }
+
+    /* ===== SECTION HEADINGS ===== */
+    .sec-head { margin-bottom: 56px; }
+    .sec-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem; color: var(--accent-2);
+      letter-spacing: 0.15em; text-transform: uppercase;
+      margin-bottom: 12px; display: block;
+    }
+    .sec-head h2 .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .sec-head p { color: var(--muted); max-width: 60ch; margin-top: 16px; font-size: 1.05rem; }
+
+    /* ===== ABOUT ===== */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      align-items: start;
+    }
+    .about-text p { color: var(--muted); margin-bottom: 18px; font-size: 1.02rem; }
+    .about-text p strong { color: var(--ink); font-weight: 600; }
+    .enjoy-list { list-style: none; display: grid; gap: 14px; margin-top: 8px; }
+    .enjoy-list li {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px; border-radius: 12px;
+      background: var(--surface); border: 1px solid var(--line);
+      font-size: 0.95rem;
+      transition: all .3s;
+    }
+    .enjoy-list li:hover {
+      transform: translateX(6px);
+      border-color: var(--accent);
+      background: var(--surface-2);
+    }
+    .enjoy-list .check {
+      width: 26px; height: 26px; border-radius: 8px;
+      background: var(--accent); color: var(--on-accent);
+      display: grid; place-items: center; font-size: 0.8rem;
+      flex-shrink: 0; font-weight: 700;
+    }
+
+    /* ===== SKILLS ===== */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+    .skill-card {
+      padding: 28px; border-radius: var(--radius);
+      background: var(--surface); border: 1px solid var(--line);
+      transition: all .35s cubic-bezier(.2,.8,.2,1);
+      position: relative; overflow: hidden;
+    }
+    .skill-card::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .4s;
+    }
+    .skill-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px var(--glow);
+    }
+    .skill-card:hover::before { transform: scaleX(1); }
+    .skill-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: var(--surface-2); border: 1px solid var(--line);
+      display: grid; place-items: center; font-size: 1.4rem;
+      margin-bottom: 18px;
+    }
+    .skill-card h3 { font-size: 1.15rem; margin-bottom: 16px; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; padding: 5px 12px;
+      border-radius: 100px; background: var(--surface-2);
+      color: var(--muted); border: 1px solid var(--line);
+      transition: all .25s;
+    }
+    .skill-card:hover .skill-tag {
+      border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+      color: var(--ink);
+    }
+
+    /* ===== PROJECTS ===== */
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 26px;
+    }
+    .proj-card {
+      padding: 30px; border-radius: var(--radius);
+      background: var(--surface); border: 1px solid var(--line);
+      cursor: pointer; transition: all .4s cubic-bezier(.2,.8,.2,1);
+      display: flex; flex-direction: column; gap: 16px;
+      position: relative; overflow: hidden;
+      text-align: left;
+    }
+    .proj-card::after {
+      content: "→"; position: absolute; top: 24px; right: 24px;
+      font-size: 1.3rem; color: var(--muted);
+      transition: all .35s;
+    }
+    .proj-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--accent);
+      box-shadow: 0 30px 60px var(--glow);
+      background: var(--surface-2);
+    }
+    .proj-card:hover::after {
+      color: var(--accent-2);
+      transform: translate(4px, -4px);
+    }
+    .proj-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; color: var(--accent-2);
+      letter-spacing: 0.1em;
+    }
+    .proj-card h3 { font-size: 1.25rem; padding-right: 30px; }
+    .proj-card .proj-desc { color: var(--muted); font-size: 0.92rem; }
+    .proj-card .proj-problem {
+      font-size: 0.85rem; color: var(--muted);
+      padding: 12px 14px; border-radius: 10px;
+      background: var(--surface-2);
+      border-left: 3px solid var(--accent-3);
+    }
+    .proj-card .proj-problem b { color: var(--accent-3); }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+    .proj-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; padding: 4px 10px;
+      border-radius: 6px; background: var(--surface-2);
+      color: var(--muted); border: 1px solid var(--line);
+    }
+
+    /* ===== EXPERIENCE ===== */
+    .timeline { position: relative; padding-left: 40px; }
+    .timeline::before {
+      content: ""; position: absolute; left: 12px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(180deg, var(--accent), var(--accent-2), transparent);
+    }
+    .timeline-item { position: relative; margin-bottom: 48px; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-item::before {
+      content: ""; position: absolute; left: -34px; top: 6px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--accent); border: 3px solid var(--bg);
+      box-shadow: 0 0 0 3px var(--accent);
+    }
+    .timeline-item h3 { font-size: 1.35rem; margin-bottom: 6px; }
+    .timeline-item .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem; color: var(--accent-2); margin-bottom: 16px;
+    }
+    .timeline-item ul { list-style: none; display: grid; gap: 8px; }
+    .timeline-item li {
+      color: var(--muted); font-size: 0.94rem;
+      padding-left: 22px; position: relative;
+    }
+    .timeline-item li::before {
+      content: "▸"; position: absolute; left: 0;
+      color: var(--accent); font-size: 0.9rem;
+    }
+
+    /* ===== BUILD SECTION ===== */
+    .build-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    .build-card {
+      padding: 26px; border-radius: var(--radius);
+      background: var(--surface); border: 1px solid var(--line);
+      transition: all .3s;
+    }
+    .build-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent-2);
+      box-shadow: 0 20px 40px var(--glow-2);
+    }
+    .build-card .build-icon { font-size: 1.8rem; margin-bottom: 14px; display: block; }
+    .build-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+    .build-card p { color: var(--muted); font-size: 0.88rem; }
+
+    /* ===== CONTACT ===== */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+    .contact-info h2 { margin-bottom: 20px; }
+    .contact-info > p { color: var(--muted); margin-bottom: 32px; font-size: 1.02rem; }
+    .contact-list { list-style: none; display: grid; gap: 16px; }
+    .contact-list li {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 20px; border-radius: 14px;
+      background: var(--surface); border: 1px solid var(--line);
+      transition: all .3s;
+    }
+    .contact-list li:hover {
+      border-color: var(--accent);
+      transform: translateX(6px);
+      background: var(--surface-2);
+    }
+    .contact-list .ico {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--surface-2); border: 1px solid var(--line);
+      display: grid; place-items: center; flex-shrink: 0;
+      font-size: 1rem;
+    }
+    .contact-list .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .contact-list .val { font-size: 0.95rem; font-weight: 500; }
+
+    /* ===== FORM ===== */
+    .contact-form {
+      padding: 36px; border-radius: var(--radius);
+      background: var(--surface); border: 1px solid var(--line);
+      display: grid; gap: 18px; position: relative;
+    }
+    .contact-form h3 { font-size: 1.4rem; margin-bottom: 4px; }
+    .contact-form .form-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 8px; }
+    .field { display: grid; gap: 6px; }
+    .field label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .field input, .field textarea {
+      width: 100%; padding: 14px 16px;
+      border-radius: 12px; border: 1px solid var(--line);
+      background: var(--bg2); color: var(--ink);
+      font: inherit; font-size: 0.95rem;
+      transition: all .25s;
+    }
+    .field input:focus, .field textarea:focus {
+      outline: none; border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--glow);
+    }
+    .field textarea { resize: vertical; min-height: 120px; font-family: inherit; }
+    .hp { position: absolute; left: -9999px; opacity: 0; }
+    .form-msg { font-size: 0.88rem; min-height: 1.3em; color: #ef4444; }
+    .form-success {
+      text-align: center; padding: 20px 0;
+      display: none;
+    }
+    .form-success.show { display: block; }
+    .form-success .check-circle {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--accent); color: var(--on-accent);
+      display: grid; place-items: center; margin: 0 auto 16px;
+      font-size: 2rem;
+      animation: pop .5s cubic-bezier(.2,1.4,.5,1);
+    }
+    @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+    .form-success h3 { color: var(--accent-2); margin-bottom: 8px; }
+    .form-success p { color: var(--muted); font-size: 0.92rem; margin-bottom: 20px; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 60px 0 30px; border-top: 1px solid var(--line);
+      background: var(--bg2);
+    }
+    .foot-grid {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 24px;
+    }
+    .foot-brand { display: flex; align-items: center; gap: 12px; }
+    .foot-brand .logo-mark { width: 40px; height: 40px; }
+    .foot-brand h3 { font-size: 1.1rem; }
+    .foot-brand p { font-size: 0.8rem; color: var(--muted); }
+    .foot-copy {
+      color: var(--muted); font-size: 0.82rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .foot-sig {
+      width: min(200px, 50vw);
+      margin: 0 auto 20px;
+    }
+    .foot-sig svg { width: 100%; height: auto; }
+    .foot-sig path {
+      fill: none; stroke: var(--accent); stroke-width: 6;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    /* ===== THEME SWITCHER ===== */
+    .theme-panel {
+      position: fixed; bottom: 24px; right: 24px; z-index: 200;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+    }
+    .theme-toggle {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--surface); border: 1px solid var(--line);
+      color: var(--ink); font-size: 1.3rem; cursor: pointer;
+      display: grid; place-items: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,.3);
+      transition: all .3s;
+    }
+    .theme-toggle:hover { transform: scale(1.1) rotate(30deg); border-color: var(--accent); }
+    .theme-drawer {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+      padding: 12px; border-radius: 16px;
+      background: var(--surface); border: 1px solid var(--line);
+      box-shadow: 0 20px 50px rgba(0,0,0,.4);
+      max-height: 0; overflow: hidden; opacity: 0;
+      transition: all .35s cubic-bezier(.2,.8,.2,1);
+      transform-origin: bottom right;
+    }
+    .theme-panel.open .theme-drawer {
+      max-height: 200px; opacity: 1; padding: 12px;
+    }
+    .theme-swatch {
+      width: 36px; height: 36px; border-radius: 10px;
+      cursor: pointer; border: 2px solid transparent;
+      transition: all .25s;
+      position: relative;
+    }
+    .theme-swatch:hover { transform: scale(1.15); }
+    .theme-swatch.active {
+      border-color: var(--ink);
+      box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--ink);
+    }
+
+    /* ===== MODAL ===== */
+    .modal {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,.7); backdrop-filter: blur(8px);
+      display: grid; place-items: center; padding: 20px;
+      opacity: 0; visibility: hidden; transition: all .35s;
+    }
+    .modal.show { opacity: 1; visibility: visible; }
+    .modal-content {
+      width: min(820px, 100%); max-height: 88vh; overflow-y: auto;
+      background: var(--bg2); border: 1px solid var(--line);
+      border-radius: 20px; padding: 40px;
+      transform: translateY(30px) scale(.96);
+      transition: transform .4s cubic-bezier(.2,.8,.2,1);
+      position: relative;
+    }
+    .modal.show .modal-content { transform: none; }
+    .modal-close {
+      position: absolute; top: 20px; right: 20px;
+      width: 40px; height: 40px; border-radius: 12px;
+      background: var(--surface); border: 1px solid var(--line);
+      color: var(--ink); cursor: pointer; font-size: 1.1rem;
+      display: grid; place-items: center;
+      transition: all .25s;
+    }
+    .modal-close:hover { background: var(--accent); color: var(--on-accent); transform: rotate(90deg); }
+    .modal-content h2 { font-size: 1.8rem; margin-bottom: 8px; }
+    .modal-content .modal-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem; color: var(--accent-2); margin-bottom: 20px;
+    }
+    .modal-content h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin: 24px 0 10px;
+    }
+    .modal-content p, .modal-content li { color: var(--muted); font-size: 0.94rem; }
+    .modal-content ul { padding-left: 20px; }
+    .modal-content ul li { margin-bottom: 6px; }
+    .modal-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .modal-tag-chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; padding: 6px 14px;
+      border-radius: 100px; background: var(--surface);
+      border: 1px solid var(--line); color: var(--ink);
+    }
+
+    /* ===== REVEAL ANIMATION ===== */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s, transform .7s cubic-bezier(.2,.8,.2,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .hero .wrap { grid-template-columns: 1fr; gap: 50px; }
+      .hero-visual { order: -1; }
+      .flip-card { width: min(300px, 75vw); }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .burger { display: grid; place-items: center; }
+      nav ul {
+        position: fixed; top: 80px; left: 4%; right: 4%;
+        flex-direction: column; gap: 4px;
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 16px; padding: 12px;
+        max-height: 0; overflow: hidden; opacity: 0;
+        transition: all .35s;
+        box-shadow: 0 20px 50px rgba(0,0,0,.4);
+      }
+      nav ul.open { max-height: 500px; opacity: 1; padding: 12px; }
+      nav ul li { width: 100%; }
+      nav ul a { display: block; padding: 14px 18px; border-radius: 10px; }
+      section { padding: 70px 0; }
+      .modal-content { padding: 28px 22px; }
+      .theme-panel { bottom: 16px; right: 16px; }
+      .sigwrap { height: 200vh; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
 </head>
-<body>
+<body data-theme="0">
 
-<!-- ============ NAVIGATION ============ -->
-<header>
-  <nav class="wrap" aria-label="Main">
-    <a href="#home" class="logo" aria-label="Divakar Balaji home">&lt;DB/&gt;</a>
-    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
-    <ul id="menu">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#" data-resume>Resume</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-</header>
+  <div id="progress-bar"></div>
 
-<main>
-<!-- ============ HERO ============ -->
-<section class="hero" id="home">
-  <div class="bg3d" aria-hidden="true"><div class="floor"></div><canvas id="net"></canvas><div class="scene" id="scene"></div></div>
-  <div class="wrap">
-    <div>
-      <h1>Divakar<br>Balaji</h1>
-      <p class="role">Web Developer | Backend Developer</p>
-      <p>I build real-world web systems and solve practical problems: admissions, fees, payments, attendance and search. Backend first, with the frontend to finish the job.</p>
-      <div class="cta">
-        <a class="btn primary" href="#projects">View My Projects</a>
-        <button class="btn" data-resume>View My Resume</button>
-        <a class="btn" href="#contact">Contact Me</a>
+  <!-- ===== NAV ===== -->
+  <header id="header">
+    <nav class="wrap">
+      <a href="#home" class="logo">
+        <span class="logo-mark">DB</span>
+        <span>Divakar<span style="color:var(--accent-2)">.</span></span>
+      </a>
+      <button class="burger" id="burger" aria-label="Menu">☰</button>
+      <ul id="menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="home">
+      <div class="wrap">
+        <div class="hero-text">
+          <div class="badge"><span class="dot"></span> Open to internships &amp; junior roles</div>
+          <h1>
+            Building <span class="gradient">backend systems</span><br>
+            that solve real problems.
+          </h1>
+          <p class="role" id="role">Web Developer | Backend Developer</p>
+          <p class="intro">
+            I'm Divakar Balaji — a web developer focused on backend engineering.
+            I build admissions, fees, payments, attendance and AI search systems
+            that real institutions use every day.
+          </p>
+          <div class="cta-group">
+            <a href="#projects" class="btn btn-primary">View Projects →</a>
+            <button class="btn btn-ghost" data-resume>View Resume</button>
+          </div>
+          <div class="social-row">
+            <a href="https://github.com/divakarbalaji10-spec" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+            <a href="https://www.linkedin.com/in/divakar-balaji-8233b7321" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg></a>
+          </div>
+        </div>
+
+        <!-- 3D FLIP CARD -->
+        <div class="hero-visual">
+          <div class="flip-card" id="flipCard">
+            <div class="flip-face flip-front">
+              <div class="avatar">DB</div>
+              <span class="front-label">// hover to flip</span>
+            </div>
+            <div class="flip-face flip-back">
+              <h3>Divakar Balaji</h3>
+              <div class="back-line"><b>ROLE</b> Backend Developer</div>
+              <div class="back-line"><b>STACK</b> PHP · MySQL · JS</div>
+              <div class="back-line"><b>FOCUS</b> Education Systems</div>
+              <div class="back-line"><b>EXP</b> 2 years internship</div>
+              <div class="back-line"><b>LOC</b> Erode, India</div>
+            </div>
+            <span class="flip-hint">↻ hover / tap to flip</span>
+          </div>
+        </div>
       </div>
-      <div class="social">
-        <a href="https://github.com/divakarbalaji10-spec" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
-        <a href="https://www.linkedin.com/in/divakar-balaji-8233b7321" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg></a>
+    </section>
+
+    <!-- ===== MARQUEE ===== -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>PHP</span><span>MySQL</span><span>REST APIs</span><span>JavaScript</span>
+        <span>Vector Search</span><span>AWS</span><span>Payments</span><span>Attendance Sync</span>
+        <span>PHP</span><span>MySQL</span><span>REST APIs</span><span>JavaScript</span>
+        <span>Vector Search</span><span>AWS</span><span>Payments</span><span>Attendance Sync</span>
       </div>
     </div>
-    <div class="portrait"><img src="assets/profile.jpg" alt="Portrait of Divakar Balaji" width="600" height="750"></div>
-  </div>
-</section>
 
-<!-- ============ SIGNATURE: written as you scroll ============ -->
-<section class="sigwrap" id="signature" aria-label="Handwritten signature">
-  <div class="sigstick">
-    <div class="sig" data-sig="scroll"></div>
-    <div class="progress"><i id="sigbar"></i></div>
-    <small>Keep scrolling. It signs as you go.</small>
-  </div>
-</section>
+    <!-- ===== SIGNATURE SCROLL ANIMATION ===== -->
+    <section class="sigwrap" id="signature" aria-label="Handwritten signature">
+      <div class="sigstick">
+        <div class="sig-heading">My <span class="accent">signature</span></div>
+        <div class="sig" data-sig="scroll"></div>
+        <div class="progress"><i id="sigbar"></i></div>
+        <small>// keep scrolling — the signature draws itself</small>
+      </div>
+    </section>
 
-<!-- ============ ABOUT ============ -->
-<section id="about"><div class="wrap about rv">
-  <div>
-    <h2>About me</h2>
-    <p class="lead">I'm a web developer with a strong interest in backend development. My main strength is the backend, but I also work with frontend technologies and build complete end-to-end web systems.</p>
-    <p class="lead" style="margin-top:14px">I believe mistakes help me learn and improve, and I'm happiest when I'm learning something new.</p>
-  </div>
-  <div>
-    <h3 style="font-size:1.5rem;color:var(--gold)">What I enjoy</h3>
-    <ul>
-      <li>Building real-world applications</li>
-      <li>Solving technical problems</li>
-      <li>Learning from mistakes</li>
-      <li>Improving my development skills</li>
-      <li>Working on practical systems, not only demo projects</li>
-    </ul>
-  </div>
-</div></section>
+    <!-- ===== ABOUT ===== -->
+    <section id="about">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="sec-tag">// 01 — About</span>
+          <h2>Get to know <span class="highlight">me</span></h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-text reveal">
+            <p>
+              I'm a web developer with a strong interest in <strong>backend development</strong>.
+              My main strength is the backend, but I also work with frontend technologies
+              and build complete end-to-end web systems.
+            </p>
+            <p>
+              I believe mistakes help me learn and improve, and I'm happiest when
+              I'm learning something new. I focus on practical systems that solve
+              real problems — not just demo projects.
+            </p>
+          </div>
+          <ul class="enjoy-list reveal">
+            <li><span class="check">✓</span> Building real-world applications</li>
+            <li><span class="check">✓</span> Solving technical problems</li>
+            <li><span class="check">✓</span> Learning from mistakes</li>
+            <li><span class="check">✓</span> Improving my development skills</li>
+            <li><span class="check">✓</span> Working on practical systems</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-<!-- ============ SKILLS ============ -->
-<section id="skills"><div class="wrap rv">
-  <h2>Skills</h2>
-  <div class="grid skills">
-    <div class="box"><h3>Frontend</h3><div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span></div></div>
-    <div class="box"><h3>Backend</h3><div class="chips"><span class="chip g">PHP</span><span class="chip g">MySQL</span><span class="chip g">API Development</span><span class="chip g">Backend Architecture</span></div></div>
-    <div class="box"><h3>Tools &amp; Technologies</h3><div class="chips"><span class="chip">Git</span><span class="chip">AWS</span><span class="chip">Cloudflare</span><span class="chip">Apache</span></div></div>
-  </div>
-</div></section>
+    <!-- ===== SKILLS ===== -->
+    <section id="skills">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="sec-tag">// 02 — Skills</span>
+          <h2>My <span class="highlight">toolbox</span></h2>
+          <p>Technologies I use to design, build and ship complete web systems.</p>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-card reveal">
+            <div class="skill-icon">🎨</div>
+            <h3>Frontend</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">HTML</span>
+              <span class="skill-tag">CSS</span>
+              <span class="skill-tag">JavaScript</span>
+            </div>
+          </div>
+          <div class="skill-card reveal">
+            <div class="skill-icon">⚙️</div>
+            <h3>Backend</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">PHP</span>
+              <span class="skill-tag">MySQL</span>
+              <span class="skill-tag">API Development</span>
+              <span class="skill-tag">Architecture</span>
+            </div>
+          </div>
+          <div class="skill-card reveal">
+            <div class="skill-icon">🛠️</div>
+            <h3>Tools &amp; Tech</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">AWS</span>
+              <span class="skill-tag">Cloudflare</span>
+              <span class="skill-tag">Apache</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<!-- ============ PROJECTS ============ -->
-<section id="projects"><div class="wrap rv">
-  <h2>Projects</h2>
-  <p class="lead">Systems built for real users. Open any project for the problem, the solution and my part in it.</p>
-  <div class="grid projects" id="projectGrid"></div>
-</div></section>
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="sec-tag">// 03 — Projects</span>
+          <h2>Things I've <span class="highlight">built</span></h2>
+          <p>Systems built for real users. Open any project for the problem, the solution and my part in it.</p>
+        </div>
+        <div class="projects-grid" id="projectGrid"></div>
+      </div>
+    </section>
 
-<!-- ============ EXPERIENCE ============ -->
-<section id="experience"><div class="wrap rv">
-  <h2>Experience</h2>
-  <div class="exp">
-    <h3>SkyneTBee Artificial Intelligence Enterprise Pvt Ltd</h3>
-    <p class="meta">Internship · 2 years of hands-on experience · [Exact dates: add here]</p>
-    <ul>
-      <li>Developed and maintained student admission and member management modules (PHP, MySQL, JavaScript, HTML, CSS).</li>
-      <li>Built online fee payment, receipt generation and fee management.</li>
-      <li>Built examination, marks, performance and result management modules.</li>
-      <li>Developed cash book and ledger management modules, and Student ID card generation.</li>
-      <li>Built backend services that fetch attendance data from biometric servers, process and sync it, and store it in MySQL for the Sky Attendance Android app.</li>
-      <li>Developed the student house election system and the Snap Talk evaluation system.</li>
-      <li>Implemented an AI vector search and matching system for ranking relevant pages.</li>
-      <li>Worked with AWS services for deployment and storage.</li>
-    </ul>
-  </div>
-  <div class="exp" style="margin-top:28px">
-    <h3>B.Sc. Information Technology</h3>
-    <p class="meta">RD National College of Arts &amp; Science, Erode · 2024 – 2027 (expected graduation 2027)</p>
-  </div>
-</div></section>
+    <!-- ===== EXPERIENCE ===== -->
+    <section id="experience">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="sec-tag">// 04 — Experience</span>
+          <h2>Where I've <span class="highlight">worked</span></h2>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <h3>SkyneTBee Artificial Intelligence Enterprise Pvt Ltd</h3>
+            <p class="meta">Internship · 2 years hands-on experience</p>
+            <ul>
+              <li>Developed and maintained student admission and member management modules (PHP, MySQL, JavaScript, HTML, CSS).</li>
+              <li>Built online fee payment, receipt generation and fee management.</li>
+              <li>Built examination, marks, performance and result management modules.</li>
+              <li>Developed cash book, ledger management and Student ID card generation.</li>
+              <li>Built backend services that sync attendance from biometric servers to MySQL for the Sky Attendance Android app.</li>
+              <li>Developed the student house election system and the Snap Talk evaluation system.</li>
+              <li>Implemented an AI vector search and matching system for ranking relevant pages.</li>
+              <li>Worked with AWS services for deployment and storage.</li>
+            </ul>
+          </div>
+          <div class="timeline-item reveal">
+            <h3>B.Sc. Information Technology</h3>
+            <p class="meta">RD National College of Arts &amp; Science, Erode · 2024 – 2027 (expected)</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<!-- ============ WHAT I BUILD ============ -->
-<section id="build"><div class="wrap rv">
-  <h2>What I build</h2>
-  <div class="grid build">
-    <div class="box"><h3>Backend Systems</h3><p>Database-driven applications, APIs and business workflows.</p></div>
-    <div class="box"><h3>Education Platforms</h3><p>Admission, fees, attendance, marks and student management.</p></div>
-    <div class="box"><h3>Management Systems</h3><p>Custom administrative and workflow-based applications.</p></div>
-    <div class="box"><h3>AI-Powered Search</h3><p>Vector-based search and matching systems.</p></div>
-    <div class="box"><h3>Payment Systems</h3><p>Payment integration, transaction tracking and receipt generation.</p></div>
-  </div>
-</div></section>
+    <!-- ===== WHAT I BUILD ===== -->
+    <section id="build">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="sec-tag">// 05 — Services</span>
+          <h2>What I <span class="highlight">build</span></h2>
+        </div>
+        <div class="build-grid">
+          <div class="build-card reveal"><span class="build-icon">🗄️</span><h3>Backend Systems</h3><p>Database-driven applications, APIs and business workflows.</p></div>
+          <div class="build-card reveal"><span class="build-icon">🎓</span><h3>Education Platforms</h3><p>Admission, fees, attendance, marks and student management.</p></div>
+          <div class="build-card reveal"><span class="build-icon">📊</span><h3>Management Systems</h3><p>Custom administrative and workflow-based applications.</p></div>
+          <div class="build-card reveal"><span class="build-icon">🔍</span><h3>AI-Powered Search</h3><p>Vector-based search and matching systems.</p></div>
+          <div class="build-card reveal"><span class="build-icon">💳</span><h3>Payment Systems</h3><p>Payment integration, transaction tracking and receipt generation.</p></div>
+        </div>
+      </div>
+    </section>
 
-<!-- ============ CONTACT ============ -->
-<section id="contact"><div class="wrap contact rv">
-  <div>
-    <h2>Let's Build Something Together.</h2>
-    <p class="lead">Have a system in mind, or want to talk about backend work? Send a message.</p>
-    <ul>
-      <li><span>Email</span><a href="mailto:divakarbalaji10@gmail.com">divakarbalaji10@gmail.com</a></li>
-      <li><span>Phone</span><a href="tel:+916380054384">+91 63800 54384</a></li>
-      <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/divakar-balaji-8233b7321" target="_blank" rel="noopener">divakar-balaji-8233b7321</a></li>
-      <li><span>GitHub</span><a href="https://github.com/divakarbalaji10-spec" target="_blank" rel="noopener">divakarbalaji10-spec</a></li>
-    </ul>
+    <!-- ===== CONTACT ===== -->
+    <section id="contact">
+      <div class="wrap">
+        <div class="contact-grid">
+          <div class="contact-info reveal">
+            <span class="sec-tag">// 06 — Contact</span>
+            <h2>Let's build <span class="highlight">together.</span></h2>
+            <p>Have a system in mind, or want to talk about backend work? Send a message.</p>
+            <ul class="contact-list">
+              <li>
+                <span class="ico">✉️</span>
+                <div><div class="label">Email</div><div class="val">divakarbalaji10@gmail.com</div></div>
+              </li>
+              <li>
+                <span class="ico">📞</span>
+                <div><div class="label">Phone</div><div class="val">+91 63800 54384</div></div>
+              </li>
+              <li>
+                <span class="ico">💼</span>
+                <div><div class="label">LinkedIn</div><div class="val">divakar-balaji-8233b7321</div></div>
+              </li>
+              <li>
+                <span class="ico">🐙</span>
+                <div><div class="label">GitHub</div><div class="val">divakarbalaji10-spec</div></div>
+              </li>
+            </ul>
+          </div>
+
+          <form class="contact-form reveal" id="contactForm">
+            <h3>Send a message</h3>
+            <p class="form-sub">I usually reply within a day.</p>
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" placeholder="Jane Doe" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="email">Your email</label>
+              <input id="email" name="email" type="email" placeholder="jane@example.com" required autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
+            </div>
+            <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off">
+            <p class="form-msg" id="formMsg"></p>
+            <button type="submit" class="btn btn-primary" id="sendBtn">Send message →</button>
+
+            <div class="form-success" id="formSuccess">
+              <div class="check-circle">✓</div>
+              <h3>Message sent!</h3>
+              <p>Thanks for reaching out. I'll get back to you soon.</p>
+              <button type="button" class="btn btn-ghost" id="sendAnother">Send another</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-sig sig" data-sig="footer"></div>
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <span class="logo-mark">DB</span>
+          <div>
+            <h3>Divakar Balaji</h3>
+            <p>Web Developer | Backend Developer</p>
+          </div>
+        </div>
+        <p class="foot-copy">© 2026 · built with care</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== THEME SWITCHER ===== -->
+  <div class="theme-panel" id="themePanel">
+    <div class="theme-drawer" id="themeDrawer">
+      <div class="theme-swatch active" data-theme="0" style="background:linear-gradient(135deg,#0b0f19,#6c5ce7,#00d2d3);" title="Deep Aurora"></div>
+      <div class="theme-swatch" data-theme="1" style="background:linear-gradient(135deg,#faf6f0,#c2410c,#0f766e);" title="Warm Paper"></div>
+      <div class="theme-swatch" data-theme="2" style="background:linear-gradient(135deg,#1a1a2e,#e94560,#f5c542);" title="Midnight Berry"></div>
+      <div class="theme-swatch" data-theme="3" style="background:linear-gradient(135deg,#f0f7f4,#0d9488,#7c3aed);" title="Mint Violet"></div>
+      <div class="theme-swatch" data-theme="4" style="background:linear-gradient(135deg,#0f0f0f,#fbbf24,#f97316);" title="Amber Dark"></div>
+      <div class="theme-swatch" data-theme="5" style="background:linear-gradient(135deg,#fdf2f8,#ec4899,#8b5cf6);" title="Pink Dream"></div>
+      <div class="theme-swatch" data-theme="6" style="background:linear-gradient(135deg,#0c1a2b,#38bdf8,#34d399);" title="Ocean Sky"></div>
+      <div class="theme-swatch" data-theme="7" style="background:linear-gradient(135deg,#fefae0,#dda15e,#606c38);" title="Sand Olive"></div>
+      <div class="theme-swatch" data-theme="8" style="background:linear-gradient(135deg,#18181b,#a78bfa,#f0abfc);" title="Neon Lilac"></div>
+      <div class="theme-swatch" data-theme="9" style="background:linear-gradient(135deg,#f5f5f4,#ea580c,#0891b2);" title="Coral Blue"></div>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Change theme">🎨</button>
   </div>
-  <div class="mail" id="mail">
-    <form id="contactForm" class="mailform">
-      <input name="name" placeholder="Your name" required aria-label="Your name" autocomplete="name">
-      <input name="email" type="email" placeholder="Your email" required aria-label="Your email" autocomplete="email">
-      <textarea name="message" rows="5" placeholder="Your message" required aria-label="Your message"></textarea>
-      <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <p class="fmsg" id="fmsg" role="alert"></p>
-      <button class="btn primary" id="sendBtn" type="submit">Send message</button>
-    </form>
-    <svg class="envelope" viewBox="0 0 260 170" aria-hidden="true">
-      <rect class="eb" x="1" y="1" width="258" height="168" rx="8"/>
-      <g class="env-letter"><rect class="el" x="24" y="14" width="212" height="118" rx="4"/>
-        <path class="ln" d="M42 40H218M42 58H218M42 76H170"/></g>
-      <path class="ef" d="M2 9Q2 1 10 1L130 92 250 1Q258 1 258 9V161Q258 169 250 169H10Q2 169 2 161Z"/>
-      <path class="tint" d="M2 9Q2 1 10 1L130 92 250 1Q258 1 258 9V161Q258 169 250 169H10Q2 169 2 161Z"/>
-      <g class="env-flap"><path class="ef" d="M4 2H256L130 96Z"/><path class="tint" d="M4 2H256L130 96Z"/></g>
-    </svg>
-    <p class="sending" aria-hidden="true">Sending…</p>
-    <div class="sent" role="status" aria-live="polite">
-      <svg viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="28"/><path d="M30 43l9 9 17-19"/></svg>
-      <h3>Message sent</h3>
-      <p>Thanks! I'll get back to you soon.</p>
-      <button class="btn" id="again" type="button">Send another</button>
+
+  <!-- ===== MODAL ===== -->
+  <div class="modal" id="pmodal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="modal-close" data-close aria-label="Close">✕</button>
+      <div id="pbody"></div>
     </div>
   </div>
-</div></section>
-</main>
 
-<!-- ============ FOOTER ============ -->
-<footer>
-  <div class="sig sig-foot" data-sig="footer"></div>
-  <h3 style="font-size:1.6rem">Divakar Balaji</h3>
-  <p>Web Developer | Backend Developer</p>
-  <div class="social">
-    <a href="https://github.com/divakarbalaji10-spec" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
-    <a href="https://www.linkedin.com/in/divakar-balaji-8233b7321" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg></a>
-  </div>
-  <p>© 2026 Divakar Balaji</p>
-</footer>
-
-<!-- ============ PROJECT MODAL ============ -->
-<div class="modal" id="pmodal" role="dialog" aria-modal="true" aria-labelledby="pm-title">
-  <div class="pm" style="position:relative">
-    <button class="btn x" data-close aria-label="Close">Close</button>
-    <div id="pbody"></div>
-  </div>
-</div>
-
-<!-- ============ RESUME LETTER ============ -->
-<div class="modal" id="letter" role="dialog" aria-modal="true" aria-label="Resume">
-  <div class="stage">
-    <div class="paper">
-      <div class="crease"></div><div class="crease b"></div><div class="seal">DB</div>
+  <!-- ===== RESUME MODAL ===== -->
+  <div class="modal" id="resumeModal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="modal-close" data-close aria-label="Close">✕</button>
       <h2>Divakar B</h2>
-      <p class="sub">Full-Stack Web Developer | PHP Backend Developer</p>
-      <p class="hint">↓ Scroll down this letter to sign it</p>
+      <p class="modal-tag">Full-Stack Web Developer | PHP Backend Developer</p>
+
       <h4>Objective</h4>
       <p>To keep improving my technical skills, learn new technologies and grow into a better developer who contributes to the company's growth.</p>
+
       <h4>Experience</h4>
-      <p><strong>SkyneTBee AI Enterprise Pvt Ltd</strong>: Internship, 2 years hands-on. Admissions, fees, exams and results, attendance sync, house elections, Snap Talk, AI vector search, AWS deployment.</p>
+      <p><strong>SkyneTBee AI Enterprise Pvt Ltd</strong> — Internship, 2 years hands-on. Admissions, fees, exams and results, attendance sync, house elections, Snap Talk, AI vector search, AWS deployment.</p>
+
       <h4>Skills</h4>
       <p>PHP, JavaScript, SQL, HTML5, CSS3 · MySQL, Microsoft SQL Server · REST APIs · VS Code, FileZilla, phpMyAdmin, SSMS</p>
+
       <h4>Education</h4>
       <p>B.Sc. Information Technology, RD National College of Arts &amp; Science, Erode (2024–2027)</p>
-      <h4>Selected projects</h4>
-      <ul><li>Student House Voting &amp; Election System</li><li>Admission Management System</li><li>School Fee &amp; Payment System</li><li>Snap Talk</li><li>AI Page Vector Search</li><li>Canteen Management System</li></ul>
+
+      <h4>Selected Projects</h4>
+      <ul>
+        <li>Student House Voting &amp; Election System</li>
+        <li>Admission Management System</li>
+        <li>School Fee &amp; Payment System</li>
+        <li>Snap Talk</li>
+        <li>AI Page Vector Search</li>
+        <li>Canteen Management System</li>
+      </ul>
+
       <h4>Contact</h4>
       <p>divakarbalaji10@gmail.com · +91 6380054384<br>github.com/divakarbalaji10-spec</p>
-      <p class="close">Sincerely,</p>
-      <div class="sig" data-sig="letter"></div>
-    </div>
-    <div class="actions">
-      <a class="btn primary" href="assets/Divakar-Balaji-Resume.pdf" target="_blank" rel="noopener">View Full Resume</a>
-      <a class="btn" href="assets/Divakar-Balaji-Resume.pdf" download>Download Resume</a>
-      <button class="btn" data-close>Close</button>
     </div>
   </div>
-</div>
 
-<script>
-/* ============ PROJECT DATA (edit text here) ============ */
-const PROJECTS = [
- {name:"Student House Voting & Election Management System",
-  short:"Manages house elections end to end: candidates, student voting and results.",
-  problem:"Paper-based house elections are slow to run and hard to count accurately.",
-  solution:"A web system where admins set up the election, students vote once, and results are tallied house by house.",
-  features:["Student voting","House-wise election management","Election administration","Result management"],
-  tech:["PHP","MySQL","JavaScript","HTML","CSS"],
-  role:"Developed the web-based student house election system covering candidates, voting and results.",shots:[]},
- {name:"RD College / School Admission Management System",
-  short:"One workflow from first enquiry to a managed student record.",
-  problem:"Enquiries, admissions, fees and student records often live in separate places and fall out of sync.",
-  solution:"A connected flow: Enquiry → Admission Confirmation → Fee Management → Student/Member Management.",
-  features:["Enquiry tracking","Admission confirmation","Fee management","Student and member records","Student ID card generation"],
-  tech:["PHP","MySQL","JavaScript","HTML","CSS"],
-  role:"Developed and maintained the admission and member management modules.",shots:[]},
- {name:"School Fee Management & Payment System",
-  short:"Fee generation and online payment, with PDF receipts.",
-  problem:"Manual fee collection makes it hard to know who has paid and to issue receipts quickly.",
-  solution:"Fees are generated and calculated per student, paid online, tracked by status, and receipted automatically.",
-  features:["Fee generation","Fee calculation","Payment processing","Payment gateway integration [gateway name]","Payment status tracking","Receipt PDF generation"],
-  tech:["PHP","MySQL","JavaScript","Payment Gateway API","PDF generation"],
-  role:"Built online fee payment, receipt generation and fee management functionality.",shots:[]},
- {name:"Snap Talk",
-  short:"A student explanation and evaluation system with audio proof.",
-  problem:"Teachers need a practical way to check whether a student truly understood a topic, and keep a record of it.",
-  solution:"Teacher selects a student → student explains the topic taught → teacher evaluates → gives a star rating → audio proof is recorded.",
-  features:["Teacher assigns topics","Student explanation recording","Teacher evaluation","Star rating","Audio-based proof of participation"],
-  tech:["PHP","MySQL","JavaScript","Audio recording"],
-  role:"Developed the teacher-driven system for topics, recordings, star ratings and audio proof.",shots:[]},
- {name:"AI Page Vector Search",
-  short:"Search that matches meaning, so pages are easier to find.",
-  problem:"Keyword search misses pages when the user's words differ from the page names.",
-  solution:"Page names are converted into vectors and stored in a database. A search query becomes a vector too, is compared with stored vectors, scored for similarity, and stronger matches are shown first.",
-  features:["Page names stored as vectors","Query converted to a vector","Similarity scoring","Results ranked by match strength"],
-  tech:["Vector embeddings","MySQL","PHP / JavaScript [confirm stack]"],
-  role:"Developed the semantic search and matching system.",shots:[]},
- {name:"Canteen Management System",
-  short:"A real-world management system for canteen operations.",
-  problem:"[Describe the problem this solved]",
-  solution:"[Describe how the system works]",
-  features:["[Add feature]","[Add feature]","[Add feature]"],
-  tech:["PHP","MySQL","JavaScript [confirm]"],
-  role:"[Describe your contribution]",shots:[]}
-];
+  <script>
+    /* ====== PROJECT DATA ====== */
+    const PROJECTS = [
+      { name:"Student House Voting & Election Management System", short:"Manages house elections end to end: candidates, student voting and results.", problem:"Paper-based house elections are slow to run and hard to count accurately.", solution:"A web system where admins set up the election, students vote once, and results are tallied house by house.", features:["Student voting","House-wise election management","Election administration","Result management"], tech:["PHP","MySQL","JavaScript","HTML","CSS"], role:"Developed the web-based student house election system covering candidates, voting and results." },
+      { name:"RD College / School Admission Management System", short:"One workflow from first enquiry to a managed student record.", problem:"Enquiries, admissions, fees and student records often live in separate places and fall out of sync.", solution:"A connected flow: Enquiry → Admission Confirmation → Fee Management → Student/Member Management.", features:["Enquiry tracking","Admission confirmation","Fee management","Student and member records","Student ID card generation"], tech:["PHP","MySQL","JavaScript","HTML","CSS"], role:"Developed and maintained the admission and member management modules." },
+      { name:"School Fee Management & Payment System", short:"Fee generation and online payment, with PDF receipts.", problem:"Manual fee collection makes it hard to know who has paid and to issue receipts quickly.", solution:"Fees are generated and calculated per student, paid online, tracked by status, and receipted automatically.", features:["Fee generation","Fee calculation","Payment processing","Payment gateway integration","Payment status tracking","Receipt PDF generation"], tech:["PHP","MySQL","JavaScript","Payment Gateway API","PDF generation"], role:"Built online fee payment, receipt generation and fee management functionality." },
+      { name:"Snap Talk", short:"A student explanation and evaluation system with audio proof.", problem:"Teachers need a practical way to check whether a student truly understood a topic, and keep a record of it.", solution:"Teacher selects a student → student explains the topic taught → teacher evaluates → gives a star rating → audio proof is recorded.", features:["Teacher assigns topics","Student explanation recording","Teacher evaluation","Star rating","Audio-based proof of participation"], tech:["PHP","MySQL","JavaScript","Audio recording"], role:"Developed the teacher-driven system for topics, recordings, star ratings and audio proof." },
+      { name:"AI Page Vector Search", short:"Search that matches meaning, so pages are easier to find.", problem:"Keyword search misses pages when the user's words differ from the page names.", solution:"Page names are converted into vectors and stored in a database. A search query becomes a vector too, is compared with stored vectors, scored for similarity, and stronger matches are shown first.", features:["Page names stored as vectors","Query converted to a vector","Similarity scoring","Results ranked by match strength"], tech:["Vector embeddings","MySQL","PHP / JavaScript"], role:"Developed the semantic search and matching system." },
+      { name:"Canteen Management System", short:"A real-world management system for canteen operations.", problem:"Manual canteen management causes order errors and slow billing.", solution:"A digital system for menu management, order tracking and billing with real-time status updates.", features:["Menu management","Order tracking","Billing","Status updates"], tech:["PHP","MySQL","JavaScript"], role:"Built the management system for canteen operations." }
+    ];
 
-/* ============ SIGNATURE STROKES ============ */
-const SIG_VIEWBOX = "470 280 1480 720";
-const SIG_PATHS = [
- "M585,420 L590,490 C590,580 572,680 540,695 C505,680 495,590 520,500 C545,420 600,370 660,385 C700,400 690,450 640,520 C700,520 760,545 760,590 C755,640 680,685 600,712",
- "M883,688 L884,689",
- "M1100,925 C1020,880 975,700 980,560 C985,400 1050,300 1140,296 C1230,295 1260,390 1220,470 C1190,520 1090,540 1065,490 C1055,450 1120,430 1190,455 C1280,490 1340,560 1300,605 C1260,640 1180,640 1120,630 C1085,645 1065,690 1075,720 C1100,715 1135,640 1138,540 L1140,410",
- "M1345,568 L1346,569",
- "M1345,625 C1300,720 1200,870 1100,918",
- "M1320,740 C1320,770 1370,750 1430,690 C1480,635 1540,625 1590,640 C1615,520 1610,360 1590,342 C1570,350 1560,550 1562,700 C1562,800 1580,830 1610,790 C1670,720 1730,620 1760,625 C1800,650 1830,705 1890,690 C1930,670 1930,600 1915,555 C1895,620 1870,760 1866,985",
- "M962,912 C1200,850 1600,810 1830,805",
- "M1100,915 C1300,880 1600,820 1788,787"
-];
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const $ = (s,c=document)=>c.querySelector(s), $$ = (s,c=document)=>[...c.querySelectorAll(s)];
+    const $ = (s,c=document) => c.querySelector(s);
+    const $$ = (s,c=document) => [...c.querySelectorAll(s)];
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const sigs = $$('.sig').map(el=>{
-  el.innerHTML = `<svg viewBox="${SIG_VIEWBOX}" role="img" aria-label="Handwritten signature of Divakar Balaji">${SIG_PATHS.map(d=>`<path d="${d}"/>`).join('')}</svg>`;
-  const paths = $$('path',el);
-  const lens = paths.map(p=>Math.max(p.getTotalLength(),12));
-  const total = lens.reduce((a,b)=>a+b,0);
-  paths.forEach((p,i)=>{p.style.strokeDasharray=lens[i]+1;p.style.strokeDashoffset=lens[i]+1});
-  return {el,paths,lens,total,mode:el.dataset.sig,raf:0};
-});
-function drawSig(s,p){
-  let done = p*s.total, c = 0;
-  s.paths.forEach((path,i)=>{
-    const local = Math.min(1,Math.max(0,(done-c)/s.lens[i]));
-    path.style.strokeDashoffset = (s.lens[i]+1)*(1-local);
-    c += s.lens[i];
-  });
-}
-function playSig(s,ms=2600){
-  cancelAnimationFrame(s.raf);
-  if(reduced) return drawSig(s,1);
-  drawSig(s,0); const t0=performance.now();
-  (function tick(t){
-    const k=Math.min(1,(t-t0)/ms), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
-    drawSig(s,e); if(k<1) s.raf=requestAnimationFrame(tick);
-  })(t0);
-}
+    /* ====== SIGNATURE PATHS ====== */
+    const SIG_VIEWBOX = "470 280 1480 720";
+    const SIG_PATHS = [
+      "M585,420 L590,490 C590,580 572,680 540,695 C505,680 495,590 520,500 C545,420 600,370 660,385 C700,400 690,450 640,520 C700,520 760,545 760,590 C755,640 680,685 600,712",
+      "M883,688 L884,689",
+      "M1100,925 C1020,880 975,700 980,560 C985,400 1050,300 1140,296 C1230,295 1260,390 1220,470 C1190,520 1090,540 1065,490 C1055,450 1120,430 1190,455 C1280,490 1340,560 1300,605 C1260,640 1180,640 1120,630 C1085,645 1065,690 1075,720 C1100,715 1135,640 1138,540 L1140,410",
+      "M1345,568 L1346,569",
+      "M1345,625 C1300,720 1200,870 1100,918",
+      "M1320,740 C1320,770 1370,750 1430,690 C1480,635 1540,625 1590,640 C1615,520 1610,360 1590,342 C1570,350 1560,550 1562,700 C1562,800 1580,830 1610,790 C1670,720 1730,620 1760,625 C1800,650 1830,705 1890,690 C1930,670 1930,600 1915,555 C1895,620 1870,760 1866,985",
+      "M962,912 C1200,850 1600,810 1830,805",
+      "M1100,915 C1300,880 1600,820 1788,787"
+    ];
 
-/* ============ SCROLL-DRIVEN SIGNATURE ============ */
-const sigMain = sigs.find(s=>s.mode==='scroll'), sigFoot = sigs.find(s=>s.mode==='footer'),
-      sigLetter = sigs.find(s=>s.mode==='letter'), bar = $('#sigbar'), wrapEl = $('#signature');
-let ticking=false, smooth=0;
-function onScroll(){
-  const r = wrapEl.getBoundingClientRect();
-  const target = Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
-  smooth += (target-smooth)*(reduced?1:.12);
-  drawSig(sigMain,Math.min(1,smooth*1.08)); bar.style.transform=`scaleX(${smooth})`;
-  if(Math.abs(target-smooth)>.002) requestAnimationFrame(onScroll); else ticking=false;
-}
-addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});
-addEventListener('resize',onScroll); onScroll();
-
-new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){playSig(sigFoot,3200);o.disconnect()}}),{threshold:.6}).observe(sigFoot.el);
-
-const paperEl = $('.paper'); let letterSigPlayed=false;
-paperEl.addEventListener('scroll',()=>{
-  if(letterSigPlayed) return;
-  const pr=paperEl.getBoundingClientRect(), sr=sigLetter.el.getBoundingClientRect();
-  if(sr.top < pr.bottom-40){ letterSigPlayed=true; playSig(sigLetter,2600); }
-},{passive:true});
-
-/* ============ PROJECTS ============ */
-const grid = $('#projectGrid'), pm = $('#pmodal'), pbody = $('#pbody');
-grid.innerHTML = PROJECTS.map((p,i)=>`
-  <button class="card" data-i="${i}">
-    <h3>${p.name}</h3><p>${p.short}</p>
-    <p class="prob"><strong>Problem:</strong> ${p.problem}</p>
-    <div class="chips">${p.tech.map(t=>`<span class="chip g">${t}</span>`).join('')}</div>
-    <span class="more">View details</span>
-  </button>`).join('');
-grid.addEventListener('click',e=>{
-  const c=e.target.closest('.card'); if(!c) return;
-  const p=PROJECTS[c.dataset.i];
-  const shots = (p.shots.length?p.shots:['Screenshot 1','Screenshot 2']).map(s=>
-    p.shots.length?`<div class="shot"><img src="${s}" alt="${p.name} screenshot" loading="lazy"></div>`
-    :`<div class="shot">${s}<br>Add images in the shots array</div>`).join('');
-  pbody.innerHTML = `<h2 id="pm-title">${p.name}</h2><p>${p.short}</p>
-    <h4>Problem</h4><p>${p.problem}</p><h4>Solution</h4><p>${p.solution}</p>
-    <h4>Features</h4><ul>${p.features.map(f=>`<li>${f}</li>`).join('')}</ul>
-    <h4>Technologies</h4><div class="chips">${p.tech.map(t=>`<span class="chip g">${t}</span>`).join('')}</div>
-    <h4>My role</h4><p>${p.role}</p><h4>Screenshots</h4><div class="shots">${shots}</div>`;
-  openModal(pm);
-});
-
-/* ============ MODALS ============ */
-let lastFocus;
-function openModal(m){lastFocus=document.activeElement;m.classList.add('show');document.body.style.overflow='hidden';$('[data-close]',m)?.focus()}
-function closeModal(m){m.classList.remove('show');document.body.style.overflow='';if(m.id==='letter'){m.classList.remove('open');cancelAnimationFrame(sigLetter.raf);letterSigPlayed=false;drawSig(sigLetter,0);paperEl.scrollTop=0}lastFocus?.focus()}
-$$('.modal').forEach(m=>{
-  m.addEventListener('click',e=>{if(e.target===m||e.target.closest('[data-close]'))closeModal(m)});
-});
-addEventListener('keydown',e=>{if(e.key==='Escape')$$('.modal.show').forEach(closeModal)});
-
-const letter = $('#letter');
-$$('[data-resume]').forEach(b=>b.addEventListener('click',e=>{
-  e.preventDefault(); $('#menu').classList.remove('open');
-  openModal(letter);
-  setTimeout(()=>letter.classList.add('open'),80);
-  paperEl.scrollTop=0; letterSigPlayed=false; cancelAnimationFrame(sigLetter.raf); drawSig(sigLetter,0);
-}));
-
-/* ============ TILT + FLOOR ============ */
-const scene=$('#scene');
-if(reduced) $$('.floor').forEach(e=>e.style.animation='none');
-const heroEl=$('#home');
-if(!reduced && matchMedia('(hover:hover)').matches){
-  heroEl.addEventListener('pointermove',e=>{
-    const r=heroEl.getBoundingClientRect();
-    scene.style.setProperty('--ry',((e.clientX-r.left)/r.width-.5)*10+'deg');
-    scene.style.setProperty('--rx',(-((e.clientY-r.top)/r.height-.5))*8+'deg');
-  });
-  $$('.card,.box,.portrait').forEach(el=>{
-    el.addEventListener('pointermove',e=>{
-      const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
-      el.style.transform=`perspective(800px) rotateX(${-y*7}deg) rotateY(${x*9}deg)`;
+    /* ====== RENDER SIGNATURES ====== */
+    const sigs = $$('.sig').map(el => {
+      el.innerHTML = `<svg viewBox="${SIG_VIEWBOX}" role="img" aria-label="Handwritten signature of Divakar Balaji">${SIG_PATHS.map(d => `<path d="${d}"/>`).join('')}</svg>`;
+      const paths = $$('path', el);
+      const lens = paths.map(p => Math.max(p.getTotalLength(), 12));
+      const total = lens.reduce((a, b) => a + b, 0);
+      paths.forEach((p, i) => {
+        p.style.strokeDasharray = lens[i] + 1;
+        p.style.strokeDashoffset = lens[i] + 1;
+      });
+      return { el, paths, lens, total, mode: el.dataset.sig, raf: 0 };
     });
-    el.addEventListener('pointerleave',()=>el.style.transform='');
-  });
-}
 
-/* ============ NAV, REVEAL, FORM ============ */
-const burger=$('#burger'), menu=$('#menu');
-burger.addEventListener('click',()=>{const o=menu.classList.toggle('open');burger.setAttribute('aria-expanded',o)});
-$$('#menu a:not([data-resume])').forEach(a=>a.addEventListener('click',()=>menu.classList.remove('open')));
-const links=$$('#menu a[href^="#"]:not([href="#"])');
-const spy=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
-$$('main section[id]').forEach(s=>spy.observe(s));
-const rv=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rv.unobserve(e.target)}}),{threshold:.12});
-$$('.rv').forEach(el=>rv.observe(el));
+    function drawSig(s, p) {
+      let done = p * s.total, c = 0;
+      s.paths.forEach((path, i) => {
+        const local = Math.min(1, Math.max(0, (done - c) / s.lens[i]));
+        path.style.strokeDashoffset = (s.lens[i] + 1) * (1 - local);
+        c += s.lens[i];
+      });
+    }
 
-/* ============ CONTACT: fold → envelope → send → "sent" ============ */
-const MAIL_TO='divakarbalaji10@gmail.com';
-const mail=$('#mail'), cform=$('#contactForm'), fmsg=$('#fmsg'), sendBtn=$('#sendBtn'), wait=ms=>new Promise(r=>setTimeout(r,ms));
-const sendMail=f=>fetch('https://formsubmit.co/ajax/'+MAIL_TO,{
-  method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
-  body:JSON.stringify({name:f.name,email:f.email,message:f.message,_honey:f._honey||'',
-    _subject:'Portfolio message from '+f.name,_replyto:f.email,_template:'table',_captcha:'false'})
-}).then(r=>r.json()).then(d=>d.success===true||d.success==='true').catch(()=>false);
-const resetMail=()=>mail.classList.remove('folding','closing','flying','done');
-cform.addEventListener('submit',async e=>{
-  e.preventDefault(); if(sendBtn.disabled) return;
-  fmsg.textContent=''; sendBtn.disabled=true;
-  const req=sendMail(Object.fromEntries(new FormData(cform)));
-  mail.classList.add('folding');  await wait(800);
-  mail.classList.add('closing');  await wait(1000);
-  if(await req){
-    mail.classList.add('flying'); await wait(950);
-    mail.classList.add('done');
-  }else{
-    resetMail(); sendBtn.disabled=false;
-    fmsg.textContent='Could not send right now. Please try again, or email '+MAIL_TO+' directly.';
-  }
-});
-$('#again').addEventListener('click',()=>{resetMail();cform.reset();sendBtn.disabled=false});
+    function playSig(s, ms = 2600) {
+      cancelAnimationFrame(s.raf);
+      if (reduced) return drawSig(s, 1);
+      drawSig(s, 0);
+      const t0 = performance.now();
+      (function tick(t) {
+        const k = Math.min(1, (t - t0) / ms);
+        const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        drawSig(s, e);
+        if (k < 1) s.raf = requestAnimationFrame(tick);
+      })(t0);
+    }
 
-/* ============ TECHNICAL 3D NETWORK GLOBE ============ */
-(()=>{
-const cv=document.getElementById('net'),ctx=cv.getContext('2d'),hero=document.getElementById('home');
-let W,H,dpr,mx=0,my=0,tx=0,ty=0,t=0,vis=true;
-const N=150,pts=[],edges=[];
-for(let i=0;i<N;i++){const y=1-2*(i+.5)/N,r=Math.sqrt(1-y*y),a=i*2.39996;pts.push([Math.cos(a)*r,y,Math.sin(a)*r])}
-for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){
-  if(Math.hypot(pts[i][0]-pts[j][0],pts[i][1]-pts[j][1],pts[i][2]-pts[j][2])<.42)edges.push([i,j])}
-const rings=[0,1,2].map(i=>({tilt:[.4,1.1,-.7][i],sp:[1,-.7,.5][i],r:1.28+i*.12,
-  p:Array.from({length:120},(_,k)=>{const a=k/120*Math.PI*2;return[Math.cos(a),0,Math.sin(a)]})}));
-const pulses=Array.from({length:16},()=>({e:Math.random()*edges.length|0,k:Math.random(),s:.006+Math.random()*.008}));
-const dust=Array.from({length:55},()=>({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*2e-4,vy:(Math.random()-.5)*2e-4}));
-function size(){dpr=Math.min(devicePixelRatio||1,2);const r=hero.getBoundingClientRect();
-  W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
-function rotX(p,a){const c=Math.cos(a),s=Math.sin(a);return[p[0],p[1]*c-p[2]*s,p[1]*s+p[2]*c]}
-function proj(p,R,cx,cy,ry,rx){let x=p[0],y=p[1],z=p[2],c=Math.cos(ry),s=Math.sin(ry);
-  const x2=x*c+z*s,z2=-x*s+z*c;const q=rotX([x2,y,z2],rx);const k=2.6/(2.6+q[2]);
-  return[cx+q[0]*R*k,cy+q[1]*R*k,q[2],k]}
-function frame(){
-  if(!reduced)t+=.004; mx+=(tx-mx)*.05; my+=(ty-my)*.05;
-  const col=getComputedStyle(document.documentElement).getPropertyValue('--gold').trim()||'#22d3ee';
-  ctx.clearRect(0,0,W,H); ctx.strokeStyle=col; ctx.fillStyle=col; ctx.lineWidth=1;
-  const mob=W<860,R=Math.min(W,H)*(mob?.3:.36),cx=mob?W/2:W*.7,cy=H*.52,ry=t*2+mx,rx=.35+my;
-  /* particle plexus */
-  dust.forEach(d=>{d.x=(d.x+d.vx+1)%1;d.y=(d.y+d.vy+1)%1});
-  for(let i=0;i<dust.length;i++){const a=dust[i];
-    ctx.globalAlpha=.35;ctx.fillRect(a.x*W,a.y*H,1.6,1.6);
-    for(let j=i+1;j<dust.length;j++){const b=dust[j],d=Math.hypot((a.x-b.x)*W,(a.y-b.y)*H);
-      if(d<110){ctx.globalAlpha=.14*(1-d/110);ctx.beginPath();ctx.moveTo(a.x*W,a.y*H);ctx.lineTo(b.x*W,b.y*H);ctx.stroke()}}}
-  /* globe links + nodes */
-  const P=pts.map(p=>proj(p,R,cx,cy,ry,rx));
-  edges.forEach(([a,b])=>{const A=P[a],B=P[b];
-    ctx.globalAlpha=Math.max(.04,.17-.15*(A[2]+B[2])/2);
-    ctx.beginPath();ctx.moveTo(A[0],A[1]);ctx.lineTo(B[0],B[1]);ctx.stroke()});
-  P.forEach(p=>{ctx.globalAlpha=Math.max(.15,.5-.4*p[2]);ctx.beginPath();ctx.arc(p[0],p[1],1.4*p[3],0,7);ctx.fill()});
-  /* data packets */
-  pulses.forEach(u=>{u.k+=u.s;if(u.k>1){u.k=0;u.e=Math.random()*edges.length|0}
-    const A=P[edges[u.e][0]],B=P[edges[u.e][1]],x=A[0]+(B[0]-A[0])*u.k,y=A[1]+(B[1]-A[1])*u.k;
-    ctx.globalAlpha=.95;ctx.beginPath();ctx.arc(x,y,2.4,0,7);ctx.fill();
-    ctx.globalAlpha=.18;ctx.beginPath();ctx.arc(x,y,6,0,7);ctx.fill()});
-  /* orbit rings + satellites */
-  rings.forEach((g,i)=>{
-    const Q=g.p.map(p=>proj(rotX([p[0]*g.r,0,p[2]*g.r],g.tilt),R,cx,cy,ry*g.sp,rx));
-    ctx.globalAlpha=.28;ctx.beginPath();Q.forEach((q,n)=>n?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.closePath();ctx.stroke();
-    const s=Q[Math.floor(((t*(1.5+i)*40)%120+120)%120)];
-    ctx.globalAlpha=1;ctx.beginPath();ctx.arc(s[0],s[1],3.2,0,7);ctx.fill()});
-  ctx.globalAlpha=1;
-  if(vis&&!reduced)requestAnimationFrame(frame)
-}
-size(); addEventListener('resize',size); frame();
-new IntersectionObserver(e=>{const was=vis;vis=e[0].isIntersecting;if(vis&&!was&&!reduced)requestAnimationFrame(frame)}).observe(hero);
-if(!reduced&&matchMedia('(hover:hover)').matches)hero.addEventListener('pointermove',e=>{
-  const r=hero.getBoundingClientRect();tx=((e.clientX-r.left)/r.width-.5)*.9;ty=((e.clientY-r.top)/r.height-.5)*.4});
-})();
-</script>
+    /* ====== MAIN SIGNATURE (SCROLL-DRIVEN) ====== */
+    const sigMain = sigs.find(s => s.mode === 'scroll');
+    const sigFoot = sigs.find(s => s.mode === 'footer');
+    const bar = $('#sigbar');
+    const wrapEl = $('#signature');
+    let ticking = false, smooth = 0;
+
+    function onScroll() {
+      if (!wrapEl) return;
+      const r = wrapEl.getBoundingClientRect();
+      const target = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
+      smooth += (target - smooth) * (reduced ? 1 : .12);
+      if (sigMain) drawSig(sigMain, Math.min(1, smooth * 1.08));
+      if (bar) bar.style.transform = `scaleX(${smooth})`;
+      if (Math.abs(target - smooth) > .002) requestAnimationFrame(onScroll);
+      else ticking = false;
+    }
+
+    addEventListener('scroll', () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+    }, { passive: true });
+    addEventListener('resize', onScroll);
+    onScroll();
+
+    /* ====== FOOTER SIGNATURE (PLAY ON VIEW) ====== */
+    if (sigFoot) {
+      new IntersectionObserver((es, o) => es.forEach(e => {
+        if (e.isIntersecting) { playSig(sigFoot, 3200); o.disconnect(); }
+      }), { threshold: .4 }).observe(sigFoot.el);
+    }
+
+    /* ====== THEME SWITCHER ====== */
+    const themePanel = $('#themePanel'), themeToggle = $('#themeToggle');
+    themeToggle.addEventListener('click', e => {
+      e.stopPropagation();
+      themePanel.classList.toggle('open');
+    });
+    document.addEventListener('click', e => {
+      if (!themePanel.contains(e.target)) themePanel.classList.remove('open');
+    });
+    $$('.theme-swatch').forEach(sw => sw.addEventListener('click', () => {
+      $$('.theme-swatch').forEach(s => s.classList.remove('active'));
+      sw.classList.add('active');
+      document.body.dataset.theme = sw.dataset.theme;
+    }));
+
+    /* ====== HERO ROLE TYPING ====== */
+    const roles = ['Web Developer | Backend Developer','PHP + MySQL Engineer','API & Systems Builder','AI Search Tinkerer'];
+    const roleEl = $('#role');
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    (async () => {
+      if (reduced) return;
+      for (let i = 0; ; i = (i + 1) % roles.length) {
+        roleEl.textContent = '';
+        for (const ch of roles[i]) { roleEl.textContent += ch; await sleep(55); }
+        await sleep(1800);
+        while (roleEl.textContent.length) {
+          roleEl.textContent = roleEl.textContent.slice(0, -1);
+          await sleep(22);
+        }
+        await sleep(300);
+      }
+    })();
+
+    /* ====== FLIP CARD (TAP ON MOBILE) ====== */
+    const flipCard = $('#flipCard');
+    flipCard.addEventListener('click', () => flipCard.classList.toggle('flipped'));
+
+    /* ====== PROJECTS RENDER ====== */
+    const grid = $('#projectGrid');
+    grid.innerHTML = PROJECTS.map((p, i) => `
+      <button class="proj-card reveal" data-i="${i}">
+        <span class="proj-num">${String(i + 1).padStart(2, '0')} /</span>
+        <h3>${p.name}</h3>
+        <p class="proj-desc">${p.short}</p>
+        <p class="proj-problem"><b>Problem:</b> ${p.problem}</p>
+        <div class="proj-tags">${p.tech.slice(0, 4).map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
+      </button>`).join('');
+
+    grid.addEventListener('click', e => {
+      const c = e.target.closest('.proj-card'); if (!c) return;
+      const p = PROJECTS[c.dataset.i];
+      $('#pbody').innerHTML = `
+        <h2>${p.name}</h2>
+        <p class="modal-tag">${p.short}</p>
+        <h4>Problem</h4><p>${p.problem}</p>
+        <h4>Solution</h4><p>${p.solution}</p>
+        <h4>Features</h4><ul>${p.features.map(f => `<li>${f}</li>`).join('')}</ul>
+        <h4>Technologies</h4>
+        <div class="modal-tags">${p.tech.map(t => `<span class="modal-tag-chip">${t}</span>`).join('')}</div>
+        <h4>My Role</h4><p>${p.role}</p>`;
+      openModal($('#pmodal'));
+    });
+
+    /* ====== MODAL SYSTEM ====== */
+    let lastFocus;
+    function openModal(m) {
+      lastFocus = document.activeElement;
+      m.classList.add('show');
+      document.body.style.overflow = 'hidden';
+      $('[data-close]', m)?.focus();
+    }
+    function closeModal(m) {
+      m.classList.remove('show');
+      document.body.style.overflow = '';
+      lastFocus?.focus();
+    }
+    $$('.modal').forEach(m => {
+      m.addEventListener('click', e => {
+        if (e.target === m || e.target.closest('[data-close]')) closeModal(m);
+      });
+    });
+    addEventListener('keydown', e => {
+      if (e.key === 'Escape') $$('.modal.show').forEach(closeModal);
+    });
+
+    /* ====== RESUME ====== */
+    $$('[data-resume]').forEach(b => b.addEventListener('click', e => {
+      e.preventDefault();
+      openModal($('#resumeModal'));
+    }));
+
+    /* ====== NAV ====== */
+    const burger = $('#burger'), menu = $('#menu');
+    burger.addEventListener('click', () => menu.classList.toggle('open'));
+    $$('#menu a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+
+    /* ====== SCROLL: HEADER + PROGRESS + SPY ====== */
+    const header = $('#header'), topbar = $('#progress-bar');
+    addEventListener('scroll', () => {
+      const sy = scrollY;
+      header.classList.toggle('scrolled', sy > 30);
+      topbar.style.transform = `scaleX(${sy / (document.documentElement.scrollHeight - innerHeight)})`;
+    }, { passive: true });
+
+    const links = $$('#menu a[href^="#"]');
+    const spy = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id));
+    }), { rootMargin: '-45% 0px -50% 0px' });
+    $$('main section[id]').forEach(s => spy.observe(s));
+
+    /* ====== REVEAL ====== */
+    const rv = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); rv.unobserve(e.target); }
+    }), { threshold: .1 });
+    $$('.reveal').forEach(el => rv.observe(el));
+
+    /* ====== CONTACT FORM ====== */
+    const MAIL_TO = 'divakarbalaji10@gmail.com';
+    const cform = $('#contactForm'), fmsg = $('#formMsg'), sendBtn = $('#sendBtn'), success = $('#formSuccess');
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const sendMail = f => fetch('https://formsubmit.co/ajax/' + MAIL_TO, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        name: f.name, email: f.email, message: f.message,
+        _honey: f._honey || '', _subject: 'Portfolio message from ' + f.name,
+        _replyto: f.email, _template: 'table', _captcha: 'false'
+      })
+    }).then(r => r.json()).then(d => d.success === true || d.success === 'true').catch(() => false);
+
+    cform.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (sendBtn.disabled) return;
+      fmsg.textContent = '';
+      sendBtn.disabled = true; sendBtn.textContent = 'Sending...';
+      const ok = await sendMail(Object.fromEntries(new FormData(cform)));
+      if (ok) {
+        $$('.field, .form-sub, .form-msg, #sendBtn', cform).forEach(el => el.style.display = 'none');
+        success.classList.add('show');
+      } else {
+        sendBtn.disabled = false; sendBtn.textContent = 'Send message →';
+        fmsg.textContent = 'Could not send right now. Please email ' + MAIL_TO + ' directly.';
+      }
+    });
+    $('#sendAnother').addEventListener('click', () => {
+      cform.reset();
+      $$('.field, .form-sub, .form-msg, #sendBtn', cform).forEach(el => el.style.display = '');
+      success.classList.remove('show');
+      sendBtn.disabled = false; sendBtn.textContent = 'Send message →';
+      fmsg.textContent = '';
+    });
+  </script>
 </body>
 </html>
