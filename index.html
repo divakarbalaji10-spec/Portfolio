@@ -10,7 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    /* ===== RESET & BASE ===== */
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -28,7 +27,6 @@
       --glow-2: rgba(0,210,211,.25);
       --on-accent: #fff;
       --radius: 18px;
-      --radius-sm: 12px;
     }
 
     html { scroll-behavior: smooth; scroll-padding-top: 90px; }
@@ -42,7 +40,96 @@
       transition: background .4s ease, color .4s ease;
     }
 
-    /* ===== 10 THEMES ===== */
+    /* ========== SIGNATURE SPLASH OVERLAY ========== */
+    #signature-splash {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: var(--bg);
+      display: grid;
+      place-items: center;
+      transition: opacity 1s cubic-bezier(.4,0,.2,1), visibility 1s;
+    }
+    #signature-splash.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .splash-inner {
+      text-align: center;
+      display: grid;
+      place-items: center;
+      gap: 32px;
+      padding: 0 20px;
+    }
+    .splash-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.4rem, 4vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      opacity: 0;
+      animation: fadeUp 0.9s 0.2s ease forwards;
+    }
+    .splash-name .accent {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .splash-sig {
+      width: min(560px, 86vw);
+      height: auto;
+      overflow: visible;
+      filter: drop-shadow(0 0 40px var(--glow));
+    }
+    .splash-sig path {
+      fill: none;
+      stroke: var(--accent-2);
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: var(--len);
+      stroke-dashoffset: var(--len);
+      animation: drawPath 1.9s cubic-bezier(.5,0,.2,1) forwards;
+    }
+    @keyframes drawPath {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .splash-tagline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      opacity: 0;
+      animation: fadeUp 0.8s 1.9s ease forwards;
+    }
+    .splash-loader {
+      width: 180px;
+      height: 4px;
+      border-radius: 100px;
+      background: var(--surface);
+      overflow: hidden;
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 0.6s 2.0s ease forwards;
+    }
+    .splash-loader i {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transform-origin: left;
+      transform: scaleX(0);
+      animation: loadBar 2.6s 2.0s cubic-bezier(.4,0,.2,1) forwards;
+    }
+    @keyframes loadBar {
+      to { transform: scaleX(1); }
+    }
+
+    /* ========== 10 THEMES ========== */
     [data-theme="0"] {
       --bg:#0b0f19; --bg2:#131a2b; --surface:#1a2236; --surface-2:#222c45;
       --ink:#f0f4ff; --muted:#8b96b8; --accent:#6c5ce7; --accent-2:#00d2d3; --accent-3:#fd79a8;
@@ -99,9 +186,7 @@
     h2 { font-size: clamp(2rem, 5vw, 3rem); }
     section { padding: 100px 0; position: relative; }
     .wrap { width: min(1200px, 92%); margin: auto; }
-    .mono { font-family: 'JetBrains Mono', monospace; }
 
-    /* ===== TOP PROGRESS ===== */
     #progress-bar {
       position: fixed; top: 0; left: 0; height: 3px; width: 100%;
       background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
@@ -137,7 +222,6 @@
     nav ul a {
       font-size: 0.88rem; font-weight: 500; color: var(--muted);
       padding: 8px 16px; border-radius: 10px; transition: all .25s;
-      position: relative;
     }
     nav ul a:hover { color: var(--ink); background: var(--surface-2); }
     nav ul a.on { color: var(--on-accent); background: var(--accent); }
@@ -211,26 +295,18 @@
       font-weight: 600; font-size: 0.95rem; cursor: pointer;
       border: none; font-family: inherit;
       transition: all .3s cubic-bezier(.2,.8,.2,1);
-      position: relative; overflow: hidden;
     }
     .btn-primary {
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       color: var(--on-accent);
       box-shadow: 0 10px 30px var(--glow);
     }
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 18px 40px var(--glow);
-    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 18px 40px var(--glow); }
     .btn-ghost {
       background: var(--surface); color: var(--ink);
       border: 1px solid var(--line);
     }
-    .btn-ghost:hover {
-      background: var(--surface-2);
-      transform: translateY(-3px);
-      border-color: var(--accent);
-    }
+    .btn-ghost:hover { background: var(--surface-2); transform: translateY(-3px); border-color: var(--accent); }
 
     .social-row { display: flex; gap: 12px; }
     .social-row a {
@@ -248,15 +324,10 @@
     }
     .social-row svg { width: 20px; height: 20px; fill: currentColor; }
 
-    /* ===== HERO PORTRAIT — 3D CARD FLIP ===== */
-    .hero-visual {
-      perspective: 1400px;
-      display: grid; place-items: center;
-      justify-self: center;
-    }
+    /* 3D FLIP CARD */
+    .hero-visual { perspective: 1400px; display: grid; place-items: center; justify-self: center; }
     .flip-card {
-      width: min(380px, 88vw);
-      aspect-ratio: 4/5;
+      width: min(380px, 88vw); aspect-ratio: 4/5;
       position: relative;
       transform-style: preserve-3d;
       transition: transform 0.9s cubic-bezier(.4,.2,.2,1);
@@ -269,7 +340,7 @@
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
       border: 1px solid var(--line);
-      box-shadow: 0 30px 60px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.03);
+      box-shadow: 0 30px 60px rgba(0,0,0,.4);
     }
     .flip-front {
       background: linear-gradient(145deg, var(--surface), var(--surface-2));
@@ -288,8 +359,7 @@
     .flip-front .avatar::after {
       content: ""; position: absolute; inset: -12px;
       border-radius: 50%; border: 2px dashed var(--accent-2);
-      animation: spin 20s linear infinite;
-      opacity: .5;
+      animation: spin 20s linear infinite; opacity: .5;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     .flip-front .front-label {
@@ -300,9 +370,7 @@
     .flip-back {
       transform: rotateY(180deg);
       background: linear-gradient(160deg, var(--surface-2), var(--surface));
-      padding: 32px;
-      display: flex; flex-direction: column; justify-content: center;
-      gap: 18px;
+      padding: 32px; display: flex; flex-direction: column; justify-content: center; gap: 18px;
     }
     .flip-back h3 { font-size: 1.4rem; color: var(--accent-2); margin-bottom: 4px; }
     .flip-back .back-line {
@@ -313,8 +381,7 @@
     .flip-back .back-line:last-child { border-bottom: none; }
     .flip-back .back-line b {
       font-family: 'JetBrains Mono', monospace;
-      color: var(--accent); font-weight: 500; min-width: 60px;
-      font-size: 0.78rem;
+      color: var(--accent); font-weight: 500; min-width: 60px; font-size: 0.78rem;
     }
     .flip-hint {
       position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
@@ -338,80 +405,10 @@
       display: inline-flex; align-items: center; gap: 40px;
       text-transform: uppercase; letter-spacing: 0.05em;
     }
-    .marquee-track span::after {
-      content: "◆"; color: var(--accent); font-size: 0.7rem;
-    }
+    .marquee-track span::after { content: "◆"; color: var(--accent); font-size: 0.7rem; }
     @keyframes scroll { to { transform: translateX(-50%); } }
 
-    /* ===== SIGNATURE SCROLL SECTION ===== */
-    .sigwrap {
-      height: 300vh;
-      padding: 0;
-      position: relative;
-      border-bottom: 1px solid var(--line);
-      background: var(--bg2);
-    }
-    .sigstick {
-      position: sticky; top: 0; height: 100vh;
-      display: grid; place-content: center; justify-items: center;
-      gap: 24px; text-align: center;
-      perspective: 1200px;
-    }
-    .sigstick .sig-heading {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      font-weight: 700;
-      color: var(--ink);
-      letter-spacing: -0.02em;
-    }
-    .sigstick .sig-heading .accent {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .sigstick .sig {
-      transform: rotateX(8deg) rotateY(-4deg);
-      transform-style: preserve-3d;
-      transition: transform .5s ease;
-    }
-    .sigstick .sig:hover {
-      transform: rotateX(0deg) rotateY(0deg) scale(1.03);
-    }
-    .sigstick svg {
-      width: min(720px, 88vw); height: auto;
-      overflow: visible;
-      filter: drop-shadow(0 20px 40px var(--glow));
-    }
-    .sigstick .sig path {
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 7;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .sigstick small {
-      color: var(--muted);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      letter-spacing: 0.05em;
-    }
-    .progress {
-      width: 200px; height: 6px;
-      border-radius: 100px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      position: relative; overflow: hidden;
-    }
-    .progress i {
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      transform-origin: left;
-      transform: scaleX(0);
-      border-radius: 100px;
-      box-shadow: 0 0 12px var(--glow);
-    }
-
-    /* ===== SECTION HEADINGS ===== */
+    /* ===== SECTION HEADS ===== */
     .sec-head { margin-bottom: 56px; }
     .sec-tag {
       font-family: 'JetBrains Mono', monospace;
@@ -427,10 +424,7 @@
     .sec-head p { color: var(--muted); max-width: 60ch; margin-top: 16px; font-size: 1.05rem; }
 
     /* ===== ABOUT ===== */
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
-      align-items: start;
-    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
     .about-text p { color: var(--muted); margin-bottom: 18px; font-size: 1.02rem; }
     .about-text p strong { color: var(--ink); font-weight: 600; }
     .enjoy-list { list-style: none; display: grid; gap: 14px; margin-top: 8px; }
@@ -438,14 +432,9 @@
       display: flex; align-items: center; gap: 14px;
       padding: 14px 18px; border-radius: 12px;
       background: var(--surface); border: 1px solid var(--line);
-      font-size: 0.95rem;
-      transition: all .3s;
+      font-size: 0.95rem; transition: all .3s;
     }
-    .enjoy-list li:hover {
-      transform: translateX(6px);
-      border-color: var(--accent);
-      background: var(--surface-2);
-    }
+    .enjoy-list li:hover { transform: translateX(6px); border-color: var(--accent); background: var(--surface-2); }
     .enjoy-list .check {
       width: 26px; height: 26px; border-radius: 8px;
       background: var(--accent); color: var(--on-accent);
@@ -464,20 +453,14 @@
     .skill-card::before {
       content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      transform: scaleX(0); transform-origin: left;
-      transition: transform .4s;
+      transform: scaleX(0); transform-origin: left; transition: transform .4s;
     }
-    .skill-card:hover {
-      transform: translateY(-8px);
-      border-color: var(--accent);
-      box-shadow: 0 20px 40px var(--glow);
-    }
+    .skill-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 20px 40px var(--glow); }
     .skill-card:hover::before { transform: scaleX(1); }
     .skill-icon {
       width: 48px; height: 48px; border-radius: 12px;
       background: var(--surface-2); border: 1px solid var(--line);
-      display: grid; place-items: center; font-size: 1.4rem;
-      margin-bottom: 18px;
+      display: grid; place-items: center; font-size: 1.4rem; margin-bottom: 18px;
     }
     .skill-card h3 { font-size: 1.15rem; margin-bottom: 16px; }
     .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -486,46 +469,24 @@
       font-size: 0.78rem; padding: 5px 12px;
       border-radius: 100px; background: var(--surface-2);
       color: var(--muted); border: 1px solid var(--line);
-      transition: all .25s;
-    }
-    .skill-card:hover .skill-tag {
-      border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
-      color: var(--ink);
     }
 
     /* ===== PROJECTS ===== */
-    .projects-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 26px;
-    }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 26px; }
     .proj-card {
       padding: 30px; border-radius: var(--radius);
       background: var(--surface); border: 1px solid var(--line);
       cursor: pointer; transition: all .4s cubic-bezier(.2,.8,.2,1);
       display: flex; flex-direction: column; gap: 16px;
-      position: relative; overflow: hidden;
-      text-align: left;
+      position: relative; overflow: hidden; text-align: left;
     }
     .proj-card::after {
       content: "→"; position: absolute; top: 24px; right: 24px;
-      font-size: 1.3rem; color: var(--muted);
-      transition: all .35s;
+      font-size: 1.3rem; color: var(--muted); transition: all .35s;
     }
-    .proj-card:hover {
-      transform: translateY(-10px);
-      border-color: var(--accent);
-      box-shadow: 0 30px 60px var(--glow);
-      background: var(--surface-2);
-    }
-    .proj-card:hover::after {
-      color: var(--accent-2);
-      transform: translate(4px, -4px);
-    }
-    .proj-num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem; color: var(--accent-2);
-      letter-spacing: 0.1em;
-    }
+    .proj-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 30px 60px var(--glow); background: var(--surface-2); }
+    .proj-card:hover::after { color: var(--accent-2); transform: translate(4px, -4px); }
+    .proj-num { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--accent-2); letter-spacing: 0.1em; }
     .proj-card h3 { font-size: 1.25rem; padding-right: 30px; }
     .proj-card .proj-desc { color: var(--muted); font-size: 0.92rem; }
     .proj-card .proj-problem {
@@ -567,23 +528,16 @@
       color: var(--muted); font-size: 0.94rem;
       padding-left: 22px; position: relative;
     }
-    .timeline-item li::before {
-      content: "▸"; position: absolute; left: 0;
-      color: var(--accent); font-size: 0.9rem;
-    }
+    .timeline-item li::before { content: "▸"; position: absolute; left: 0; color: var(--accent); font-size: 0.9rem; }
 
-    /* ===== BUILD SECTION ===== */
+    /* ===== BUILD ===== */
     .build-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
     .build-card {
       padding: 26px; border-radius: var(--radius);
       background: var(--surface); border: 1px solid var(--line);
       transition: all .3s;
     }
-    .build-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--accent-2);
-      box-shadow: 0 20px 40px var(--glow-2);
-    }
+    .build-card:hover { transform: translateY(-6px); border-color: var(--accent-2); box-shadow: 0 20px 40px var(--glow-2); }
     .build-card .build-icon { font-size: 1.8rem; margin-bottom: 14px; display: block; }
     .build-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
     .build-card p { color: var(--muted); font-size: 0.88rem; }
@@ -599,16 +553,11 @@
       background: var(--surface); border: 1px solid var(--line);
       transition: all .3s;
     }
-    .contact-list li:hover {
-      border-color: var(--accent);
-      transform: translateX(6px);
-      background: var(--surface-2);
-    }
+    .contact-list li:hover { border-color: var(--accent); transform: translateX(6px); background: var(--surface-2); }
     .contact-list .ico {
       width: 40px; height: 40px; border-radius: 10px;
       background: var(--surface-2); border: 1px solid var(--line);
-      display: grid; place-items: center; flex-shrink: 0;
-      font-size: 1rem;
+      display: grid; place-items: center; flex-shrink: 0; font-size: 1rem;
     }
     .contact-list .label {
       font-family: 'JetBrains Mono', monospace;
@@ -617,7 +566,6 @@
     }
     .contact-list .val { font-size: 0.95rem; font-weight: 500; }
 
-    /* ===== FORM ===== */
     .contact-form {
       padding: 36px; border-radius: var(--radius);
       background: var(--surface); border: 1px solid var(--line);
@@ -635,8 +583,7 @@
       width: 100%; padding: 14px 16px;
       border-radius: 12px; border: 1px solid var(--line);
       background: var(--bg2); color: var(--ink);
-      font: inherit; font-size: 0.95rem;
-      transition: all .25s;
+      font: inherit; font-size: 0.95rem; transition: all .25s;
     }
     .field input:focus, .field textarea:focus {
       outline: none; border-color: var(--accent);
@@ -645,17 +592,13 @@
     .field textarea { resize: vertical; min-height: 120px; font-family: inherit; }
     .hp { position: absolute; left: -9999px; opacity: 0; }
     .form-msg { font-size: 0.88rem; min-height: 1.3em; color: #ef4444; }
-    .form-success {
-      text-align: center; padding: 20px 0;
-      display: none;
-    }
+    .form-success { text-align: center; padding: 20px 0; display: none; }
     .form-success.show { display: block; }
     .form-success .check-circle {
       width: 72px; height: 72px; border-radius: 50%;
       background: var(--accent); color: var(--on-accent);
       display: grid; place-items: center; margin: 0 auto 16px;
-      font-size: 2rem;
-      animation: pop .5s cubic-bezier(.2,1.4,.5,1);
+      font-size: 2rem; animation: pop .5s cubic-bezier(.2,1.4,.5,1);
     }
     @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
     .form-success h3 { color: var(--accent-2); margin-bottom: 8px; }
@@ -678,10 +621,7 @@
       color: var(--muted); font-size: 0.82rem;
       font-family: 'JetBrains Mono', monospace;
     }
-    .foot-sig {
-      width: min(200px, 50vw);
-      margin: 0 auto 20px;
-    }
+    .foot-sig { width: min(200px, 50vw); margin: 0 auto 20px; }
     .foot-sig svg { width: 100%; height: auto; }
     .foot-sig path {
       fill: none; stroke: var(--accent); stroke-width: 6;
@@ -698,8 +638,7 @@
       background: var(--surface); border: 1px solid var(--line);
       color: var(--ink); font-size: 1.3rem; cursor: pointer;
       display: grid; place-items: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,.3);
-      transition: all .3s;
+      box-shadow: 0 10px 30px rgba(0,0,0,.3); transition: all .3s;
     }
     .theme-toggle:hover { transform: scale(1.1) rotate(30deg); border-color: var(--accent); }
     .theme-drawer {
@@ -711,14 +650,11 @@
       transition: all .35s cubic-bezier(.2,.8,.2,1);
       transform-origin: bottom right;
     }
-    .theme-panel.open .theme-drawer {
-      max-height: 200px; opacity: 1; padding: 12px;
-    }
+    .theme-panel.open .theme-drawer { max-height: 200px; opacity: 1; padding: 12px; }
     .theme-swatch {
       width: 36px; height: 36px; border-radius: 10px;
       cursor: pointer; border: 2px solid transparent;
-      transition: all .25s;
-      position: relative;
+      transition: all .25s; position: relative;
     }
     .theme-swatch:hover { transform: scale(1.15); }
     .theme-swatch.active {
@@ -748,8 +684,7 @@
       width: 40px; height: 40px; border-radius: 12px;
       background: var(--surface); border: 1px solid var(--line);
       color: var(--ink); cursor: pointer; font-size: 1.1rem;
-      display: grid; place-items: center;
-      transition: all .25s;
+      display: grid; place-items: center; transition: all .25s;
     }
     .modal-close:hover { background: var(--accent); color: var(--on-accent); transform: rotate(90deg); }
     .modal-content h2 { font-size: 1.8rem; margin-bottom: 8px; }
@@ -774,7 +709,29 @@
       border: 1px solid var(--line); color: var(--ink);
     }
 
-    /* ===== REVEAL ANIMATION ===== */
+    /* RESUME MODAL - paper style */
+    .resume-paper {
+      background: var(--bg2);
+      color: var(--ink);
+      border-radius: 6px;
+      padding: 40px 44px 32px;
+      position: relative;
+    }
+    .resume-paper h2 { font-size: 2rem; margin-bottom: 4px; }
+    .resume-paper .sub { color: var(--accent); font-weight: 600; margin-bottom: 18px; font-size: 0.95rem; }
+    .resume-paper h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem; text-transform: uppercase;
+      color: var(--accent-3); margin: 20px 0 6px;
+      border-bottom: 1px solid var(--line); padding-bottom: 4px;
+    }
+    .resume-paper p, .resume-paper li { font-size: 0.92rem; color: var(--muted); }
+    .resume-paper ul { padding-left: 18px; }
+    .resume-paper .close { margin-top: 30px; font-family: 'Syne', sans-serif; font-size: 1rem; }
+    .resume-paper .sig { width: 180px; margin-top: 8px; }
+    .resume-paper .sig path { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ===== REVEAL ===== */
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s, transform .7s cubic-bezier(.2,.8,.2,1); }
     .reveal.visible { opacity: 1; transform: none; }
 
@@ -800,7 +757,6 @@
       section { padding: 70px 0; }
       .modal-content { padding: 28px 22px; }
       .theme-panel { bottom: 16px; right: 16px; }
-      .sigwrap { height: 200vh; }
     }
     @media (prefers-reduced-motion: reduce) {
       * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -809,6 +765,18 @@
   </style>
 </head>
 <body data-theme="0">
+
+  <!-- ========== SIGNATURE SPLASH OVERLAY ========== -->
+  <div id="signature-splash">
+    <div class="splash-inner">
+      <div class="splash-name">Divakar <span class="accent">Balaji</span></div>
+      <svg class="splash-sig" id="splashSig" viewBox="470 280 1480 720" xmlns="http://www.w3.org/2000/svg" aria-label="Signature">
+        <!-- paths injected by JS -->
+      </svg>
+      <div class="splash-tagline">// backend developer · php · mysql</div>
+      <div class="splash-loader"><i></i></div>
+    </div>
+  </div>
 
   <div id="progress-bar"></div>
 
@@ -858,7 +826,6 @@
           </div>
         </div>
 
-        <!-- 3D FLIP CARD -->
         <div class="hero-visual">
           <div class="flip-card" id="flipCard">
             <div class="flip-face flip-front">
@@ -889,16 +856,6 @@
       </div>
     </div>
 
-    <!-- ===== SIGNATURE SCROLL ANIMATION ===== -->
-    <section class="sigwrap" id="signature" aria-label="Handwritten signature">
-      <div class="sigstick">
-        <div class="sig-heading">My <span class="accent">signature</span></div>
-        <div class="sig" data-sig="scroll"></div>
-        <div class="progress"><i id="sigbar"></i></div>
-        <small>// keep scrolling — the signature draws itself</small>
-      </div>
-    </section>
-
     <!-- ===== ABOUT ===== -->
     <section id="about">
       <div class="wrap">
@@ -908,16 +865,8 @@
         </div>
         <div class="about-grid">
           <div class="about-text reveal">
-            <p>
-              I'm a web developer with a strong interest in <strong>backend development</strong>.
-              My main strength is the backend, but I also work with frontend technologies
-              and build complete end-to-end web systems.
-            </p>
-            <p>
-              I believe mistakes help me learn and improve, and I'm happiest when
-              I'm learning something new. I focus on practical systems that solve
-              real problems — not just demo projects.
-            </p>
+            <p>I'm a web developer with a strong interest in <strong>backend development</strong>. My main strength is the backend, but I also work with frontend technologies and build complete end-to-end web systems.</p>
+            <p>I believe mistakes help me learn and improve, and I'm happiest when I'm learning something new. I focus on practical systems that solve real problems — not just demo projects.</p>
           </div>
           <ul class="enjoy-list reveal">
             <li><span class="check">✓</span> Building real-world applications</li>
@@ -1014,7 +963,7 @@
       </div>
     </section>
 
-    <!-- ===== WHAT I BUILD ===== -->
+    <!-- ===== BUILD ===== -->
     <section id="build">
       <div class="wrap">
         <div class="sec-head reveal">
@@ -1040,22 +989,10 @@
             <h2>Let's build <span class="highlight">together.</span></h2>
             <p>Have a system in mind, or want to talk about backend work? Send a message.</p>
             <ul class="contact-list">
-              <li>
-                <span class="ico">✉️</span>
-                <div><div class="label">Email</div><div class="val">divakarbalaji10@gmail.com</div></div>
-              </li>
-              <li>
-                <span class="ico">📞</span>
-                <div><div class="label">Phone</div><div class="val">+91 63800 54384</div></div>
-              </li>
-              <li>
-                <span class="ico">💼</span>
-                <div><div class="label">LinkedIn</div><div class="val">divakar-balaji-8233b7321</div></div>
-              </li>
-              <li>
-                <span class="ico">🐙</span>
-                <div><div class="label">GitHub</div><div class="val">divakarbalaji10-spec</div></div>
-              </li>
+              <li><span class="ico">✉️</span><div><div class="label">Email</div><div class="val">divakarbalaji10@gmail.com</div></div></li>
+              <li><span class="ico">📞</span><div><div class="label">Phone</div><div class="val">+91 63800 54384</div></div></li>
+              <li><span class="ico">💼</span><div><div class="label">LinkedIn</div><div class="val">divakar-balaji-8233b7321</div></div></li>
+              <li><span class="ico">🐙</span><div><div class="label">GitHub</div><div class="val">divakarbalaji10-spec</div></div></li>
             </ul>
           </div>
 
@@ -1137,38 +1074,96 @@
   <div class="modal" id="resumeModal" role="dialog" aria-modal="true">
     <div class="modal-content">
       <button class="modal-close" data-close aria-label="Close">✕</button>
-      <h2>Divakar B</h2>
-      <p class="modal-tag">Full-Stack Web Developer | PHP Backend Developer</p>
+      <div class="resume-paper">
+        <h2>Divakar B</h2>
+        <p class="sub">Full-Stack Web Developer | PHP Backend Developer</p>
 
-      <h4>Objective</h4>
-      <p>To keep improving my technical skills, learn new technologies and grow into a better developer who contributes to the company's growth.</p>
+        <h4>Objective</h4>
+        <p>To keep improving my technical skills, learn new technologies and grow into a better developer who contributes to the company's growth.</p>
 
-      <h4>Experience</h4>
-      <p><strong>SkyneTBee AI Enterprise Pvt Ltd</strong> — Internship, 2 years hands-on. Admissions, fees, exams and results, attendance sync, house elections, Snap Talk, AI vector search, AWS deployment.</p>
+        <h4>Experience</h4>
+        <p><strong>SkyneTBee AI Enterprise Pvt Ltd</strong> — Internship, 2 years hands-on. Admissions, fees, exams and results, attendance sync, house elections, Snap Talk, AI vector search, AWS deployment.</p>
 
-      <h4>Skills</h4>
-      <p>PHP, JavaScript, SQL, HTML5, CSS3 · MySQL, Microsoft SQL Server · REST APIs · VS Code, FileZilla, phpMyAdmin, SSMS</p>
+        <h4>Skills</h4>
+        <p>PHP, JavaScript, SQL, HTML5, CSS3 · MySQL, Microsoft SQL Server · REST APIs · VS Code, FileZilla, phpMyAdmin, SSMS</p>
 
-      <h4>Education</h4>
-      <p>B.Sc. Information Technology, RD National College of Arts &amp; Science, Erode (2024–2027)</p>
+        <h4>Education</h4>
+        <p>B.Sc. Information Technology, RD National College of Arts &amp; Science, Erode (2024–2027)</p>
 
-      <h4>Selected Projects</h4>
-      <ul>
-        <li>Student House Voting &amp; Election System</li>
-        <li>Admission Management System</li>
-        <li>School Fee &amp; Payment System</li>
-        <li>Snap Talk</li>
-        <li>AI Page Vector Search</li>
-        <li>Canteen Management System</li>
-      </ul>
+        <h4>Selected Projects</h4>
+        <ul>
+          <li>Student House Voting &amp; Election System</li>
+          <li>Admission Management System</li>
+          <li>School Fee &amp; Payment System</li>
+          <li>Snap Talk</li>
+          <li>AI Page Vector Search</li>
+          <li>Canteen Management System</li>
+        </ul>
 
-      <h4>Contact</h4>
-      <p>divakarbalaji10@gmail.com · +91 6380054384<br>github.com/divakarbalaji10-spec</p>
+        <h4>Contact</h4>
+        <p>divakarbalaji10@gmail.com · +91 6380054384<br>github.com/divakarbalaji10-spec</p>
+
+        <p class="close">Sincerely,</p>
+        <div class="sig" data-sig="resume"></div>
+      </div>
     </div>
   </div>
 
   <script>
-    /* ====== PROJECT DATA ====== */
+    /* ============================================================
+       SIGNATURE PATHS — shared across splash, footer, resume
+       ============================================================ */
+    const SIG_VIEWBOX = "470 280 1480 720";
+    const SIG_PATHS = [
+      "M585,420 L590,490 C590,580 572,680 540,695 C505,680 495,590 520,500 C545,420 600,370 660,385 C700,400 690,450 640,520 C700,520 760,545 760,590 C755,640 680,685 600,712",
+      "M883,688 L884,689",
+      "M1100,925 C1020,880 975,700 980,560 C985,400 1050,300 1140,296 C1230,295 1260,390 1220,470 C1190,520 1090,540 1065,490 C1055,450 1120,430 1190,455 C1280,490 1340,560 1300,605 C1260,640 1180,640 1120,630 C1085,645 1065,690 1075,720 C1100,715 1135,640 1138,540 L1140,410",
+      "M1345,568 L1346,569",
+      "M1345,625 C1300,720 1200,870 1100,918",
+      "M1320,740 C1320,770 1370,750 1430,690 C1480,635 1540,625 1590,640 C1615,520 1610,360 1590,342 C1570,350 1560,550 1562,700 C1562,800 1580,830 1610,790 C1670,720 1730,620 1760,625 C1800,650 1830,705 1890,690 C1930,670 1930,600 1915,555 C1895,620 1870,760 1866,985",
+      "M962,912 C1200,850 1600,810 1830,805",
+      "M1100,915 C1300,880 1600,820 1788,787"
+    ];
+
+    /* ============================================================
+       SIGNATURE SPLASH — animate on page load, then fade out
+       ============================================================ */
+    (function() {
+      const splash = document.getElementById('signature-splash');
+      const splashSig = document.getElementById('splashSig');
+
+      // Build SVG paths with measured lengths for the draw animation
+      splashSig.innerHTML = SIG_PATHS.map(d => `<path d="${d}"/>`).join('');
+      const paths = splashSig.querySelectorAll('path');
+      let total = 0;
+      paths.forEach(p => {
+        const len = Math.max(p.getTotalLength(), 12);
+        p.style.setProperty('--len', len);
+        // stagger each path slightly
+        p.style.animationDelay = (0.15 + total / 2000) + 's';
+        total += len;
+      });
+
+      // Total animation time + hold, then reveal the site
+      const HOLD_MS = 3700; // 1.9s draw + 1.5s hold + small buffer
+      setTimeout(() => {
+        splash.classList.add('hidden');
+        document.body.style.overflow = '';
+      }, HOLD_MS);
+
+      // Lock scroll while splash is visible
+      document.body.style.overflow = 'hidden';
+
+      // Safety fallback: always hide after 6s max
+      setTimeout(() => {
+        splash.classList.add('hidden');
+        document.body.style.overflow = '';
+      }, 6000);
+    })();
+
+    /* ============================================================
+       PROJECT DATA
+       ============================================================ */
     const PROJECTS = [
       { name:"Student House Voting & Election Management System", short:"Manages house elections end to end: candidates, student voting and results.", problem:"Paper-based house elections are slow to run and hard to count accurately.", solution:"A web system where admins set up the election, students vote once, and results are tallied house by house.", features:["Student voting","House-wise election management","Election administration","Result management"], tech:["PHP","MySQL","JavaScript","HTML","CSS"], role:"Developed the web-based student house election system covering candidates, voting and results." },
       { name:"RD College / School Admission Management System", short:"One workflow from first enquiry to a managed student record.", problem:"Enquiries, admissions, fees and student records often live in separate places and fall out of sync.", solution:"A connected flow: Enquiry → Admission Confirmation → Fee Management → Student/Member Management.", features:["Enquiry tracking","Admission confirmation","Fee management","Student and member records","Student ID card generation"], tech:["PHP","MySQL","JavaScript","HTML","CSS"], role:"Developed and maintained the admission and member management modules." },
@@ -1182,29 +1177,15 @@
     const $$ = (s,c=document) => [...c.querySelectorAll(s)];
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    /* ====== SIGNATURE PATHS ====== */
-    const SIG_VIEWBOX = "470 280 1480 720";
-    const SIG_PATHS = [
-      "M585,420 L590,490 C590,580 572,680 540,695 C505,680 495,590 520,500 C545,420 600,370 660,385 C700,400 690,450 640,520 C700,520 760,545 760,590 C755,640 680,685 600,712",
-      "M883,688 L884,689",
-      "M1100,925 C1020,880 975,700 980,560 C985,400 1050,300 1140,296 C1230,295 1260,390 1220,470 C1190,520 1090,540 1065,490 C1055,450 1120,430 1190,455 C1280,490 1340,560 1300,605 C1260,640 1180,640 1120,630 C1085,645 1065,690 1075,720 C1100,715 1135,640 1138,540 L1140,410",
-      "M1345,568 L1346,569",
-      "M1345,625 C1300,720 1200,870 1100,918",
-      "M1320,740 C1320,770 1370,750 1430,690 C1480,635 1540,625 1590,640 C1615,520 1610,360 1590,342 C1570,350 1560,550 1562,700 C1562,800 1580,830 1610,790 C1670,720 1730,620 1760,625 C1800,650 1830,705 1890,690 C1930,670 1930,600 1915,555 C1895,620 1870,760 1866,985",
-      "M962,912 C1200,850 1600,810 1830,805",
-      "M1100,915 C1300,880 1600,820 1788,787"
-    ];
-
-    /* ====== RENDER SIGNATURES ====== */
+    /* ============================================================
+       FOOTER + RESUME SIGNATURES (small, drawn when visible)
+       ============================================================ */
     const sigs = $$('.sig').map(el => {
-      el.innerHTML = `<svg viewBox="${SIG_VIEWBOX}" role="img" aria-label="Handwritten signature of Divakar Balaji">${SIG_PATHS.map(d => `<path d="${d}"/>`).join('')}</svg>`;
+      el.innerHTML = `<svg viewBox="${SIG_VIEWBOX}" role="img" aria-label="Signature of Divakar Balaji">${SIG_PATHS.map(d => `<path d="${d}"/>`).join('')}</svg>`;
       const paths = $$('path', el);
       const lens = paths.map(p => Math.max(p.getTotalLength(), 12));
-      const total = lens.reduce((a, b) => a + b, 0);
-      paths.forEach((p, i) => {
-        p.style.strokeDasharray = lens[i] + 1;
-        p.style.strokeDashoffset = lens[i] + 1;
-      });
+      const total = lens.reduce((a,b)=>a+b, 0);
+      paths.forEach((p,i) => { p.style.strokeDasharray = lens[i] + 1; p.style.strokeDashoffset = lens[i] + 1; });
       return { el, paths, lens, total, mode: el.dataset.sig, raf: 0 };
     });
 
@@ -1224,44 +1205,32 @@
       const t0 = performance.now();
       (function tick(t) {
         const k = Math.min(1, (t - t0) / ms);
-        const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        const e = k < .5 ? 2*k*k : 1 - Math.pow(-2*k + 2, 2)/2;
         drawSig(s, e);
         if (k < 1) s.raf = requestAnimationFrame(tick);
       })(t0);
     }
 
-    /* ====== MAIN SIGNATURE (SCROLL-DRIVEN) ====== */
-    const sigMain = sigs.find(s => s.mode === 'scroll');
+    // Footer signature — play when it enters the viewport
     const sigFoot = sigs.find(s => s.mode === 'footer');
-    const bar = $('#sigbar');
-    const wrapEl = $('#signature');
-    let ticking = false, smooth = 0;
-
-    function onScroll() {
-      if (!wrapEl) return;
-      const r = wrapEl.getBoundingClientRect();
-      const target = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
-      smooth += (target - smooth) * (reduced ? 1 : .12);
-      if (sigMain) drawSig(sigMain, Math.min(1, smooth * 1.08));
-      if (bar) bar.style.transform = `scaleX(${smooth})`;
-      if (Math.abs(target - smooth) > .002) requestAnimationFrame(onScroll);
-      else ticking = false;
-    }
-
-    addEventListener('scroll', () => {
-      if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
-    }, { passive: true });
-    addEventListener('resize', onScroll);
-    onScroll();
-
-    /* ====== FOOTER SIGNATURE (PLAY ON VIEW) ====== */
     if (sigFoot) {
-      new IntersectionObserver((es, o) => es.forEach(e => {
+      new IntersectionObserver((es,o) => es.forEach(e => {
         if (e.isIntersecting) { playSig(sigFoot, 3200); o.disconnect(); }
       }), { threshold: .4 }).observe(sigFoot.el);
     }
 
-    /* ====== THEME SWITCHER ====== */
+    // Resume signature — play when resume modal opens
+    const sigResume = sigs.find(s => s.mode === 'resume');
+    function playResumeSig() {
+      if (!sigResume) return;
+      cancelAnimationFrame(sigResume.raf);
+      drawSig(sigResume, 0);
+      setTimeout(() => playSig(sigResume, 2400), 300);
+    }
+
+    /* ============================================================
+       THEME SWITCHER
+       ============================================================ */
     const themePanel = $('#themePanel'), themeToggle = $('#themeToggle');
     themeToggle.addEventListener('click', e => {
       e.stopPropagation();
@@ -1276,37 +1245,40 @@
       document.body.dataset.theme = sw.dataset.theme;
     }));
 
-    /* ====== HERO ROLE TYPING ====== */
+    /* ============================================================
+       HERO ROLE TYPING
+       ============================================================ */
     const roles = ['Web Developer | Backend Developer','PHP + MySQL Engineer','API & Systems Builder','AI Search Tinkerer'];
     const roleEl = $('#role');
     const sleep = ms => new Promise(r => setTimeout(r, ms));
     (async () => {
       if (reduced) return;
-      for (let i = 0; ; i = (i + 1) % roles.length) {
+      for (let i = 0; ; i = (i+1) % roles.length) {
         roleEl.textContent = '';
         for (const ch of roles[i]) { roleEl.textContent += ch; await sleep(55); }
         await sleep(1800);
-        while (roleEl.textContent.length) {
-          roleEl.textContent = roleEl.textContent.slice(0, -1);
-          await sleep(22);
-        }
+        while (roleEl.textContent.length) { roleEl.textContent = roleEl.textContent.slice(0,-1); await sleep(22); }
         await sleep(300);
       }
     })();
 
-    /* ====== FLIP CARD (TAP ON MOBILE) ====== */
+    /* ============================================================
+       FLIP CARD
+       ============================================================ */
     const flipCard = $('#flipCard');
     flipCard.addEventListener('click', () => flipCard.classList.toggle('flipped'));
 
-    /* ====== PROJECTS RENDER ====== */
+    /* ============================================================
+       PROJECTS
+       ============================================================ */
     const grid = $('#projectGrid');
-    grid.innerHTML = PROJECTS.map((p, i) => `
+    grid.innerHTML = PROJECTS.map((p,i) => `
       <button class="proj-card reveal" data-i="${i}">
-        <span class="proj-num">${String(i + 1).padStart(2, '0')} /</span>
+        <span class="proj-num">${String(i+1).padStart(2,'0')} /</span>
         <h3>${p.name}</h3>
         <p class="proj-desc">${p.short}</p>
         <p class="proj-problem"><b>Problem:</b> ${p.problem}</p>
-        <div class="proj-tags">${p.tech.slice(0, 4).map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
+        <div class="proj-tags">${p.tech.slice(0,4).map(t=>`<span class="proj-tag">${t}</span>`).join('')}</div>
       </button>`).join('');
 
     grid.addEventListener('click', e => {
@@ -1317,14 +1289,16 @@
         <p class="modal-tag">${p.short}</p>
         <h4>Problem</h4><p>${p.problem}</p>
         <h4>Solution</h4><p>${p.solution}</p>
-        <h4>Features</h4><ul>${p.features.map(f => `<li>${f}</li>`).join('')}</ul>
+        <h4>Features</h4><ul>${p.features.map(f=>`<li>${f}</li>`).join('')}</ul>
         <h4>Technologies</h4>
-        <div class="modal-tags">${p.tech.map(t => `<span class="modal-tag-chip">${t}</span>`).join('')}</div>
+        <div class="modal-tags">${p.tech.map(t=>`<span class="modal-tag-chip">${t}</span>`).join('')}</div>
         <h4>My Role</h4><p>${p.role}</p>`;
       openModal($('#pmodal'));
     });
 
-    /* ====== MODAL SYSTEM ====== */
+    /* ============================================================
+       MODAL SYSTEM
+       ============================================================ */
     let lastFocus;
     function openModal(m) {
       lastFocus = document.activeElement;
@@ -1338,26 +1312,30 @@
       lastFocus?.focus();
     }
     $$('.modal').forEach(m => {
-      m.addEventListener('click', e => {
-        if (e.target === m || e.target.closest('[data-close]')) closeModal(m);
-      });
+      m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) closeModal(m); });
     });
-    addEventListener('keydown', e => {
-      if (e.key === 'Escape') $$('.modal.show').forEach(closeModal);
-    });
+    addEventListener('keydown', e => { if (e.key === 'Escape') $$('.modal.show').forEach(closeModal); });
 
-    /* ====== RESUME ====== */
+    /* ============================================================
+       RESUME
+       ============================================================ */
     $$('[data-resume]').forEach(b => b.addEventListener('click', e => {
       e.preventDefault();
+      $('#menu').classList.remove('open');
       openModal($('#resumeModal'));
+      playResumeSig();
     }));
 
-    /* ====== NAV ====== */
+    /* ============================================================
+       NAV
+       ============================================================ */
     const burger = $('#burger'), menu = $('#menu');
     burger.addEventListener('click', () => menu.classList.toggle('open'));
     $$('#menu a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
 
-    /* ====== SCROLL: HEADER + PROGRESS + SPY ====== */
+    /* ============================================================
+       SCROLL: header, progress, spy
+       ============================================================ */
     const header = $('#header'), topbar = $('#progress-bar');
     addEventListener('scroll', () => {
       const sy = scrollY;
@@ -1367,29 +1345,33 @@
 
     const links = $$('#menu a[href^="#"]');
     const spy = new IntersectionObserver(es => es.forEach(e => {
-      if (e.isIntersecting) links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id));
+      if (e.isIntersecting) links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#'+e.target.id));
     }), { rootMargin: '-45% 0px -50% 0px' });
     $$('main section[id]').forEach(s => spy.observe(s));
 
-    /* ====== REVEAL ====== */
+    /* ============================================================
+       REVEAL
+       ============================================================ */
     const rv = new IntersectionObserver(es => es.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); rv.unobserve(e.target); }
     }), { threshold: .1 });
     $$('.reveal').forEach(el => rv.observe(el));
 
-    /* ====== CONTACT FORM ====== */
+    /* ============================================================
+       CONTACT FORM
+       ============================================================ */
     const MAIL_TO = 'divakarbalaji10@gmail.com';
     const cform = $('#contactForm'), fmsg = $('#formMsg'), sendBtn = $('#sendBtn'), success = $('#formSuccess');
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    const sendMail = f => fetch('https://formsubmit.co/ajax/' + MAIL_TO, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    const sendMail = f => fetch('https://formsubmit.co/ajax/'+MAIL_TO, {
+      method:'POST',
+      headers:{'Content-Type':'application/json',Accept:'application/json'},
       body: JSON.stringify({
-        name: f.name, email: f.email, message: f.message,
-        _honey: f._honey || '', _subject: 'Portfolio message from ' + f.name,
-        _replyto: f.email, _template: 'table', _captcha: 'false'
+        name:f.name, email:f.email, message:f.message,
+        _honey:f._honey||'', _subject:'Portfolio message from '+f.name,
+        _replyto:f.email, _template:'table', _captcha:'false'
       })
-    }).then(r => r.json()).then(d => d.success === true || d.success === 'true').catch(() => false);
+    }).then(r=>r.json()).then(d=>d.success===true||d.success==='true').catch(()=>false);
 
     cform.addEventListener('submit', async e => {
       e.preventDefault();
