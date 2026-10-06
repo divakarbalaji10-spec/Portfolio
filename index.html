@@ -12,7 +12,6 @@
 <style>
 /* ============ TOKENS (edit colours here) ============ */
 :root{
-  /* LIGHT THEME (default) */
   --bg:#f5f8fc; --bg2:#ffffff; --ink:#0f1b2a; --muted:#52657d;
   --gold:#0e7490; --gold-soft:rgba(14,116,144,.08);
   --green:#047857; --line:rgba(14,116,144,.22);
@@ -25,7 +24,6 @@
   --sans:'Manrope',system-ui,sans-serif;
   color-scheme:light;
 }
-/* DARK THEME: follows the visitor's system setting */
 @media (prefers-color-scheme:dark){
   :root{
     --bg:#05080f; --bg2:#0a111c; --ink:#e6f1ff; --muted:#8497b0;
@@ -79,24 +77,23 @@ nav ul a:hover,nav ul a.on{color:var(--gold)}
 .social a{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;transition:.25s;color:var(--muted)}
 .social a:hover{color:var(--gold);border-color:var(--gold)}
 .social svg{width:18px;height:18px;fill:currentColor}
-.portrait{position:relative;justify-self:center;width:min(320px,80%)}
+/* PORTRAIT (fixed: height:auto + 4/5 ratio so the photo is no longer stretched) */
+.portrait{position:relative;justify-self:center;width:min(340px,80%)}
 .portrait::before{content:"";position:absolute;inset:-12px 12px 12px -12px;border:1px solid var(--gold);opacity:.55;border-radius:12px}
-.portrait img{position:relative;width:100%;aspect-ratio:1/1.05;object-fit:cover;object-position:50% 88%;
+.portrait img{position:relative;display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 80%;
   border-radius:12px;filter:saturate(.9) contrast(1.03)}
 
 /* ============ 3D BACKGROUND (hero) ============ */
 .hero{position:relative;overflow:hidden}
 .hero .wrap{position:relative;z-index:1}
 .bg3d{position:absolute;inset:0;perspective:900px;pointer-events:none;z-index:0}
+#net{position:absolute;inset:0;width:100%;height:100%;display:block}
 .floor{position:absolute;left:-60%;right:-60%;bottom:-8%;height:62%;transform:rotateX(70deg);transform-origin:50% 100%;
   background:linear-gradient(var(--gold) 1px,transparent 1px) 0 0/64px 64px,linear-gradient(90deg,var(--gold) 1px,transparent 1px) 0 0/64px 64px;
   opacity:.28;-webkit-mask-image:linear-gradient(transparent,#000 70%);mask-image:linear-gradient(transparent,#000 70%);
   animation:floor 6s linear infinite}
 @keyframes floor{to{background-position:0 64px,0 0}}
 .scene{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .4s ease-out}
-.cube{position:absolute;transform-style:preserve-3d;animation:spin linear infinite}
-.cube i{position:absolute;inset:0;border:1px solid var(--gold);background:var(--gold-soft);opacity:.55}
-@keyframes spin{from{transform:rotateX(-20deg) rotateY(0)}to{transform:rotateX(340deg) rotateY(360deg)}}
 .box,.portrait{transition:transform .25s ease-out,border-color .25s}
 
 /* ============ SIGNATURE (scroll-written) ============ */
@@ -146,7 +143,6 @@ nav ul a:hover,nav ul a.on{color:var(--gold)}
 .contact{display:grid;grid-template-columns:1fr 1fr;gap:56px}
 .contact ul{list-style:none;margin-top:20px;display:grid;gap:10px}
 .contact li span{color:var(--muted);display:inline-block;width:90px;font-size:.9rem}
-/* ============ CONTACT FORM → ENVELOPE → SENT ============ */
 .mail{display:grid;position:relative;min-height:380px}
 .mail>*{grid-area:1/1}
 .mailform{display:grid;gap:14px;align-content:start;padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--glass);
@@ -279,7 +275,7 @@ footer .social{justify-content:center;margin:16px 0}
 <main>
 <!-- ============ HERO ============ -->
 <section class="hero" id="home">
-  <div class="bg3d" aria-hidden="true"><div class="floor"></div><div class="scene" id="scene"></div></div>
+  <div class="bg3d" aria-hidden="true"><div class="floor"></div><canvas id="net"></canvas><div class="scene" id="scene"></div></div>
   <div class="wrap">
     <div>
       <h1>Divakar<br>Balaji</h1>
@@ -291,12 +287,11 @@ footer .social{justify-content:center;margin:16px 0}
         <a class="btn" href="#contact">Contact Me</a>
       </div>
       <div class="social">
-        
         <a href="https://github.com/divakarbalaji10-spec" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
         <a href="https://www.linkedin.com/in/divakar-balaji-8233b7321" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg></a>
       </div>
     </div>
-    <div class="portrait"><img src="assets/profile.jpg" alt="Portrait of Divakar Balaji" width="600" height="800"></div>
+    <div class="portrait"><img src="assets/profile.jpg" alt="Portrait of Divakar Balaji" width="600" height="750"></div>
   </div>
 </section>
 
@@ -338,7 +333,7 @@ footer .social{justify-content:center;margin:16px 0}
   </div>
 </div></section>
 
-<!-- ============ PROJECTS (cards are generated from the PROJECTS array below) ============ -->
+<!-- ============ PROJECTS ============ -->
 <section id="projects"><div class="wrap rv">
   <h2>Projects</h2>
   <p class="lead">Systems built for real users. Open any project for the problem, the solution and my part in it.</p>
@@ -518,7 +513,7 @@ const PROJECTS = [
   role:"[Describe your contribution]",shots:[]}
 ];
 
-/* ============ SIGNATURE STROKES (traced from your signature) ============ */
+/* ============ SIGNATURE STROKES ============ */
 const SIG_VIEWBOX = "470 280 1480 720";
 const SIG_PATHS = [
  "M585,420 L590,490 C590,580 572,680 540,695 C505,680 495,590 520,500 C545,420 600,370 660,385 C700,400 690,450 640,520 C700,520 760,545 760,590 C755,640 680,685 600,712",
@@ -533,7 +528,6 @@ const SIG_PATHS = [
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (s,c=document)=>c.querySelector(s), $$ = (s,c=document)=>[...c.querySelectorAll(s)];
 
-/* Build signature SVGs and give every path a dash length */
 const sigs = $$('.sig').map(el=>{
   el.innerHTML = `<svg viewBox="${SIG_VIEWBOX}" role="img" aria-label="Handwritten signature of Divakar Balaji">${SIG_PATHS.map(d=>`<path d="${d}"/>`).join('')}</svg>`;
   const paths = $$('path',el);
@@ -542,7 +536,6 @@ const sigs = $$('.sig').map(el=>{
   paths.forEach((p,i)=>{p.style.strokeDasharray=lens[i]+1;p.style.strokeDashoffset=lens[i]+1});
   return {el,paths,lens,total,mode:el.dataset.sig,raf:0};
 });
-/* progress 0..1 → pen position across all strokes, in order */
 function drawSig(s,p){
   let done = p*s.total, c = 0;
   s.paths.forEach((path,i)=>{
@@ -551,7 +544,6 @@ function drawSig(s,p){
     c += s.lens[i];
   });
 }
-/* time-based writing (used inside the resume letter) */
 function playSig(s,ms=2600){
   cancelAnimationFrame(s.raf);
   if(reduced) return drawSig(s,1);
@@ -569,7 +561,6 @@ let ticking=false, smooth=0;
 function onScroll(){
   const r = wrapEl.getBoundingClientRect();
   const target = Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
-  /* ease toward the target so the pen glides instead of jumping */
   smooth += (target-smooth)*(reduced?1:.12);
   drawSig(sigMain,Math.min(1,smooth*1.08)); bar.style.transform=`scaleX(${smooth})`;
   if(Math.abs(target-smooth)>.002) requestAnimationFrame(onScroll); else ticking=false;
@@ -577,10 +568,8 @@ function onScroll(){
 addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});
 addEventListener('resize',onScroll); onScroll();
 
-/* Footer signature: writes itself automatically, once, when it appears */
 new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){playSig(sigFoot,3200);o.disconnect()}}),{threshold:.6}).observe(sigFoot.el);
 
-/* Resume letter signature: waits until the reader scrolls down to it, then writes itself automatically (once) */
 const paperEl = $('.paper'); let letterSigPlayed=false;
 paperEl.addEventListener('scroll',()=>{
   if(letterSigPlayed) return;
@@ -620,7 +609,6 @@ $$('.modal').forEach(m=>{
 });
 addEventListener('keydown',e=>{if(e.key==='Escape')$$('.modal.show').forEach(closeModal)});
 
-/* Resume: open letter → unfold → write signature */
 const letter = $('#letter');
 $$('[data-resume]').forEach(b=>b.addEventListener('click',e=>{
   e.preventDefault(); $('#menu').classList.remove('open');
@@ -629,16 +617,9 @@ $$('[data-resume]').forEach(b=>b.addEventListener('click',e=>{
   paperEl.scrollTop=0; letterSigPlayed=false; cancelAnimationFrame(sigLetter.raf); drawSig(sigLetter,0);
 }));
 
-/* ============ 3D BACKGROUND + TILT ============ */
+/* ============ TILT + FLOOR ============ */
 const scene=$('#scene');
-[{s:90,l:'7%',t:'20%',d:30},{s:56,l:'46%',t:'10%',d:38},{s:120,l:'80%',t:'58%',d:44},{s:44,l:'18%',t:'68%',d:26}].forEach(c=>{
-  const el=document.createElement('div'); el.className='cube';
-  el.style.cssText=`width:${c.s}px;height:${c.s}px;left:${c.l};top:${c.t};animation-duration:${c.d}s`;
-  el.innerHTML=['rotateY(0)','rotateY(90deg)','rotateY(180deg)','rotateY(-90deg)','rotateX(90deg)','rotateX(-90deg)']
-    .map(t=>`<i style="transform:${t} translateZ(${c.s/2}px)"></i>`).join('');
-  scene.appendChild(el);
-});
-if(reduced) $$('.cube,.floor').forEach(e=>e.style.animation='none');
+if(reduced) $$('.floor').forEach(e=>e.style.animation='none');
 const heroEl=$('#home');
 if(!reduced && matchMedia('(hover:hover)').matches){
   heroEl.addEventListener('pointermove',e=>{
@@ -664,8 +645,8 @@ const spy=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.
 $$('main section[id]').forEach(s=>spy.observe(s));
 const rv=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rv.unobserve(e.target)}}),{threshold:.12});
 $$('.rv').forEach(el=>rv.observe(el));
+
 /* ============ CONTACT: fold → envelope → send → "sent" ============ */
-/* Uses FormSubmit.co (free). First submission sends ONE activation email to the address below: click "Activate". */
 const MAIL_TO='divakarbalaji10@gmail.com';
 const mail=$('#mail'), cform=$('#contactForm'), fmsg=$('#fmsg'), sendBtn=$('#sendBtn'), wait=ms=>new Promise(r=>setTimeout(r,ms));
 const sendMail=f=>fetch('https://formsubmit.co/ajax/'+MAIL_TO,{
@@ -677,18 +658,73 @@ const resetMail=()=>mail.classList.remove('folding','closing','flying','done');
 cform.addEventListener('submit',async e=>{
   e.preventDefault(); if(sendBtn.disabled) return;
   fmsg.textContent=''; sendBtn.disabled=true;
-  const req=sendMail(Object.fromEntries(new FormData(cform)));   // starts right away
-  mail.classList.add('folding');  await wait(800);                // letter folds into the envelope
-  mail.classList.add('closing');  await wait(1000);               // letter slides in, flap closes
+  const req=sendMail(Object.fromEntries(new FormData(cform)));
+  mail.classList.add('folding');  await wait(800);
+  mail.classList.add('closing');  await wait(1000);
   if(await req){
-    mail.classList.add('flying'); await wait(950);                // envelope flies away
-    mail.classList.add('done');                                   // tick draws, "Message sent"
+    mail.classList.add('flying'); await wait(950);
+    mail.classList.add('done');
   }else{
     resetMail(); sendBtn.disabled=false;
     fmsg.textContent='Could not send right now. Please try again, or email '+MAIL_TO+' directly.';
   }
 });
 $('#again').addEventListener('click',()=>{resetMail();cform.reset();sendBtn.disabled=false});
+
+/* ============ TECHNICAL 3D NETWORK GLOBE ============ */
+(()=>{
+const cv=document.getElementById('net'),ctx=cv.getContext('2d'),hero=document.getElementById('home');
+let W,H,dpr,mx=0,my=0,tx=0,ty=0,t=0,vis=true;
+const N=150,pts=[],edges=[];
+for(let i=0;i<N;i++){const y=1-2*(i+.5)/N,r=Math.sqrt(1-y*y),a=i*2.39996;pts.push([Math.cos(a)*r,y,Math.sin(a)*r])}
+for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){
+  if(Math.hypot(pts[i][0]-pts[j][0],pts[i][1]-pts[j][1],pts[i][2]-pts[j][2])<.42)edges.push([i,j])}
+const rings=[0,1,2].map(i=>({tilt:[.4,1.1,-.7][i],sp:[1,-.7,.5][i],r:1.28+i*.12,
+  p:Array.from({length:120},(_,k)=>{const a=k/120*Math.PI*2;return[Math.cos(a),0,Math.sin(a)]})}));
+const pulses=Array.from({length:16},()=>({e:Math.random()*edges.length|0,k:Math.random(),s:.006+Math.random()*.008}));
+const dust=Array.from({length:55},()=>({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*2e-4,vy:(Math.random()-.5)*2e-4}));
+function size(){dpr=Math.min(devicePixelRatio||1,2);const r=hero.getBoundingClientRect();
+  W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
+function rotX(p,a){const c=Math.cos(a),s=Math.sin(a);return[p[0],p[1]*c-p[2]*s,p[1]*s+p[2]*c]}
+function proj(p,R,cx,cy,ry,rx){let x=p[0],y=p[1],z=p[2],c=Math.cos(ry),s=Math.sin(ry);
+  const x2=x*c+z*s,z2=-x*s+z*c;const q=rotX([x2,y,z2],rx);const k=2.6/(2.6+q[2]);
+  return[cx+q[0]*R*k,cy+q[1]*R*k,q[2],k]}
+function frame(){
+  if(!reduced)t+=.004; mx+=(tx-mx)*.05; my+=(ty-my)*.05;
+  const col=getComputedStyle(document.documentElement).getPropertyValue('--gold').trim()||'#22d3ee';
+  ctx.clearRect(0,0,W,H); ctx.strokeStyle=col; ctx.fillStyle=col; ctx.lineWidth=1;
+  const mob=W<860,R=Math.min(W,H)*(mob?.3:.36),cx=mob?W/2:W*.7,cy=H*.52,ry=t*2+mx,rx=.35+my;
+  /* particle plexus */
+  dust.forEach(d=>{d.x=(d.x+d.vx+1)%1;d.y=(d.y+d.vy+1)%1});
+  for(let i=0;i<dust.length;i++){const a=dust[i];
+    ctx.globalAlpha=.35;ctx.fillRect(a.x*W,a.y*H,1.6,1.6);
+    for(let j=i+1;j<dust.length;j++){const b=dust[j],d=Math.hypot((a.x-b.x)*W,(a.y-b.y)*H);
+      if(d<110){ctx.globalAlpha=.14*(1-d/110);ctx.beginPath();ctx.moveTo(a.x*W,a.y*H);ctx.lineTo(b.x*W,b.y*H);ctx.stroke()}}}
+  /* globe links + nodes */
+  const P=pts.map(p=>proj(p,R,cx,cy,ry,rx));
+  edges.forEach(([a,b])=>{const A=P[a],B=P[b];
+    ctx.globalAlpha=Math.max(.04,.17-.15*(A[2]+B[2])/2);
+    ctx.beginPath();ctx.moveTo(A[0],A[1]);ctx.lineTo(B[0],B[1]);ctx.stroke()});
+  P.forEach(p=>{ctx.globalAlpha=Math.max(.15,.5-.4*p[2]);ctx.beginPath();ctx.arc(p[0],p[1],1.4*p[3],0,7);ctx.fill()});
+  /* data packets */
+  pulses.forEach(u=>{u.k+=u.s;if(u.k>1){u.k=0;u.e=Math.random()*edges.length|0}
+    const A=P[edges[u.e][0]],B=P[edges[u.e][1]],x=A[0]+(B[0]-A[0])*u.k,y=A[1]+(B[1]-A[1])*u.k;
+    ctx.globalAlpha=.95;ctx.beginPath();ctx.arc(x,y,2.4,0,7);ctx.fill();
+    ctx.globalAlpha=.18;ctx.beginPath();ctx.arc(x,y,6,0,7);ctx.fill()});
+  /* orbit rings + satellites */
+  rings.forEach((g,i)=>{
+    const Q=g.p.map(p=>proj(rotX([p[0]*g.r,0,p[2]*g.r],g.tilt),R,cx,cy,ry*g.sp,rx));
+    ctx.globalAlpha=.28;ctx.beginPath();Q.forEach((q,n)=>n?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.closePath();ctx.stroke();
+    const s=Q[Math.floor(((t*(1.5+i)*40)%120+120)%120)];
+    ctx.globalAlpha=1;ctx.beginPath();ctx.arc(s[0],s[1],3.2,0,7);ctx.fill()});
+  ctx.globalAlpha=1;
+  if(vis&&!reduced)requestAnimationFrame(frame)
+}
+size(); addEventListener('resize',size); frame();
+new IntersectionObserver(e=>{const was=vis;vis=e[0].isIntersecting;if(vis&&!was&&!reduced)requestAnimationFrame(frame)}).observe(hero);
+if(!reduced&&matchMedia('(hover:hover)').matches)hero.addEventListener('pointermove',e=>{
+  const r=hero.getBoundingClientRect();tx=((e.clientX-r.left)/r.width-.5)*.9;ty=((e.clientY-r.top)/r.height-.5)*.4});
+})();
 </script>
 </body>
 </html>
