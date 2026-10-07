@@ -334,7 +334,7 @@
     /* 3D FLIP CARD */
     .hero-visual { perspective: 1400px; display: grid; place-items: center; justify-self: center; }
     .flip-card {
-      width: min(380px, 88vw); aspect-ratio: 4/5;
+      width: min(340px, 80vw); aspect-ratio: 1;
       position: relative;
       transform-style: preserve-3d;
       transition: transform 0.9s cubic-bezier(.4,.2,.2,1);
@@ -352,7 +352,7 @@
       display: grid; place-items: center;
     }
     .flip-front .avatar {
-      width: 70%; aspect-ratio: 1; border-radius: 50%;
+      width: 88%; aspect-ratio: 1; border-radius: 50%;
       background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3));
       display: grid; place-items: center;
       font-family: 'Syne', sans-serif; font-weight: 800;
@@ -437,19 +437,15 @@
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
     .about-text p { color: var(--muted); margin-bottom: 18px; font-size: 1.02rem; }
     .about-text p strong { color: var(--ink); font-weight: 600; }
-    .enjoy-list { list-style: none; display: grid; gap: 14px; margin-top: 8px; }
+    .enjoy-list { list-style: none; display: grid; gap: 4px; margin-top: 8px; }
     .enjoy-list li {
-      display: flex; align-items: center; gap: 14px;
-      padding: 14px 18px; border-radius: 12px;
-      background: var(--surface); border: 1px solid var(--line);
-      font-size: 0.95rem; transition: all .3s;
+      display: flex; align-items: center; gap: 12px;
+      padding: 8px 0; font-size: 1rem; color: var(--ink);
+      transition: transform .3s, color .3s;
     }
-    .enjoy-list li:hover { transform: translateX(6px); border-color: var(--accent); background: var(--surface-2); }
+    .enjoy-list li:hover { transform: translateX(6px); color: var(--accent-2); }
     .enjoy-list .check {
-      width: 26px; height: 26px; border-radius: 8px;
-      background: var(--accent); color: var(--on-accent);
-      display: grid; place-items: center; font-size: 0.8rem;
-      flex-shrink: 0; font-weight: 700;
+      color: var(--accent); font-size: 0.9rem; font-weight: 700; flex-shrink: 0;
     }
 
     /* ===== SKILLS ===== */
@@ -482,7 +478,40 @@
     }
 
     /* ===== PROJECTS ===== */
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 26px; }
+    /* Projects timeline: wavy graph line with a dot per project */
+    .proj-timeline { position: relative; display: grid; gap: 64px; }
+    .proj-svg { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; z-index: 0; }
+    .proj-svg path { fill: none; stroke-linecap: round; }
+    .proj-svg .pl-base { stroke: var(--line); stroke-width: 3; stroke-dasharray: 2 9; }
+    .proj-svg .pl-fill { stroke-width: 3.5; filter: drop-shadow(0 0 6px var(--glow)); }
+    .proj-body {
+      position: relative; z-index: 1; width: calc(50% - 70px); opacity: 0;
+      transition: opacity .7s, transform .8s cubic-bezier(.2,.8,.2,1);
+    }
+    .proj-body:nth-of-type(odd) { justify-self: start; transform: translateX(-60px); }
+    .proj-body:nth-of-type(even) { justify-self: end; transform: translateX(60px); }
+    .proj-body.visible { opacity: 1; transform: none; }
+    .proj-body .proj-card { width: 100%; }
+    .proj-dot {
+      position: absolute; z-index: 2; width: 18px; height: 18px; margin: -9px 0 0 -9px;
+      border-radius: 50%; background: var(--bg); border: 3px solid var(--line);
+      transition: all .45s cubic-bezier(.2,.8,.2,1);
+    }
+    .proj-dot.on {
+      background: var(--accent); border-color: var(--accent-2); transform: scale(1.2);
+      box-shadow: 0 0 0 6px var(--glow), 0 0 22px var(--glow);
+    }
+    .proj-dot.on::after {
+      content: ""; position: absolute; inset: -3px; border-radius: 50%;
+      border: 2px solid var(--accent-2); animation: dotPing 1.4s ease-out 1;
+    }
+    @keyframes dotPing { to { transform: scale(2.8); opacity: 0; } }
+    .proj-conn {
+      position: absolute; z-index: 1; height: 2px; margin-top: -1px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transform: scaleX(0); transition: transform .5s .15s cubic-bezier(.2,.8,.2,1);
+    }
+    .proj-conn.on { transform: scaleX(1); }
     .proj-card {
       padding: 30px; border-radius: var(--radius);
       background: var(--surface); border: 1px solid var(--line);
@@ -883,9 +912,14 @@
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
-      .hero .wrap { grid-template-columns: 1fr; gap: 50px; }
+      .hero { min-height: auto; padding: 100px 0 50px; }
+      .hero .wrap { grid-template-columns: 1fr; gap: 28px; }
       .hero-visual { order: -1; }
-      .flip-card { width: min(300px, 75vw); }
+      .flip-card { width: min(260px, 68vw); }
+      .proj-timeline { gap: 40px; }
+      .proj-body { width: calc(100% - 52px); }
+      .proj-body:nth-of-type(odd), .proj-body:nth-of-type(even) { justify-self: end; transform: translateX(40px); }
+      .proj-body.visible { transform: none; }
       .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
       .burger { display: grid; place-items: center; }
       nav ul {
@@ -1066,7 +1100,7 @@
           <h2>Things I've <span class="highlight">built</span></h2>
           <p>Systems built for real users. Open any project for the problem, the solution and my part in it.</p>
         </div>
-        <div class="projects-grid" id="projectGrid"></div>
+        <div class="proj-timeline" id="projectGrid"></div>
       </div>
     </section>
 
@@ -1100,19 +1134,12 @@
       </div>
     </section>
 
-    <!-- ===== BUILD ===== -->
-    <section id="build">
+    <!-- ===== MOMENTS & ACHIEVEMENTS ===== -->
+    <section id="moments">
       <div class="wrap">
         <div class="sec-head reveal">
-          <span class="sec-tag">// 05 — Services</span>
-          <h2>What I <span class="highlight">build</span></h2>
-        </div>
-        <div class="build-grid">
-          <div class="build-card reveal"><span class="build-icon">🗄️</span><h3>Backend Systems</h3><p>Database-driven applications, APIs and business workflows.</p></div>
-          <div class="build-card reveal"><span class="build-icon">🎓</span><h3>Education Platforms</h3><p>Admission, fees, attendance, marks and student management.</p></div>
-          <div class="build-card reveal"><span class="build-icon">📊</span><h3>Management Systems</h3><p>Custom administrative and workflow-based applications.</p></div>
-          <div class="build-card reveal"><span class="build-icon">🔍</span><h3>AI-Powered Search</h3><p>Vector-based search and matching systems.</p></div>
-          <div class="build-card reveal"><span class="build-icon">💳</span><h3>Payment Systems</h3><p>Payment integration, transaction tracking and receipt generation.</p></div>
+          <span class="sec-tag">// 05 — Moments</span>
+          <h2>Moments &amp; <span class="highlight">Achievements</span></h2>
         </div>
       </div>
     </section>
@@ -1459,13 +1486,85 @@
        ============================================================ */
     const grid = $('#projectGrid');
     grid.innerHTML = PROJECTS.map((p,i) => `
-      <button class="proj-card reveal" data-i="${i}">
-        <span class="proj-num">${String(i+1).padStart(2,'0')} /</span>
-        <h3>${p.name}</h3>
-        <p class="proj-desc">${p.short}</p>
-        <p class="proj-problem"><b>Problem:</b> ${p.problem}</p>
-        <div class="proj-tags">${p.tech.slice(0,4).map(t=>`<span class="proj-tag">${t}</span>`).join('')}</div>
-      </button>`).join('');
+      <div class="proj-body">
+        <button class="proj-card" data-i="${i}">
+          <span class="proj-num">${String(i+1).padStart(2,'0')} /</span>
+          <h3>${p.name}</h3>
+          <p class="proj-desc">${p.short}</p>
+          <p class="proj-problem"><b>Problem:</b> ${p.problem}</p>
+          <div class="proj-tags">${p.tech.slice(0,4).map(t=>`<span class="proj-tag">${t}</span>`).join('')}</div>
+        </button>
+      </div>`).join('');
+
+    /* ---- Timeline: wavy line drawn on scroll, one dot per project ---- */
+    const tl = { fill:null, total:0, pts:[], dots:[], conns:[], bodies:[] };
+    function buildTimeline() {
+      $$('.proj-svg, .proj-dot, .proj-conn', grid).forEach(n => n.remove());
+      const W = grid.offsetWidth, H = grid.offsetHeight;
+      const bodies = $$('.proj-body', grid);
+      const desktop = innerWidth > 900;
+      const cx = desktop ? W / 2 : 18, amp = desktop ? 34 : 8;
+      const pts = bodies.map((b,i) => ({ x: cx + (i % 2 ? amp : -amp), y: b.offsetTop + 46 }));
+      const y0 = Math.max(0, pts[0].y - 70);
+      let d = `M${cx},${y0}`, prev = { x: cx, y: y0 };
+      pts.forEach(p => { const my = (prev.y + p.y) / 2; d += ` C${prev.x},${my} ${p.x},${my} ${p.x},${p.y}`; prev = p; });
+
+      grid.insertAdjacentHTML('afterbegin',
+        `<svg class="proj-svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-hidden="true">
+          <defs><linearGradient id="pgrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="${H}">
+            <stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent-2)"/>
+          </linearGradient></defs>
+          <path class="pl-base" d="${d}"/><path class="pl-fill" d="${d}" stroke="url(#pgrad)"/>
+        </svg>`);
+
+      const fill = $('.pl-fill', grid);
+      const total = fill.getTotalLength();
+      fill.style.strokeDasharray = total;
+      fill.style.strokeDashoffset = total;
+
+      const dots = [], conns = [];
+      pts.forEach((p,i) => {
+        const b = bodies[i];
+        grid.insertAdjacentHTML('beforeend', `<span class="proj-dot" style="left:${p.x}px;top:${p.y}px"></span>`);
+        dots.push(grid.lastElementChild);
+        const right = b.offsetLeft > p.x;
+        const edge = right ? b.offsetLeft : b.offsetLeft + b.offsetWidth;
+        const left = right ? p.x : edge, width = Math.abs(edge - p.x);
+        grid.insertAdjacentHTML('beforeend',
+          `<span class="proj-conn" style="left:${left}px;top:${p.y}px;width:${width}px;transform-origin:${right ? 'left' : 'right'} center"></span>`);
+        conns.push(grid.lastElementChild);
+      });
+      Object.assign(tl, { fill, total, pts, dots, conns, bodies });
+    }
+
+    function lenAtY(y) {
+      let lo = 0, hi = tl.total;
+      for (let k = 0; k < 22; k++) {
+        const m = (lo + hi) / 2;
+        if (tl.fill.getPointAtLength(m).y < y) lo = m; else hi = m;
+      }
+      return hi;
+    }
+
+    function updateTimeline() {
+      if (!tl.fill) return;
+      const r = grid.getBoundingClientRect();
+      const y = Math.max(0, innerHeight * 0.65 - r.top);
+      tl.fill.style.strokeDashoffset = tl.total - lenAtY(y);
+      tl.pts.forEach((p,i) => {
+        const on = y >= p.y;
+        tl.dots[i].classList.toggle('on', on);
+        tl.conns[i].classList.toggle('on', on);
+        tl.bodies[i].classList.toggle('visible', on);
+      });
+    }
+
+    let tlRaf = 0, tlResize = 0;
+    addEventListener('scroll', () => { cancelAnimationFrame(tlRaf); tlRaf = requestAnimationFrame(updateTimeline); }, { passive: true });
+    addEventListener('resize', () => { clearTimeout(tlResize); tlResize = setTimeout(() => { buildTimeline(); updateTimeline(); }, 150); });
+    addEventListener('load', () => { buildTimeline(); updateTimeline(); });
+    document.fonts?.ready.then(() => { buildTimeline(); updateTimeline(); });
+    buildTimeline(); updateTimeline();
 
     grid.addEventListener('click', e => {
       const c = e.target.closest('.proj-card'); if (!c) return;
