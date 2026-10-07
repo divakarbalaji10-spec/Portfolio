@@ -12,6 +12,10 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* Hide scrollbars everywhere (scrolling still works) */
+    html, body, * { scrollbar-width: none; -ms-overflow-style: none; }
+    *::-webkit-scrollbar, html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
     :root {
       --bg: #0b0f19;
       --bg2: #131a2b;
@@ -334,9 +338,7 @@
       position: relative;
       transform-style: preserve-3d;
       transition: transform 0.9s cubic-bezier(.4,.2,.2,1);
-      cursor: pointer;
     }
-    .flip-card:hover, .flip-card.flipped { transform: rotateY(180deg); }
     .flip-face {
       position: absolute; inset: 0;
       border-radius: 24px; overflow: hidden;
@@ -346,7 +348,7 @@
       box-shadow: 0 30px 60px rgba(0,0,0,.4);
     }
     .flip-front {
-      background: linear-gradient(145deg, var(--surface), var(--surface-2));
+      background: none; border: none; box-shadow: none; overflow: visible;
       display: grid; place-items: center;
     }
     .flip-front .avatar {
@@ -360,8 +362,9 @@
       position: relative;
     }
     .flip-front .avatar img {
+      position: absolute; inset: 0;
       width: 100%; height: 100%; border-radius: 50%;
-      object-fit: cover; display: block;
+      object-fit: cover; object-position: center top; display: block;
     }
     .flip-front .avatar::after {
       content: ""; position: absolute; inset: -12px;
@@ -579,9 +582,9 @@
     .contact-list .val { font-size: 0.95rem; font-weight: 500; }
 
     .contact-form {
-      padding: 36px; border-radius: var(--radius);
-      background: var(--surface); border: 1px solid var(--line);
-      display: grid; gap: 18px; position: relative; overflow: hidden;
+      padding: 8px; border-radius: var(--radius);
+      background: none; border: none; box-shadow: none;
+      display: grid; gap: 18px; position: relative; overflow: visible;
     }
     .contact-form h3 { font-size: 1.4rem; margin-bottom: 4px; }
     .contact-form .form-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 8px; }
@@ -682,7 +685,7 @@
     /* send stage overlay inside the form */
     .send-stage {
       position: absolute; inset: 0; z-index: 10;
-      background: var(--surface); border-radius: var(--radius);
+      background: var(--bg); border-radius: var(--radius);
       display: grid; place-items: center; padding: 24px;
       opacity: 0; visibility: hidden; transition: opacity .35s, visibility .35s;
     }
@@ -858,6 +861,8 @@
       60% { opacity: 1; }
       100% { opacity: 1; transform: perspective(1200px) rotateX(0) translateY(0) scaleY(1); }
     }
+    .resume-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 8px; }
+    .resume-actions .btn { padding: 12px 22px; font-size: .88rem; }
     .resume-paper h2 { font-size: 2rem; margin-bottom: 4px; }
     .resume-paper .sub { color: var(--accent); font-weight: 600; margin-bottom: 18px; font-size: 0.95rem; }
     .resume-paper h4 {
@@ -972,17 +977,7 @@
           <div class="flip-card" id="flipCard">
             <div class="flip-face flip-front">
               <div class="avatar"><img src="assets/profile.jpg" alt="Divakar Balaji" onerror="this.replaceWith('DB')"></div>
-              <span class="front-label">// hover to flip</span>
             </div>
-            <div class="flip-face flip-back">
-              <h3>Divakar Balaji</h3>
-              <div class="back-line"><b>ROLE</b> Backend Developer</div>
-              <div class="back-line"><b>STACK</b> PHP · MySQL · JS</div>
-              <div class="back-line"><b>FOCUS</b> Education Systems</div>
-              <div class="back-line"><b>EXP</b> 2 years internship</div>
-              <div class="back-line"><b>LOC</b> Erode, India</div>
-            </div>
-            <span class="flip-hint">↻ hover / tap to flip</span>
           </div>
         </div>
       </div>
@@ -1235,6 +1230,11 @@
         <h2>Divakar B</h2>
         <p class="sub">Full-Stack Web Developer | PHP Backend Developer</p>
 
+        <div class="resume-actions">
+          <a class="btn btn-primary" href="assets/Divakar-Balaji-Resume.pdf" target="_blank" rel="noopener">📄 View Full Resume</a>
+          <a class="btn btn-ghost" href="assets/Divakar-Balaji-Resume.pdf" download="Divakar-Balaji-Resume.pdf">⬇ Download Resume</a>
+        </div>
+
         <h4>Objective</h4>
         <p>To keep improving my technical skills, learn new technologies and grow into a better developer who contributes to the company's growth.</p>
 
@@ -1453,12 +1453,6 @@
         await sleep(300);
       }
     })();
-
-    /* ============================================================
-       FLIP CARD
-       ============================================================ */
-    const flipCard = $('#flipCard');
-    flipCard.addEventListener('click', () => flipCard.classList.toggle('flipped'));
 
     /* ============================================================
        PROJECTS
