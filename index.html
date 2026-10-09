@@ -929,21 +929,23 @@
     /* Spider-Noir: black & white photo look */
     body[data-theme="2"] .avatar img, body[data-theme="2"] .logo-mark img { filter: grayscale(1) contrast(1.1); }
 
-    /* ===== MOMENTS & ACHIEVEMENTS (vertical tree) ===== */
-    .moment-tree { position: relative; display: grid; gap: 44px; max-width: 860px; }
-    .moment-tree::before {            /* dotted trunk */
-      content: ""; position: absolute; left: 18px; top: 0; bottom: 0; width: 3px; margin-left: -1.5px;
-      background: repeating-linear-gradient(180deg, var(--line) 0 3px, transparent 3px 11px);
+    /* ===== MOMENTS & ACHIEVEMENTS (horizontal tree, drawn while you scroll) ===== */
+    #moments { padding-bottom: 0; }
+    .moment-scroll { position: relative; height: 230vh; }
+    .moment-sticky {
+      position: sticky; top: 70px; height: calc(100vh - 70px); overflow: hidden;
+      display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
     }
-    .moment-fill {                    /* glowing trunk, grows as you scroll */
-      position: absolute; left: 18px; top: 0; width: 3.5px; height: 0; margin-left: -1.75px; border-radius: 3px;
-      background: linear-gradient(180deg, var(--accent), var(--accent-2)); box-shadow: 0 0 10px var(--glow);
+    .moment-hz {
+      position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+      column-gap: 20px; row-gap: 88px; width: max(min(100%, 1320px), 1240px);
+      margin: 0 auto; padding: 0 40px; flex-shrink: 0; will-change: transform;
     }
     .moment-root {
-      position: relative; z-index: 2; justify-self: start; text-align: left;
-      padding: 18px 26px; border-radius: var(--radius);
+      grid-column: 1 / -1; grid-row: 1; justify-self: center; text-align: center;
+      padding: 16px 26px; border-radius: var(--radius);
       background: var(--surface); border: 1px solid var(--accent);
-      box-shadow: 0 16px 40px var(--glow); max-width: 100%;
+      box-shadow: 0 16px 40px var(--glow); position: relative; z-index: 2;
     }
     .moment-root b { display: block; font-family: 'Syne', sans-serif; font-size: 1.15rem; }
     .moment-root span {
@@ -951,52 +953,66 @@
       font-family: 'JetBrains Mono', monospace; font-size: .74rem;
       background: var(--accent); color: var(--on-accent);
     }
+    .mh-stub, .mh-trunk, .mh-fill, .mh-stubfill { position: absolute; }
+    .mh-trunk { height: 3px; background: repeating-linear-gradient(90deg, var(--line) 0 3px, transparent 3px 11px); }
+    .mh-stub { width: 3px; margin-left: -1.5px; background: repeating-linear-gradient(180deg, var(--line) 0 3px, transparent 3px 11px); }
+    .mh-fill {
+      height: 3.5px; width: 0; border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2)); box-shadow: 0 0 10px var(--glow);
+    }
+    .mh-stubfill {
+      width: 3.5px; height: 0; margin-left: -1.75px; border-radius: 3px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2)); box-shadow: 0 0 10px var(--glow);
+    }
     .moment-node {
-      position: relative; width: calc(100% - 52px); justify-self: end;
-      opacity: 0; transform: translateX(70px);
-      transition: opacity .7s, transform .8s cubic-bezier(.2,.8,.2,1);
+      grid-row: 2; position: relative; align-self: start;
+      opacity: 0; transform: translateY(-26px);
+      transition: opacity .6s, transform .7s cubic-bezier(.2,.8,.2,1);
     }
     .moment-node.on { opacity: 1; transform: none; }
-    .moment-node::before {            /* dot on the trunk */
-      content: ""; position: absolute; top: 44px; left: -43px; width: 18px; height: 18px; margin-top: -9px;
+    .moment-node::before {            /* branch hanging from the trunk */
+      content: ""; position: absolute; left: 50%; top: -44px; width: 3px; height: 44px; margin-left: -1.5px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      transform: scaleY(0); transform-origin: top; transition: transform .5s .1s cubic-bezier(.2,.8,.2,1);
+    }
+    .moment-node.on::before { transform: scaleY(1); }
+    .moment-node::after {             /* dot on the trunk */
+      content: ""; position: absolute; left: 50%; top: -44px; width: 18px; height: 18px; margin: -9px 0 0 -9px;
       border-radius: 50%; background: var(--bg); border: 3px solid var(--line); z-index: 2;
       transition: all .45s cubic-bezier(.2,.8,.2,1);
     }
-    .moment-node.on::before {
+    .moment-node.on::after {
       background: var(--accent); border-color: var(--accent-2); transform: scale(1.2);
       box-shadow: 0 0 0 5px var(--glow), 0 0 20px var(--glow);
     }
-    .moment-node::after {             /* branch from trunk to card */
-      content: ""; position: absolute; top: 44px; left: -34px; width: 34px; height: 2px; margin-top: -1px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      transform: scaleX(0); transform-origin: left; transition: transform .5s .15s cubic-bezier(.2,.8,.2,1);
-    }
-    .moment-node.on::after { transform: scaleX(1); }
     .moment-card {
-      display: block; width: 100%;
-      border-radius: var(--radius); overflow: hidden; text-align: left;
+      display: block; width: 100%; border-radius: var(--radius); overflow: hidden; text-align: left;
       background: var(--surface); border: 1px solid var(--line);
       transition: transform .4s cubic-bezier(.2,.8,.2,1), border-color .3s, box-shadow .4s;
       cursor: pointer; color: inherit; font: inherit; padding: 0;
     }
-    .moment-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 24px 50px var(--glow); }
+    .moment-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 24px 50px var(--glow); }
     .moment-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-    .moment-photo { position: relative; overflow: hidden; background: var(--surface-2); }
-    .moment-photo img { width: 100%; height: auto; max-height: 460px; object-fit: cover; object-position: center 30%; display: block; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
-    .moment-card:hover .moment-photo img { transform: scale(1.04); }
+    .moment-photo { position: relative; height: 150px; overflow: hidden; background: var(--surface-2); }
+    .moment-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+    .moment-card:hover .moment-photo img { transform: scale(1.05); }
     .moment-badge {
-      position: absolute; top: 14px; left: 14px;
-      font-family: 'JetBrains Mono', monospace; font-size: .72rem; letter-spacing: .06em;
-      padding: 6px 12px; border-radius: 100px;
+      position: absolute; top: 10px; left: 10px;
+      font-family: 'JetBrains Mono', monospace; font-size: .66rem; letter-spacing: .05em;
+      padding: 4px 10px; border-radius: 100px;
       background: var(--accent); color: var(--on-accent); box-shadow: 0 6px 16px var(--glow);
     }
-    .moment-info { padding: 20px 22px 24px; }
-    .moment-info h3 { font-size: 1.15rem; margin-bottom: 8px; }
-    .moment-info p { color: var(--muted); font-size: .92rem; }
+    .moment-info { padding: 14px 16px 18px; }
+    .moment-info h3 { font-size: 1rem; margin-bottom: 6px; }
+    .moment-info p {
+      color: var(--muted); font-size: .84rem; line-height: 1.5;
+      display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+    }
     .modal-photo {
       width: 100%; max-height: 60vh; object-fit: contain; display: block;
       border-radius: 12px; margin: 8px 0 18px; background: var(--surface);
     }
+
     /* ===== CINEMATIC SCENES (resume + send) ===== */
     .send-stage, .resume-stage { overflow: hidden; }
     .send-stage { background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.35) 100%), var(--bg); }
@@ -1268,7 +1284,11 @@
           <h2>Moments &amp; <span class="highlight">Achievements</span></h2>
           <p>Proud moments from my journey at SkyneTBee Pvt Ltd Enterprises. Tap any photo to see it bigger.</p>
         </div>
-        <div class="moment-tree" id="momentGrid"></div>
+        </div>
+      <div class="moment-scroll" id="momentScroll">
+        <div class="moment-sticky">
+          <div class="moment-hz" id="momentGrid"></div>
+        </div>
       </div>
     </section>
 
@@ -1869,22 +1889,25 @@
        MOMENTS & ACHIEVEMENTS
        ============================================================ */
     const MOMENTS = [
-      { img:"assets/moment-2.jpg", badge:"First salary", title:"My first month salary", text:"I received my first month salary at SkyneTBee Pvt Ltd Enterprises. The CEO gave it to me, and my mother was with me. It was a very proud day for my family and me." },
-      { img:"assets/moment-1.jpg", badge:"First project", title:"My first project presentation", text:"I presented my first project at SkyneTBee Pvt Ltd Enterprises. It was a big step for me, and I learned a lot from it." },
-      { img:"assets/moment-4.jpg", badge:"Gold medal", title:"My first gold medal", text:"I received my first gold medal from the CEO of SkyneTBee. It made me want to work even harder." },
-      { img:"assets/moment-5.jpg", badge:"Team visit", title:"NVIDIA Expo, Coimbatore", text:"Our SkyneTBee team visited the NVIDIA expo in Coimbatore. We learned about new technology and had a great day together." },
-      { img:"assets/moment-3.jpg", badge:"Gold medal", title:"Second gold medal: Most Promising Developer", text:"I won my second gold medal, the Most Promising Developer medal. It was given by the founder and chairman of the RD Institution, who is also the father of the SkyneTBee CEO." }
+      { img:"assets/moment-2.jpg", pos:"50% 40%", badge:"First salary", title:"My first month salary", text:"I received my first month salary at SkyneTBee Pvt Ltd Enterprises. The CEO gave it to me, and my mother was with me. It was a very proud day for my family and me." },
+      { img:"assets/moment-1.jpg", pos:"78% 40%", badge:"First project", title:"My first project presentation", text:"I presented my first project at SkyneTBee Pvt Ltd Enterprises. It was a big step for me, and I learned a lot from it." },
+      { img:"assets/moment-4.jpg", pos:"50% 55%", badge:"Gold medal", title:"My first gold medal", text:"I received my first gold medal from the CEO of SkyneTBee. It made me want to work even harder." },
+      { img:"assets/moment-5.jpg", pos:"50% 40%", badge:"Team visit", title:"NVIDIA Expo, Coimbatore", text:"Our SkyneTBee team visited the NVIDIA expo in Coimbatore. We learned about new technology and had a great day together." },
+      { img:"assets/moment-3.jpg", pos:"50% 35%", badge:"Gold medal", title:"Second gold medal: Most Promising Developer", text:"I won my second gold medal, the Most Promising Developer medal. It was given by the founder and chairman of the RD Institution, who is also the father of the SkyneTBee CEO." }
     ];
-    const momentGrid = $('#momentGrid');
+    const momentGrid = $('#momentGrid'), momentScroll = $('#momentScroll');
+    const momentSticky = $('.moment-sticky', momentScroll);
     momentGrid.innerHTML = `
-      <aside class="moment-root reveal">
+      <aside class="moment-root">
         <b>SkyneTBee Pvt Ltd Enterprises</b>
         <span>🏆 Best Startup Award 2022 · National Level</span>
-      </aside>` + MOMENTS.map((m,i) => `
+      </aside>
+      <div class="mh-stub" id="mhStub"></div><div class="mh-stubfill" id="mhStubFill"></div>
+      <div class="mh-trunk" id="mhTrunk"></div><div class="mh-fill" id="mhFill"></div>` + MOMENTS.map((m,i) => `
       <div class="moment-node">
         <button class="moment-card" data-i="${i}" aria-label="Open photo: ${m.title}">
           <div class="moment-photo">
-            <img src="${m.img}" alt="${m.title}" loading="lazy">
+            <img src="${m.img}" alt="${m.title}" loading="lazy" style="object-position:${m.pos}">
             <span class="moment-badge">${m.badge}</span>
           </div>
           <div class="moment-info">
@@ -1893,20 +1916,55 @@
           </div>
         </button>
       </div>`).join('');
-    momentGrid.insertAdjacentHTML('afterbegin', '<div class="moment-fill" id="momentFill"></div>');
-    const momentFill = $('#momentFill'), momentNodes = $$('.moment-node', momentGrid);
-    function updateMoments() {
-      const r = momentGrid.getBoundingClientRect();
-      const y = Math.max(0, innerHeight * 0.65 - r.top);           // how far down the tree we've scrolled
-      momentFill.style.height = Math.min(r.height, y) + 'px';
-      momentNodes.forEach(n => n.classList.toggle('on', y >= n.offsetTop + 44));
+
+    /* The tree is drawn while you scroll: the section stays pinned, the
+       line grows left → right, each branch drops its card when the line
+       reaches it, and scrolling back up hides them again. On narrow
+       screens the "camera" pans sideways to follow the line. */
+    const mhStub = $('#mhStub'), mhStubFill = $('#mhStubFill'), mhTrunk = $('#mhTrunk'), mhFill = $('#mhFill');
+    const momentNodes = $$('.moment-node', momentGrid), momentRoot = $('.moment-root', momentGrid);
+    const clamp01 = v => Math.min(1, Math.max(0, v));
+    const HZ = { x0:0, x1:0, ty:0, cx:0, stubH:0, nodeX:[] };
+
+    function layoutMoments() {
+      const f = momentNodes[0], l = momentNodes[momentNodes.length - 1];
+      HZ.ty = f.offsetTop - 44;
+      HZ.x0 = f.offsetLeft + f.offsetWidth / 2;
+      HZ.x1 = l.offsetLeft + l.offsetWidth / 2;
+      HZ.cx = momentGrid.offsetWidth / 2;
+      const stubTop = momentRoot.offsetTop + momentRoot.offsetHeight;
+      HZ.stubH = HZ.ty - stubTop;
+      HZ.nodeX = momentNodes.map(n => n.offsetLeft + n.offsetWidth / 2);
+      mhTrunk.style.cssText = `left:${HZ.x0}px;top:${HZ.ty - 1.5}px;width:${HZ.x1 - HZ.x0}px`;
+      mhFill.style.left = HZ.x0 + 'px'; mhFill.style.top = (HZ.ty - 1.75) + 'px';
+      mhStub.style.cssText = `left:${HZ.cx}px;top:${stubTop}px;height:${HZ.stubH}px`;
+      mhStubFill.style.left = HZ.cx + 'px'; mhStubFill.style.top = stubTop + 'px';
     }
+
+    function updateMoments() {
+      const r = momentScroll.getBoundingClientRect();
+      const total = r.height - momentSticky.offsetHeight;
+      const p = total > 0 ? clamp01((70 - r.top) / total) : 0;           // 0 → 1 while pinned
+      mhStubFill.style.height = HZ.stubH * clamp01(p / .08) + 'px';      // root drops its stem first
+      const trunkP = clamp01((p - .06) / .86);
+      const fw = (HZ.x1 - HZ.x0) * trunkP;
+      mhFill.style.width = fw + 'px';                                    // line grows to the right
+      momentNodes.forEach((n, i) => n.classList.toggle('on', trunkP > 0 && fw >= HZ.nodeX[i] - HZ.x0 - 1));
+
+      const vw = momentSticky.clientWidth, hzW = momentGrid.offsetWidth;
+      if (hzW > vw + 1) {                                                // small screen: pan along with the line
+        const camHead = HZ.x0 + fw + vw * .12;
+        const camX = HZ.cx + (camHead - HZ.cx) * smooth(clamp01((p - .05) / .12));
+        momentGrid.style.transform = `translateX(${-Math.min(hzW - vw, Math.max(0, camX - vw / 2))}px)`;
+      } else momentGrid.style.transform = '';
+    }
+    const refreshMoments = () => { layoutMoments(); updateMoments(); };
     let momRaf = 0;
     addEventListener('scroll', () => { cancelAnimationFrame(momRaf); momRaf = requestAnimationFrame(updateMoments); }, { passive: true });
-    addEventListener('resize', updateMoments);
-    addEventListener('load', updateMoments);
-    $$('img', momentGrid).forEach(i => i.addEventListener('load', updateMoments));
-    updateMoments();
+    addEventListener('resize', refreshMoments);
+    addEventListener('load', refreshMoments);
+    document.fonts?.ready.then(refreshMoments);
+    refreshMoments();
 
     momentGrid.addEventListener('click', e => {
       const c = e.target.closest('.moment-card'); if (!c) return;
