@@ -931,9 +931,13 @@
 
     /* ===== MOMENTS & ACHIEVEMENTS (vertical tree) ===== */
     .moment-tree { position: relative; display: grid; gap: 44px; max-width: 860px; }
-    .moment-tree::before {            /* trunk */
+    .moment-tree::before {            /* dotted trunk */
       content: ""; position: absolute; left: 18px; top: 0; bottom: 0; width: 3px; margin-left: -1.5px;
-      background: linear-gradient(180deg, var(--accent), var(--accent-2), transparent);
+      background: repeating-linear-gradient(180deg, var(--line) 0 3px, transparent 3px 11px);
+    }
+    .moment-fill {                    /* glowing trunk, grows as you scroll */
+      position: absolute; left: 18px; top: 0; width: 3.5px; height: 0; margin-left: -1.75px; border-radius: 3px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2)); box-shadow: 0 0 10px var(--glow);
     }
     .moment-root {
       position: relative; z-index: 2; justify-self: start; text-align: left;
@@ -947,16 +951,27 @@
       font-family: 'JetBrains Mono', monospace; font-size: .74rem;
       background: var(--accent); color: var(--on-accent);
     }
-    .moment-node { position: relative; width: calc(100% - 52px); justify-self: end; }
+    .moment-node {
+      position: relative; width: calc(100% - 52px); justify-self: end;
+      opacity: 0; transform: translateX(70px);
+      transition: opacity .7s, transform .8s cubic-bezier(.2,.8,.2,1);
+    }
+    .moment-node.on { opacity: 1; transform: none; }
     .moment-node::before {            /* dot on the trunk */
       content: ""; position: absolute; top: 44px; left: -43px; width: 18px; height: 18px; margin-top: -9px;
-      border-radius: 50%; background: var(--accent); border: 3px solid var(--bg);
-      box-shadow: 0 0 0 4px var(--glow), 0 0 20px var(--glow); z-index: 2;
+      border-radius: 50%; background: var(--bg); border: 3px solid var(--line); z-index: 2;
+      transition: all .45s cubic-bezier(.2,.8,.2,1);
+    }
+    .moment-node.on::before {
+      background: var(--accent); border-color: var(--accent-2); transform: scale(1.2);
+      box-shadow: 0 0 0 5px var(--glow), 0 0 20px var(--glow);
     }
     .moment-node::after {             /* branch from trunk to card */
       content: ""; position: absolute; top: 44px; left: -34px; width: 34px; height: 2px; margin-top: -1px;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transform: scaleX(0); transform-origin: left; transition: transform .5s .15s cubic-bezier(.2,.8,.2,1);
     }
+    .moment-node.on::after { transform: scaleX(1); }
     .moment-card {
       display: block; width: 100%;
       border-radius: var(--radius); overflow: hidden; text-align: left;
@@ -982,6 +997,38 @@
       width: 100%; max-height: 60vh; object-fit: contain; display: block;
       border-radius: 12px; margin: 8px 0 18px; background: var(--surface);
     }
+    /* ===== CINEMATIC SCENES (resume + send) ===== */
+    .send-stage, .resume-stage { overflow: hidden; }
+    .send-stage { background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.35) 100%), var(--bg); }
+    .resume-stage { background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.35) 100%), var(--bg2); }
+    .send-stage::before, .send-stage::after, .resume-stage::before, .resume-stage::after {
+      content: ""; position: absolute; left: 0; right: 0; height: 11%; background: #000; z-index: 8;
+      transition: transform .6s cubic-bezier(.2,.8,.2,1); pointer-events: none;
+    }
+    .send-stage::before, .resume-stage::before { top: 0; transform: translateY(-100%); }
+    .send-stage::after, .resume-stage::after { bottom: 0; transform: translateY(100%); }
+    .send-stage.cine::before, .send-stage.cine::after, .resume-stage.cine::before, .resume-stage.cine::after { transform: none; }
+    .strand { stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; opacity: 0; filter: drop-shadow(0 0 4px var(--glow)); }
+    .blob { opacity: 0; transition: opacity .15s; }
+    .blob line, .blob circle { stroke: var(--ink); stroke-width: 1.5; fill: none; }
+    .env-wrap { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 6; pointer-events: none; overflow: visible; }
+    .wrap-line {
+      stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; fill: none;
+      stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .35s ease;
+      filter: drop-shadow(0 0 3px var(--glow));
+    }
+    .wrap-line.on { stroke-dashoffset: 0; }
+    #speed { opacity: 0; }
+    #speed line { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; opacity: .8; }
+    .flash { position: absolute; inset: 0; z-index: 9; background: #fff; opacity: 0; pointer-events: none; }
+    .flash.go { animation: flashGo .6s ease-out; }
+    @keyframes flashGo { 0% { opacity: 0; } 15% { opacity: .9; } 100% { opacity: 0; } }
+    .env.pop { animation: envPop .55s cubic-bezier(.2,.9,.3,1.2) both; }
+    #resumeScene .env { left: 60px; top: 45px; }
+    .count-bar { width: 180px; height: 4px; border-radius: 100px; background: var(--surface-2); margin: 0 auto; overflow: hidden; }
+    .count-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transform-origin: left; animation: countDrain 3s linear forwards; }
+    @keyframes countDrain { to { transform: scaleX(0); } }
+
     /* ===== REVEAL ===== */
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s, transform .7s cubic-bezier(.2,.8,.2,1); }
     .reveal.visible { opacity: 1; transform: none; }
@@ -1265,20 +1312,24 @@
               <div class="send-anim" id="sendAnim">
                 <div class="web-scene" id="webScene">
                   <svg class="web-svg" viewBox="0 0 320 220" aria-hidden="true">
-                    <line id="webLine" x1="316" y1="4" x2="316" y2="4"/>
-                    <g id="webBlob"></g>
+                    <g id="speed"></g>
+                    <line class="strand" id="webLine" x1="316" y1="4" x2="316" y2="4"/>
+                    <line class="strand" id="webLine2" x1="4" y1="216" x2="4" y2="216"/>
+                    <g class="blob" id="webBlob"></g>
                   </svg>
                   <div class="env mini" id="sendEnv"></div>
                   <span class="thwip" id="thwip">THWIP!</span>
                 </div>
-                <p class="send-text">Sending<span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
+                <p class="send-text"><span id="sendStatus">Sending</span><span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
               </div>
+              <div class="flash" id="flash"></div>
               <div class="form-success" id="formSuccess">
                 <div class="check-circle">✓</div>
                 <h3>Message sent!</h3>
                 <p>Thanks for reaching out. I'll get back to you soon.</p>
                 <div class="sent-preview"><b id="sentFrom">Your message</b><span id="sentText"></span></div>
-                <button type="button" class="btn btn-ghost" id="sendAnother">Send another</button>
+                <p>The form reopens in <b id="countNum">3</b>s</p>
+                <div class="count-bar"><i></i></div>
               </div>
             </div>
           </form>
@@ -1337,8 +1388,15 @@
 
       <!-- Envelope that opens first -->
       <div class="resume-stage" id="resumeStage">
-        <div class="env" id="resumeEnv"></div>
-        <p class="stage-label">// a letter from Divakar</p>
+        <div class="web-scene" id="resumeScene">
+          <svg class="web-svg" viewBox="0 0 320 220" aria-hidden="true">
+            <line class="strand" id="rLine" x1="316" y1="4" x2="316" y2="4"/>
+            <g class="blob" id="rBlob"></g>
+          </svg>
+          <div class="env" id="resumeEnv"></div>
+          <span class="thwip" id="rThwip">THWIP!</span>
+        </div>
+        <p class="stage-label" id="resumeLabel">// a letter from Divakar</p>
       </div>
 
       <div class="resume-paper" id="resumePaper">
@@ -1455,7 +1513,13 @@
       <div class="env-flap"></div>
       <div class="env-seal">✉</div>`;
     $('#resumeEnv').innerHTML = ENV_HTML;
-    $('#sendEnv').innerHTML = ENV_HTML;
+    const WRAP_SVG = `<svg class="env-wrap" viewBox="0 0 170 110" aria-hidden="true">
+        <line class="wrap-line" pathLength="1" x1="8" y1="6" x2="162" y2="104"/>
+        <line class="wrap-line" pathLength="1" x1="162" y1="6" x2="8" y2="104"/>
+        <line class="wrap-line" pathLength="1" x1="6" y1="55" x2="164" y2="55"/>
+        <circle class="wrap-line" pathLength="1" cx="85" cy="55" r="13"/>
+      </svg>`;
+    $('#sendEnv').innerHTML = ENV_HTML + WRAP_SVG;
 
     /* ============================================================
        FOOTER + RESUME SIGNATURES (small, drawn when visible)
@@ -1505,19 +1569,62 @@
        envelope pops in → flap opens → letter rises → envelope drops
        away → letter unfolds → signature is written
        ============================================================ */
-    let resumeTimers = [];
-    function clearResumeTimers() { resumeTimers.forEach(clearTimeout); resumeTimers = []; }
+    /* ---------- shared web-animation helpers ---------- */
+    const easeOut = k => 1 - Math.pow(1 - k, 3);
+    const smooth  = k => k * k * (3 - 2 * k);
+    const tweenT = (ms, fn, alive) => new Promise(res => {
+      const t0 = performance.now();
+      (function f(t) {
+        if (!alive()) return res(false);
+        const k = Math.min(1, (t - t0) / ms);
+        fn(k);
+        k < 1 ? requestAnimationFrame(f) : res(true);
+      })(t0);
+    });
+    const sleepT = (ms, alive) => new Promise(res => setTimeout(() => res(alive()), ms));
+    const setStrand = (el, x, y, o = 1) => { el.setAttribute('x2', x); el.setAttribute('y2', y); el.style.opacity = o; };
+    const setBlob = (g, x, y, s) => g.setAttribute('transform', `translate(${x} ${y}) scale(${s})`);
+    const fillBlob = g => {
+      g.innerHTML = [0,1,2,3,4,5,6,7].map(i => {
+        const a = i * Math.PI / 4;
+        return `<line x1="0" y1="0" x2="${(26*Math.cos(a)).toFixed(1)}" y2="${(26*Math.sin(a)).toFixed(1)}"/>`;
+      }).join('') + '<circle r="9"/><circle r="18"/><circle r="26"/>';
+    };
 
-    function playResumeLetter() {
-      const stage = $('#resumeStage'), env = $('#resumeEnv'), paper = $('#resumePaper');
+    /* ============================================================
+       RESUME — cinematic: letterbox bars, a web shoots out, grabs the
+       envelope flap and rips it open, the letter slides out, then the
+       resume unfolds and the signature is written
+       ============================================================ */
+    let resumeTimers = [], resumeToken = 0;
+    function clearResumeTimers() { resumeToken++; resumeTimers.forEach(clearTimeout); resumeTimers = []; }
+
+    const rLine = $('#rLine'), rBlob = $('#rBlob'), rThwip = $('#rThwip');
+    fillBlob(rBlob);
+    const ENV_TOP = 45, FLAP_H = 72.8, LETTER_RISE = 71;
+    const flapTipY = deg => ENV_TOP + FLAP_H * Math.cos(deg * Math.PI / 180);
+
+    function resetResumeScene() {
+      const env = $('#resumeEnv');
+      env.classList.remove('pop'); env.style.transform = ''; env.style.opacity = '';
+      const flap = $('.env-flap', env), letter = $('.env-letter', env), seal = $('.env-seal', env);
+      flap.style.transform = ''; flap.style.zIndex = '';
+      letter.style.transform = ''; seal.style.transition = ''; seal.style.opacity = '';
+      rLine.style.opacity = 0; rBlob.style.opacity = 0;
+      rThwip.classList.remove('show');
+    }
+
+    async function playResumeLetter() {
+      const stage = $('#resumeStage'), env = $('#resumeEnv'), paper = $('#resumePaper'), label = $('#resumeLabel');
       clearResumeTimers();
+      const tok = resumeToken, alive = () => tok === resumeToken;
       if (sigResume) { cancelAnimationFrame(sigResume.raf); drawSig(sigResume, 0); }
       $('#resumeContent').scrollTop = 0;
 
-      stage.classList.remove('done');
-      env.classList.remove('opening');
-      paper.classList.remove('unfold');
-      paper.style.opacity = '';
+      stage.classList.remove('done', 'cine');
+      paper.classList.remove('unfold'); paper.style.opacity = '';
+      resetResumeScene();
+      label.textContent = '// a letter from Divakar';
 
       if (reduced) {
         stage.classList.add('done');
@@ -1526,14 +1633,49 @@
         return;
       }
 
+      const flap = $('.env-flap', env), letter = $('.env-letter', env), seal = $('.env-seal', env);
       void env.offsetWidth;
-      env.classList.add('opening');
+      stage.classList.add('cine');
+      env.classList.add('pop');
+      if (!await sleepT(950, alive)) return;
+      env.classList.remove('pop');
 
-      resumeTimers.push(setTimeout(() => {
-        stage.classList.add('done');
-        paper.classList.add('unfold');
-      }, 2500));
-      resumeTimers.push(setTimeout(() => sigResume && playSig(sigResume, 2400), 3500));
+      // 1) THWIP — web shoots from the corner onto the flap tip
+      label.textContent = '// THWIP!';
+      rThwip.classList.add('show');
+      await tweenT(300, k => {
+        const e = easeOut(k);
+        setStrand(rLine, 316 + (160 - 316) * e, 4 + (flapTipY(0) - 4) * e);
+      }, alive);
+      if (!alive()) return;
+      setBlob(rBlob, 160, flapTipY(0), .55); rBlob.style.opacity = 1;
+      seal.style.transition = 'opacity .3s'; seal.style.opacity = 0;
+      if (!await sleepT(380, alive)) return;
+
+      // 2) web yanks the flap open
+      label.textContent = '// opening the letter…';
+      await tweenT(950, k => {
+        const d = 180 * smooth(k), y = flapTipY(d);
+        flap.style.transform = `rotateX(${d}deg)`;
+        flap.style.zIndex = d > 90 ? 1 : 4;
+        setStrand(rLine, 160, y); setBlob(rBlob, 160, y, .55);
+        env.style.transform = `translate(${(Math.sin(k * 22) * (1 - k) * 2.5).toFixed(2)}px,0)`;
+      }, alive);
+      if (!alive()) return;
+      env.style.transform = '';
+
+      // 3) web lets go, letter slides out
+      await tweenT(240, k => { rLine.style.opacity = 1 - k; rBlob.style.opacity = 1 - k; }, alive);
+      if (!alive()) return;
+      rThwip.classList.remove('show');
+      label.textContent = '// reading the letter…';
+      await tweenT(850, k => { letter.style.transform = `translateY(${-LETTER_RISE * easeOut(k)}px)`; }, alive);
+      if (!await sleepT(250, alive)) return;
+
+      // 4) the resume unfolds
+      stage.classList.add('done');
+      paper.classList.add('unfold');
+      resumeTimers.push(setTimeout(() => sigResume && playSig(sigResume, 2400), 1000));
     }
 
     /* ============================================================
@@ -1739,7 +1881,7 @@
         <b>SkyneTBee Pvt Ltd Enterprises</b>
         <span>🏆 Best Startup Award 2022 · National Level</span>
       </aside>` + MOMENTS.map((m,i) => `
-      <div class="moment-node reveal">
+      <div class="moment-node">
         <button class="moment-card" data-i="${i}" aria-label="Open photo: ${m.title}">
           <div class="moment-photo">
             <img src="${m.img}" alt="${m.title}" loading="lazy">
@@ -1751,6 +1893,21 @@
           </div>
         </button>
       </div>`).join('');
+    momentGrid.insertAdjacentHTML('afterbegin', '<div class="moment-fill" id="momentFill"></div>');
+    const momentFill = $('#momentFill'), momentNodes = $$('.moment-node', momentGrid);
+    function updateMoments() {
+      const r = momentGrid.getBoundingClientRect();
+      const y = Math.max(0, innerHeight * 0.65 - r.top);           // how far down the tree we've scrolled
+      momentFill.style.height = Math.min(r.height, y) + 'px';
+      momentNodes.forEach(n => n.classList.toggle('on', y >= n.offsetTop + 44));
+    }
+    let momRaf = 0;
+    addEventListener('scroll', () => { cancelAnimationFrame(momRaf); momRaf = requestAnimationFrame(updateMoments); }, { passive: true });
+    addEventListener('resize', updateMoments);
+    addEventListener('load', updateMoments);
+    $$('img', momentGrid).forEach(i => i.addEventListener('load', updateMoments));
+    updateMoments();
+
     momentGrid.addEventListener('click', e => {
       const c = e.target.closest('.moment-card'); if (!c) return;
       const m = MOMENTS[c.dataset.i];
@@ -1771,8 +1928,9 @@
     $$('.reveal').forEach(el => rv.observe(el));
 
     /* ============================================================
-       CONTACT FORM — letter drops into the envelope, a web shoots
-       out, sticks to it and yanks it away, then "Message sent!"
+       CONTACT FORM — cinematic send: letter packed, sealed with web,
+       THWIP strands, slingshot launch, flash — then "Message sent!"
+       and the form comes back by itself after 3 seconds
        ============================================================ */
     const MAIL_TO = 'divakarbalaji10@gmail.com';
     const cform = $('#contactForm'), fmsg = $('#formMsg'), sendBtn = $('#sendBtn');
@@ -1787,75 +1945,116 @@
       })
     }).then(r=>r.json()).then(d=>d.success===true||d.success==='true').catch(()=>false);
 
-    /* ---------- WEB-SLING SEND ANIMATION ---------- */
-    const WO = { x:316, y:4 }, WC = { x:160, y:110 };   // web origin (top-right) and envelope centre
-    const webLine = $('#webLine'), webBlob = $('#webBlob'), thwip = $('#thwip');
-    webBlob.innerHTML = [0,1,2,3,4,5,6,7].map(i => {
-      const a = i * Math.PI / 4;
-      return `<line x1="0" y1="0" x2="${(26*Math.cos(a)).toFixed(1)}" y2="${(26*Math.sin(a)).toFixed(1)}"/>`;
-    }).join('') + '<circle r="9"/><circle r="18"/><circle r="26"/>';
+    const WO = { x:316, y:4 }, WB = { x:4, y:216 }, WC = { x:160, y:110 };   // web origin, anchor, envelope centre
+    const webLine = $('#webLine'), webLine2 = $('#webLine2'), webBlob = $('#webBlob'), thwip = $('#thwip');
+    const speedG = $('#speed'), scene = $('#webScene'), flashEl = $('#flash'), statusEl = $('#sendStatus');
+    fillBlob(webBlob);
+    speedG.innerHTML = [-22,-13,-4,5,14,23].map(y => `<line x1="-20" y1="${y}" x2="${-90 - Math.abs(y) * 2}" y2="${y}"/>`).join('');
 
-    let webToken = 0;
-    const easeOut = k => 1 - Math.pow(1 - k, 3);
-    const smooth  = k => k * k * (3 - 2 * k);
-    const tween = (ms, fn, tok) => new Promise(res => {
-      const t0 = performance.now();
-      (function f(t) {
-        if (tok !== webToken) return res();
-        const k = Math.min(1, (t - t0) / ms);
-        fn(k);
-        k < 1 ? requestAnimationFrame(f) : res();
-      })(t0);
-    });
-    const setLine = (x, y, o = 1) => {
-      webLine.setAttribute('x2', x); webLine.setAttribute('y2', y); webLine.style.opacity = o;
-    };
-    const setBlob = (x, y, s) => webBlob.setAttribute('transform', `translate(${x} ${y}) scale(${s})`);
+    let sendToken = 0, countTimers = [];
+    function clearCount() { countTimers.forEach(t => { clearTimeout(t); clearInterval(t); }); countTimers = []; }
 
     function resetWeb() {
       sendEnv.classList.remove('sending');
-      sendEnv.style.transform = ''; sendEnv.style.opacity = '';
-      setLine(WO.x, WO.y, 0);
-      webBlob.style.opacity = 0; setBlob(WC.x, WC.y, 1);
-      thwip.classList.remove('show');
+      sendEnv.style.transform = ''; sendEnv.style.opacity = ''; sendEnv.style.filter = '';
+      setStrand(webLine, WO.x, WO.y, 0); setStrand(webLine2, WB.x, WB.y, 0);
+      webBlob.style.opacity = 0; setBlob(webBlob, WC.x, WC.y, 1);
+      speedG.style.opacity = 0; scene.style.transform = '';
+      $$('.wrap-line', sendEnv).forEach(l => { l.classList.remove('on'); l.style.transitionDelay = ''; });
+      thwip.classList.remove('show'); flashEl.classList.remove('go');
+      statusEl.textContent = 'Sending';
     }
 
     async function playWebSend() {
-      const tok = ++webToken;
-      resetWeb();
-      void sendEnv.offsetWidth;
-      sendEnv.classList.add('sending');            // letter drops in, flap closes
-      await sleep(1700); if (tok !== webToken) return;
+      const tok = ++sendToken, alive = () => tok === sendToken;
+      resetWeb(); void sendEnv.offsetWidth;
+      stage.classList.add('cine');
 
-      thwip.classList.add('show');                 // THWIP! the web shoots out
-      await tween(300, k => {
+      // 1) letter drops into the envelope, flap closes
+      sendEnv.classList.add('sending');
+      statusEl.textContent = 'Packing your letter';
+      if (!await sleepT(1500, alive)) return;
+
+      // 2) sealed with web
+      statusEl.textContent = 'Sealing with web';
+      $$('.wrap-line', sendEnv).forEach((l, i) => { l.style.transitionDelay = (i * 0.12) + 's'; l.classList.add('on'); });
+      if (!await sleepT(750, alive)) return;
+
+      // 3) THWIP — two strands attach
+      statusEl.textContent = 'THWIP!';
+      thwip.classList.add('show');
+      await tweenT(280, k => {
         const e = easeOut(k);
-        setLine(WO.x + (WC.x - WO.x) * e, WO.y + (WC.y - WO.y) * e);
-      }, tok);
-      if (tok !== webToken) return;
+        setStrand(webLine, WO.x + (WC.x - WO.x) * e, WO.y + (WC.y - WO.y) * e);
+      }, alive);
+      if (!alive()) return;
+      setBlob(webBlob, WC.x, WC.y, .7); webBlob.style.opacity = 1;
+      if (!await sleepT(150, alive)) return;
+      await tweenT(220, k => {
+        const e = easeOut(k);
+        setStrand(webLine2, WB.x + (WC.x - WB.x) * e, WB.y + (WC.y - WB.y) * e);
+      }, alive);
+      if (!alive()) return;
 
-      setBlob(WC.x, WC.y, 1); webBlob.style.opacity = 1;   // web sticks to the letter
-      await sleep(250); if (tok !== webToken) return;
+      // 4) tension — pulled back like a slingshot, camera shakes
+      statusEl.textContent = 'Hold tight';
+      const P0 = { x:-24, y:16 };
+      await tweenT(500, k => {
+        const e = smooth(k), dx = P0.x * e, dy = P0.y * e;
+        sendEnv.style.transform = `translate(${dx}px,${dy}px) rotate(${-5 * e}deg) scale(${1 - .07 * e})`;
+        setStrand(webLine, WC.x + dx, WC.y + dy); setStrand(webLine2, WC.x + dx, WC.y + dy);
+        setBlob(webBlob, WC.x + dx, WC.y + dy, .7);
+        scene.style.transform = `translate(${((Math.random() - .5) * 3 * e).toFixed(2)}px,${((Math.random() - .5) * 3 * e).toFixed(2)}px)`;
+      }, alive);
+      if (!alive()) return;
 
-      await tween(800, k => {                      // web pulls the letter away
-        const e = smooth(k);
-        const x = WC.x + (WO.x - WC.x) * e, y = WC.y + (WO.y - WC.y) * e;
-        const s = 1 - e * .75;
-        sendEnv.style.transform = `translate(${x - WC.x}px,${y - WC.y}px) rotate(${e * 25}deg) scale(${s})`;
-        sendEnv.style.opacity = 1 - Math.max(0, (k - .7) / .3);
-        setBlob(x, y, s);
-        setLine(x, y, 1 - Math.max(0, (k - .8) * 5));
-      }, tok);
-      if (tok !== webToken) return;
-      webBlob.style.opacity = 0; thwip.classList.remove('show');
+      // 5) release — launched toward the corner with speed lines and motion blur
+      statusEl.textContent = 'Delivering';
+      const S = { x:WC.x + P0.x, y:WC.y + P0.y }, T = { x:352, y:-34 };
+      const ang = Math.atan2(T.y - S.y, T.x - S.x) * 180 / Math.PI;
+      await tweenT(560, k => {
+        const e = k * k * k, x = S.x + (T.x - S.x) * e, y = S.y + (T.y - S.y) * e;
+        const sc = .93 - .65 * e;
+        sendEnv.style.transform = `translate(${x - WC.x}px,${y - WC.y}px) rotate(${-5 + 30 * e}deg) scale(${sc})`;
+        sendEnv.style.filter = `blur(${(e * 3).toFixed(1)}px)`;
+        sendEnv.style.opacity = 1 - Math.max(0, (k - .85) / .15);
+        setStrand(webLine, x, y, 1 - Math.max(0, (k - .8) * 5));
+        setStrand(webLine2, x, y, Math.max(0, 1 - k * 6));
+        setBlob(webBlob, x, y, .7 * sc);
+        speedG.setAttribute('transform', `translate(${x} ${y}) rotate(${ang})`);
+        speedG.style.opacity = (Math.min(1, k * 3) * (1 - Math.max(0, (k - .9) * 10)) * .9).toFixed(2);
+        scene.style.transform = `translate(${((Math.random() - .5) * 5 * e).toFixed(2)}px,${((Math.random() - .5) * 5 * e).toFixed(2)}px)`;
+      }, alive);
+      if (!alive()) return;
+
+      // 6) impact flash
+      scene.style.transform = '';
+      flashEl.classList.add('go');
+      thwip.classList.remove('show'); webBlob.style.opacity = 0; speedG.style.opacity = 0;
+      statusEl.textContent = 'Delivered';
+      await sleepT(300, alive);
     }
 
     function resetSendStage() {
-      webToken++;
+      sendToken++;
+      clearCount();
       resetWeb();
-      stage.classList.remove('show');
+      stage.classList.remove('show', 'cine');
       success.classList.remove('show');
       sendAnim.classList.remove('hide');
+    }
+
+    // after "Message sent!", wait 3 seconds then bring the form back automatically
+    function startCount() {
+      let n = 3;
+      $('#countNum').textContent = n;
+      countTimers.push(setInterval(() => { n = Math.max(0, n - 1); $('#countNum').textContent = n; }, 1000));
+      countTimers.push(setTimeout(() => {
+        cform.reset();
+        resetSendStage();
+        sendBtn.disabled = false; sendBtn.textContent = 'Send message →';
+        fmsg.textContent = '';
+      }, 3000));
     }
 
     cform.addEventListener('submit', async e => {
@@ -1866,7 +2065,6 @@
 
       const data = Object.fromEntries(new FormData(cform));
 
-      // start the web-sling animation
       resetSendStage();
       stage.classList.add('show');
       const anim = reduced ? sleep(300) : playWebSend();
@@ -1878,19 +2076,14 @@
         $('#sentFrom').textContent = 'From ' + data.name;
         $('#sentText').textContent = data.message;
         sendAnim.classList.add('hide');
+        stage.classList.remove('cine');
         success.classList.add('show');
+        startCount();
       } else {
         resetSendStage();
         sendBtn.disabled = false; sendBtn.textContent = 'Send message →';
         fmsg.textContent = 'Could not send right now. Please email ' + MAIL_TO + ' directly.';
       }
-    });
-
-    $('#sendAnother').addEventListener('click', () => {
-      cform.reset();
-      resetSendStage();
-      sendBtn.disabled = false; sendBtn.textContent = 'Send message →';
-      fmsg.textContent = '';
     });
   </script>
 </body>
