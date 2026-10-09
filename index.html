@@ -256,14 +256,14 @@
     }
     .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 60px; align-items: center; }
 
-    . {
+    .badge {
       display: inline-flex; align-items: center; gap: 10px;
       padding: 8px 16px; border-radius: 100px;
       background: var(--surface); border: 1px solid var(--line);
       font-size: 0.82rem; color: var(--muted); margin-bottom: 24px;
       font-weight: 500;
     }
-    . .dot {
+    .badge .dot {
       width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
       box-shadow: 0 0 0 0 #22c55e; animation: pulse 2s infinite;
     }
@@ -926,8 +926,8 @@
       -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 360' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M360 0H0M360 0L0 130M360 0L0 280M360 0L110 360M360 0L250 360M360 0V360'/%3E%3Cpath d='M270 0Q250 90 360 90M180 0Q150 150 360 170M90 0Q60 210 360 260'/%3E%3C/svg%3E") no-repeat top right / contain;
       mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 360' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M360 0H0M360 0L0 130M360 0L0 280M360 0L110 360M360 0L250 360M360 0V360'/%3E%3Cpath d='M270 0Q250 90 360 90M180 0Q150 150 360 170M90 0Q60 210 360 260'/%3E%3C/svg%3E") no-repeat top right / contain;
     }
-    /* Spider-Noir: black & white photo look */
-    body[data-theme="2"] .avatar img, body[data-theme="2"] .logo-mark img { filter: grayscale(1) contrast(1.1); }
+    /* photos follow the theme (see THEME PHOTOS below) */
+    .avatar img, .logo-mark img { filter: var(--photo-filter); transition: filter .5s; }
 
     /* ===== MOMENTS & ACHIEVEMENTS (horizontal tree, drawn while you scroll) ===== */
     #moments { padding-bottom: 0; }
@@ -996,7 +996,7 @@
     .moment-photo { position: relative; height: 150px; overflow: hidden; background: var(--surface-2); }
     .moment-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
     .moment-card:hover .moment-photo img { transform: scale(1.05); }
-    .moment- {
+    .moment-badge {
       position: absolute; top: 10px; left: 10px;
       font-family: 'JetBrains Mono', monospace; font-size: .66rem; letter-spacing: .05em;
       padding: 4px 10px; border-radius: 100px;
@@ -1044,6 +1044,49 @@
     .count-bar { width: 180px; height: 4px; border-radius: 100px; background: var(--surface-2); margin: 0 auto; overflow: hidden; }
     .count-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transform-origin: left; animation: countDrain 3s linear forwards; }
     @keyframes countDrain { to { transform: scaleX(0); } }
+
+    /* ===== THEME PHOTOS: every photo is re-coloured by the active theme ===== */
+    :root { --photo-filter: none; --photo-tint: transparent; --photo-tint-a: 0; }
+    body[data-theme="1"] { --photo-filter: saturate(1.05) brightness(1.06); --photo-tint: #e11d86; --photo-tint-a: .16; }
+    body[data-theme="2"] { --photo-filter: grayscale(1) contrast(1.18) brightness(.95); --photo-tint: transparent; --photo-tint-a: 0; }
+    body[data-theme="3"] { --photo-filter: contrast(1.12) saturate(1.25); --photo-tint: #a855f7; --photo-tint-a: .18; }
+    body[data-theme="4"] { --photo-filter: sepia(.35) saturate(1.25) contrast(1.05); --photo-tint: #f5b301; --photo-tint-a: .22; }
+    body[data-theme="5"] { --photo-filter: grayscale(1) contrast(1.2); --photo-tint: #8b5cf6; --photo-tint-a: .55; }
+    body[data-theme="6"] { --photo-filter: contrast(1.1) saturate(1.2); --photo-tint: #22d3ee; --photo-tint-a: .25; }
+    body[data-theme="7"] { --photo-filter: sepia(.25) contrast(1.25) saturate(1.2); --photo-tint: #d90429; --photo-tint-a: .12; }
+    body[data-theme="8"] { --photo-filter: grayscale(.5) contrast(1.1); --photo-tint: #ef2b2b; --photo-tint-a: .38; }
+    .moment-photo { isolation: isolate; }
+    .moment-photo img { filter: var(--photo-filter); transition: transform .6s cubic-bezier(.2,.8,.2,1), filter .5s; }
+    .moment-photo::after {
+      content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: var(--photo-tint); opacity: var(--photo-tint-a); mix-blend-mode: color;
+      transition: opacity .5s, background .5s;
+    }
+    .moment-badge { z-index: 2; }
+    .modal-photo { filter: var(--photo-filter); transition: filter .5s; }
+
+    /* ===== MOMENTS ON MOBILE: vertical tree, drawn while you scroll ===== */
+    @media (max-width: 900px) {
+      #moments { padding-bottom: 70px; }
+      .moment-scroll { height: auto; }
+      .moment-sticky { position: static; height: auto; overflow: visible; display: block; }
+      .moment-hz { grid-template-columns: minmax(0, 1fr); row-gap: 36px; width: min(92%, 640px); padding: 0; margin: 0 auto; }
+      .moment-root { grid-column: 1; grid-row: auto; justify-self: start; text-align: left; }
+      .moment-node { grid-row: auto; width: calc(100% - 52px); justify-self: end; transform: translateX(70px); }
+      .moment-node.on { transform: none; }
+      .moment-node::before {
+        left: -34px; top: 44px; width: 34px; height: 2px; margin: -1px 0 0 0;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        transform: scaleX(0); transform-origin: left;
+      }
+      .moment-node.on::before { transform: scaleX(1); }
+      .moment-node::after { left: -34px; top: 44px; }
+      .mh-stub, .mh-stubfill { display: none; }
+      .mh-trunk { width: 3px; margin-left: -1.5px; background: repeating-linear-gradient(180deg, var(--line) 0 3px, transparent 3px 11px); }
+      .mh-fill { width: 3.5px; margin-left: -1.75px; background: linear-gradient(180deg, var(--accent), var(--accent-2)); }
+      .moment-photo { height: 190px; }
+      .moment-info p { display: block; -webkit-line-clamp: unset; overflow: visible; }
+    }
 
     /* ===== REVEAL ===== */
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s, transform .7s cubic-bezier(.2,.8,.2,1); }
@@ -1126,7 +1169,6 @@
     <section class="hero" id="home">
       <div class="wrap">
         <div class="hero-text">
-          <!-- <div class=""><span class="dot"></span> Open to internships &amp; junior roles</div> -->
           <h1>
             Building <span class="gradient">backend systems</span><br>
             that solve real problems.
@@ -1926,22 +1968,41 @@
     const clamp01 = v => Math.min(1, Math.max(0, v));
     const HZ = { x0:0, x1:0, ty:0, cx:0, stubH:0, nodeX:[] };
 
+    const momentMQ = matchMedia('(max-width: 900px)');
+
     function layoutMoments() {
       const f = momentNodes[0], l = momentNodes[momentNodes.length - 1];
-      HZ.ty = f.offsetTop - 44;
+      HZ.nodeX = momentNodes.map(n => n.offsetLeft + n.offsetWidth / 2);
+      if (momentMQ.matches) {                          // mobile: vertical trunk down the left side
+        const top = momentRoot.offsetTop + momentRoot.offsetHeight / 2;
+        HZ.vTop = top; HZ.vH = (l.offsetTop + 44) - top;
+        HZ.nodeY = momentNodes.map(n => n.offsetTop + 44);
+        mhTrunk.style.cssText = `left:18px;top:${top}px;height:${HZ.vH}px`;
+        mhFill.style.cssText = `left:18px;top:${top}px;height:0`;
+        mhStub.style.cssText = ''; mhStubFill.style.cssText = '';
+        return;
+      }
+      HZ.ty = f.offsetTop - 44;                        // desktop: horizontal trunk, branches hang down
       HZ.x0 = f.offsetLeft + f.offsetWidth / 2;
       HZ.x1 = l.offsetLeft + l.offsetWidth / 2;
       HZ.cx = momentGrid.offsetWidth / 2;
       const stubTop = momentRoot.offsetTop + momentRoot.offsetHeight;
       HZ.stubH = HZ.ty - stubTop;
-      HZ.nodeX = momentNodes.map(n => n.offsetLeft + n.offsetWidth / 2);
       mhTrunk.style.cssText = `left:${HZ.x0}px;top:${HZ.ty - 1.5}px;width:${HZ.x1 - HZ.x0}px`;
-      mhFill.style.left = HZ.x0 + 'px'; mhFill.style.top = (HZ.ty - 1.75) + 'px';
+      mhFill.style.cssText = `left:${HZ.x0}px;top:${HZ.ty - 1.75}px;width:0`;
       mhStub.style.cssText = `left:${HZ.cx}px;top:${stubTop}px;height:${HZ.stubH}px`;
-      mhStubFill.style.left = HZ.cx + 'px'; mhStubFill.style.top = stubTop + 'px';
+      mhStubFill.style.cssText = `left:${HZ.cx}px;top:${stubTop}px;height:0`;
     }
 
     function updateMoments() {
+      if (momentMQ.matches) {                          // mobile: line grows down as you scroll, cards slide in
+        const r = momentGrid.getBoundingClientRect();
+        const y = Math.max(0, innerHeight * 0.65 - r.top);
+        mhFill.style.height = Math.min(HZ.vH, Math.max(0, y - HZ.vTop)) + 'px';
+        momentNodes.forEach((n, i) => n.classList.toggle('on', y >= HZ.nodeY[i]));
+        momentGrid.style.transform = '';
+        return;
+      }
       const r = momentScroll.getBoundingClientRect();
       const total = r.height - momentSticky.offsetHeight;
       const p = total > 0 ? clamp01((70 - r.top) / total) : 0;           // 0 → 1 while pinned
@@ -1952,7 +2013,7 @@
       momentNodes.forEach((n, i) => n.classList.toggle('on', trunkP > 0 && fw >= HZ.nodeX[i] - HZ.x0 - 1));
 
       const vw = momentSticky.clientWidth, hzW = momentGrid.offsetWidth;
-      if (hzW > vw + 1) {                                                // small screen: pan along with the line
+      if (hzW > vw + 1) {                                                // narrow desktop window: pan with the line
         const camHead = HZ.x0 + fw + vw * .12;
         const camX = HZ.cx + (camHead - HZ.cx) * smooth(clamp01((p - .05) / .12));
         momentGrid.style.transform = `translateX(${-Math.min(hzW - vw, Math.max(0, camX - vw / 2))}px)`;
