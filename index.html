@@ -929,19 +929,45 @@
     /* Spider-Noir: black & white photo look */
     body[data-theme="2"] .avatar img, body[data-theme="2"] .logo-mark img { filter: grayscale(1) contrast(1.1); }
 
-    /* ===== MOMENTS & ACHIEVEMENTS ===== */
-    .moment-grid { columns: 3 300px; column-gap: 24px; }
+    /* ===== MOMENTS & ACHIEVEMENTS (vertical tree) ===== */
+    .moment-tree { position: relative; display: grid; gap: 44px; max-width: 860px; }
+    .moment-tree::before {            /* trunk */
+      content: ""; position: absolute; left: 18px; top: 0; bottom: 0; width: 3px; margin-left: -1.5px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2), transparent);
+    }
+    .moment-root {
+      position: relative; z-index: 2; justify-self: start; text-align: left;
+      padding: 18px 26px; border-radius: var(--radius);
+      background: var(--surface); border: 1px solid var(--accent);
+      box-shadow: 0 16px 40px var(--glow); max-width: 100%;
+    }
+    .moment-root b { display: block; font-family: 'Syne', sans-serif; font-size: 1.15rem; }
+    .moment-root span {
+      display: inline-block; margin-top: 8px; padding: 5px 14px; border-radius: 100px;
+      font-family: 'JetBrains Mono', monospace; font-size: .74rem;
+      background: var(--accent); color: var(--on-accent);
+    }
+    .moment-node { position: relative; width: calc(100% - 52px); justify-self: end; }
+    .moment-node::before {            /* dot on the trunk */
+      content: ""; position: absolute; top: 44px; left: -43px; width: 18px; height: 18px; margin-top: -9px;
+      border-radius: 50%; background: var(--accent); border: 3px solid var(--bg);
+      box-shadow: 0 0 0 4px var(--glow), 0 0 20px var(--glow); z-index: 2;
+    }
+    .moment-node::after {             /* branch from trunk to card */
+      content: ""; position: absolute; top: 44px; left: -34px; width: 34px; height: 2px; margin-top: -1px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
     .moment-card {
-      break-inside: avoid; margin-bottom: 24px; display: block; width: 100%;
+      display: block; width: 100%;
       border-radius: var(--radius); overflow: hidden; text-align: left;
       background: var(--surface); border: 1px solid var(--line);
-      transition: transform .4s cubic-bezier(.2,.8,.2,1), border-color .3s, box-shadow .4s, opacity .7s;
+      transition: transform .4s cubic-bezier(.2,.8,.2,1), border-color .3s, box-shadow .4s;
       cursor: pointer; color: inherit; font: inherit; padding: 0;
     }
     .moment-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 24px 50px var(--glow); }
     .moment-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
     .moment-photo { position: relative; overflow: hidden; background: var(--surface-2); }
-    .moment-photo img { width: 100%; height: auto; display: block; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+    .moment-photo img { width: 100%; height: auto; max-height: 460px; object-fit: cover; object-position: center 30%; display: block; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
     .moment-card:hover .moment-photo img { transform: scale(1.04); }
     .moment-badge {
       position: absolute; top: 14px; left: 14px;
@@ -956,7 +982,6 @@
       width: 100%; max-height: 60vh; object-fit: contain; display: block;
       border-radius: 12px; margin: 8px 0 18px; background: var(--surface);
     }
-
     /* ===== REVEAL ===== */
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s, transform .7s cubic-bezier(.2,.8,.2,1); }
     .reveal.visible { opacity: 1; transform: none; }
@@ -1167,8 +1192,8 @@
         </div>
         <div class="timeline">
           <div class="timeline-item reveal">
-            <h3>SkyneTBee Artificial Intelligence Enterprise Pvt Ltd</h3>
-            <p class="meta">Internship · 2 years hands-on experience</p>
+            <h3>SkyneTBee Pvt Ltd Enterprises</h3>
+            <p class="meta">Internship · 2 years hands-on experience · Best Startup Award 2022 (National Level)</p>
             <ul>
               <li>Developed and maintained student admission and member management modules (PHP, MySQL, JavaScript, HTML, CSS).</li>
               <li>Built online fee payment, receipt generation and fee management.</li>
@@ -1194,9 +1219,9 @@
         <div class="sec-head reveal">
           <span class="sec-tag">// 05 — Moments</span>
           <h2>Moments &amp; <span class="highlight">Achievements</span></h2>
-          <p>Proud moments from my journey at SkyneTBee. Tap any photo to see it bigger.</p>
+          <p>Proud moments from my journey at SkyneTBee Pvt Ltd Enterprises. Tap any photo to see it bigger.</p>
         </div>
-        <div class="moment-grid" id="momentGrid"></div>
+        <div class="moment-tree" id="momentGrid"></div>
       </div>
     </section>
 
@@ -1329,7 +1354,7 @@
         <p>To keep improving my technical skills, learn new technologies and grow into a better developer who contributes to the company's growth.</p>
 
         <h4>Experience</h4>
-        <p><strong>SkyneTBee AI Enterprise Pvt Ltd</strong> — Internship, 2 years hands-on. Admissions, fees, exams and results, attendance sync, house elections, Snap Talk, AI vector search, AWS deployment.</p>
+        <p><strong>SkyneTBee Pvt Ltd Enterprises</strong> (Best Startup Award 2022, National Level) — Internship, 2 years hands-on. Admissions, fees, exams and results, attendance sync, house elections, Snap Talk, AI vector search, AWS deployment.</p>
 
         <h4>Skills</h4>
         <p>PHP, JavaScript, SQL, HTML5, CSS3 · MySQL, Microsoft SQL Server · REST APIs · VS Code, FileZilla, phpMyAdmin, SSMS</p>
@@ -1702,24 +1727,30 @@
        MOMENTS & ACHIEVEMENTS
        ============================================================ */
     const MOMENTS = [
-      { img:"assets/moment-1.jpg", badge:"First project", title:"My first project presentation", text:"I presented my first project at SkyneTBee Pvt Ltd. It was a big step for me, and I learned a lot from it." },
-      { img:"assets/moment-2.jpg", badge:"First salary", title:"My first month salary", text:"I received my first month salary at SkyneTBee Pvt Ltd Enterprise. The CEO of SkyneTBee gave it to me, and my mother was with me. It was a very proud day for my family and me." },
-      { img:"assets/moment-3.jpg", badge:"Gold medal", title:"Second gold medal: Most Promising Developer", text:"I won my second gold medal, the Most Promising Developer medal. It was given by the founder and chairman of the RD Institution, who is also the father of the SkyneTBee CEO." },
+      { img:"assets/moment-2.jpg", badge:"First salary", title:"My first month salary", text:"I received my first month salary at SkyneTBee Pvt Ltd Enterprises. The CEO gave it to me, and my mother was with me. It was a very proud day for my family and me." },
+      { img:"assets/moment-1.jpg", badge:"First project", title:"My first project presentation", text:"I presented my first project at SkyneTBee Pvt Ltd Enterprises. It was a big step for me, and I learned a lot from it." },
       { img:"assets/moment-4.jpg", badge:"Gold medal", title:"My first gold medal", text:"I received my first gold medal from the CEO of SkyneTBee. It made me want to work even harder." },
-      { img:"assets/moment-5.jpg", badge:"Team visit", title:"NVIDIA Expo, Coimbatore", text:"Our SkyneTBee team visited the NVIDIA expo in Coimbatore. We learned about new technology and had a great day together." }
+      { img:"assets/moment-5.jpg", badge:"Team visit", title:"NVIDIA Expo, Coimbatore", text:"Our SkyneTBee team visited the NVIDIA expo in Coimbatore. We learned about new technology and had a great day together." },
+      { img:"assets/moment-3.jpg", badge:"Gold medal", title:"Second gold medal: Most Promising Developer", text:"I won my second gold medal, the Most Promising Developer medal. It was given by the founder and chairman of the RD Institution, who is also the father of the SkyneTBee CEO." }
     ];
     const momentGrid = $('#momentGrid');
-    momentGrid.innerHTML = MOMENTS.map((m,i) => `
-      <button class="moment-card reveal" data-i="${i}" aria-label="Open photo: ${m.title}">
-        <div class="moment-photo">
-          <img src="${m.img}" alt="${m.title}" loading="lazy">
-          <span class="moment-badge">${m.badge}</span>
-        </div>
-        <div class="moment-info">
-          <h3>${m.title}</h3>
-          <p>${m.text}</p>
-        </div>
-      </button>`).join('');
+    momentGrid.innerHTML = `
+      <aside class="moment-root reveal">
+        <b>SkyneTBee Pvt Ltd Enterprises</b>
+        <span>🏆 Best Startup Award 2022 · National Level</span>
+      </aside>` + MOMENTS.map((m,i) => `
+      <div class="moment-node reveal">
+        <button class="moment-card" data-i="${i}" aria-label="Open photo: ${m.title}">
+          <div class="moment-photo">
+            <img src="${m.img}" alt="${m.title}" loading="lazy">
+            <span class="moment-badge">${m.badge}</span>
+          </div>
+          <div class="moment-info">
+            <h3>${m.title}</h3>
+            <p>${m.text}</p>
+          </div>
+        </button>
+      </div>`).join('');
     momentGrid.addEventListener('click', e => {
       const c = e.target.closest('.moment-card'); if (!c) return;
       const m = MOMENTS[c.dataset.i];
