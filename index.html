@@ -637,7 +637,7 @@
     .hp { position: absolute; left: -9999px; opacity: 0; }
     .form-msg { font-size: 0.88rem; min-height: 1.3em; color: #ef4444; }
 
-    /* ===== ENVELOPE (shared by resume + send animations) ===== */
+    /* ===== ENVELOPE (used by the send animation) ===== */
     .env {
       --w: 200px; --h: 130px;
       width: var(--w); height: var(--h);
@@ -689,8 +689,8 @@
       51% { z-index: 4; }
       100% { transform: rotateX(0); z-index: 4; }
     }
-    @keyframes letterRise { to { transform: translateY(calc(var(--h) * -.55)); } }
     @keyframes letterDrop { from { transform: translateY(calc(var(--h) * -.55)); } to { transform: translateY(0); } }
+    @keyframes letterRise { to { transform: translateY(calc(var(--h) * -.55)); } }
     @keyframes sealFade { to { opacity: 0; transform: scale(.4); } }
     @keyframes sealIn { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: scale(1); } }
 
@@ -1013,17 +1013,16 @@
       border-radius: 12px; margin: 8px 0 18px; background: var(--surface);
     }
 
-    /* ===== CINEMATIC SCENES (resume + send) ===== */
-    .send-stage, .resume-stage { overflow: hidden; }
+    /* ===== CINEMATIC SCENE (contact send) ===== */
+    .send-stage { overflow: hidden; }
     .send-stage { background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.35) 100%), var(--bg); }
-    .resume-stage { background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.35) 100%), var(--bg2); }
-    .send-stage::before, .send-stage::after, .resume-stage::before, .resume-stage::after {
+    .send-stage::before, .send-stage::after {
       content: ""; position: absolute; left: 0; right: 0; height: 11%; background: #000; z-index: 8;
       transition: transform .6s cubic-bezier(.2,.8,.2,1); pointer-events: none;
     }
-    .send-stage::before, .resume-stage::before { top: 0; transform: translateY(-100%); }
-    .send-stage::after, .resume-stage::after { bottom: 0; transform: translateY(100%); }
-    .send-stage.cine::before, .send-stage.cine::after, .resume-stage.cine::before, .resume-stage.cine::after { transform: none; }
+    .send-stage::before { top: 0; transform: translateY(-100%); }
+    .send-stage::after { bottom: 0; transform: translateY(100%); }
+    .send-stage.cine::before, .send-stage.cine::after { transform: none; }
     .strand { stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; opacity: 0; filter: drop-shadow(0 0 4px var(--glow)); }
     .blob { opacity: 0; transition: opacity .15s; }
     .blob line, .blob circle { stroke: var(--ink); stroke-width: 1.5; fill: none; }
@@ -1039,8 +1038,6 @@
     .flash { position: absolute; inset: 0; z-index: 9; background: #fff; opacity: 0; pointer-events: none; }
     .flash.go { animation: flashGo .6s ease-out; }
     @keyframes flashGo { 0% { opacity: 0; } 15% { opacity: .9; } 100% { opacity: 0; } }
-    .env.pop { animation: envPop .55s cubic-bezier(.2,.9,.3,1.2) both; }
-    #resumeScene .env { left: 60px; top: 45px; }
     .count-bar { width: 180px; height: 4px; border-radius: 100px; background: var(--surface-2); margin: 0 auto; overflow: hidden; }
     .count-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transform-origin: left; animation: countDrain 3s linear forwards; }
     @keyframes countDrain { to { transform: scaleX(0); } }
@@ -1051,7 +1048,8 @@
     body[data-theme="2"] { --photo-filter: grayscale(1) contrast(1.18) brightness(.95); --photo-tint: transparent; --photo-tint-a: 0; }
     body[data-theme="3"] { --photo-filter: contrast(1.12) saturate(1.25); --photo-tint: #a855f7; --photo-tint-a: .18; }
     body[data-theme="4"] { --photo-filter: sepia(.35) saturate(1.25) contrast(1.05); --photo-tint: #f5b301; --photo-tint-a: .22; }
-    body[data-theme="5"] { --photo-filter: grayscale(1) contrast(1.2); --photo-tint: #8b5cf6; --photo-tint-a: .55; }
+    /* Symbiote: pure black & white photo (no purple tint) */
+    body[data-theme="5"] { --photo-filter: grayscale(1) contrast(1.25) brightness(.9); --photo-tint: transparent; --photo-tint-a: 0; }
     body[data-theme="6"] { --photo-filter: contrast(1.1) saturate(1.2); --photo-tint: #22d3ee; --photo-tint-a: .25; }
     body[data-theme="7"] { --photo-filter: sepia(.25) contrast(1.25) saturate(1.2); --photo-tint: #d90429; --photo-tint-a: .12; }
     body[data-theme="8"] { --photo-filter: grayscale(.5) contrast(1.1); --photo-tint: #ef2b2b; --photo-tint-a: .38; }
@@ -1124,6 +1122,54 @@
     @media (prefers-reduced-motion: reduce) {
       * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
       .reveal { opacity: 1; transform: none; }
+    }
+
+    /* ===== Mobile: stop horizontal overflow (right-side gap fix) ===== */
+    main, footer { overflow-x: clip; }
+    @media (max-width: 900px) {
+      .proj-body:nth-of-type(odd),
+      .proj-body:nth-of-type(even) { transform: translateY(30px); }
+      .proj-body.visible { transform: none; }
+
+      .moment-node { transform: translateY(30px); }
+      .moment-node.on { transform: none; }
+    }
+
+
+    /* ===== Cinematic resume scene (letterbox bars, pop) ===== */
+    .resume-stage { overflow: hidden; background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.35) 100%), var(--bg2); }
+    .resume-stage::before, .resume-stage::after {
+      content: ""; position: absolute; left: 0; right: 0; height: 11%; background: #000; z-index: 8;
+      transition: transform .6s cubic-bezier(.2,.8,.2,1); pointer-events: none;
+    }
+    .resume-stage::before { top: 0; transform: translateY(-100%); }
+    .resume-stage::after { bottom: 0; transform: translateY(100%); }
+    .resume-stage.cine::before, .resume-stage.cine::after { transform: none; }
+    .env.pop { animation: envPop .55s cubic-bezier(.2,.9,.3,1.2) both; }
+    #resumeScene .env { left: 60px; top: 45px; }
+
+    /* ===== BACK TO TOP LABEL (bottom-left corner) ===== */
+    .to-top {
+      position: fixed; left: 24px; bottom: 24px; z-index: 190;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 20px; border-radius: 100px;
+      background: var(--surface); color: var(--ink);
+      border: 1px solid var(--line);
+      font-family: 'JetBrains Mono', monospace; font-size: .8rem; font-weight: 500;
+      letter-spacing: .05em; cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0,0,0,.3);
+      opacity: 0; visibility: hidden; transform: translateY(20px);
+      transition: opacity .35s, visibility .35s, transform .35s cubic-bezier(.2,.8,.2,1), background .25s, border-color .25s, box-shadow .25s;
+    }
+    .to-top.show { opacity: 1; visibility: visible; transform: none; }
+    .to-top:hover {
+      background: var(--accent); color: var(--on-accent); border-color: var(--accent);
+      transform: translateY(-4px); box-shadow: 0 14px 32px var(--glow);
+    }
+    .to-top .arrow { font-size: 1rem; line-height: 1; }
+    .to-top:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    @media (max-width: 900px) {
+      .to-top { left: 16px; bottom: 16px; padding: 11px 16px; font-size: .74rem; }
     }
   </style>
 </head>
@@ -1297,7 +1343,7 @@
         </div>
         <div class="timeline">
           <div class="timeline-item reveal">
-            <h3>SkyneTBee Pvt Ltd Enterprises</h3>
+            <h3>SkyneTBee Artificial Intelligence Enterprise Pvt Ltd</h3>
             <p class="meta">Internship · 2 years hands-on experience · Best Startup Award 2022 (National Level)</p>
             <ul>
               <li>Developed and maintained student admission and member management modules (PHP, MySQL, JavaScript, HTML, CSS).</li>
@@ -1324,9 +1370,9 @@
         <div class="sec-head reveal">
           <span class="sec-tag">// 05 — Moments</span>
           <h2>Moments &amp; <span class="highlight">Achievements</span></h2>
-          <p>Proud moments from my journey at SkyneTBee Pvt Ltd Enterprises. Tap any photo to see it bigger.</p>
+          <p>Proud moments from my journey at SkyneTBee Artificial Intelligence Enterprise Pvt Ltd. Tap any photo to see it bigger.</p>
         </div>
-        </div>
+      </div>
       <div class="moment-scroll" id="momentScroll">
         <div class="moment-sticky">
           <div class="moment-hz" id="momentGrid"></div>
@@ -1418,6 +1464,9 @@
     </div>
   </footer>
 
+  <!-- ===== BACK TO TOP LABEL (left corner) ===== -->
+  <button class="to-top" id="toTop" aria-label="Back to top"><span class="arrow">↑</span><span>Back to top</span></button>
+
   <!-- ===== THEME SWITCHER ===== -->
   <div class="theme-panel" id="themePanel">
     <div class="theme-drawer" id="themeDrawer">
@@ -1443,7 +1492,7 @@
     </div>
   </div>
 
-  <!-- ===== RESUME MODAL ===== -->
+  <!-- ===== RESUME MODAL (slides up / slides down) ===== -->
   <div class="modal" id="resumeModal" role="dialog" aria-modal="true">
     <div class="modal-content" id="resumeContent">
       <button class="modal-close" data-close aria-label="Close">✕</button>
@@ -1474,7 +1523,7 @@
         <p>To keep improving my technical skills, learn new technologies and grow into a better developer who contributes to the company's growth.</p>
 
         <h4>Experience</h4>
-        <p><strong>SkyneTBee Pvt Ltd Enterprises</strong> (Best Startup Award 2022, National Level) — Internship, 2 years hands-on. Admissions, fees, exams and results, attendance sync, house elections, Snap Talk, AI vector search, AWS deployment.</p>
+        <p><strong>SkyneTBee Artificial Intelligence Enterprise Pvt Ltd</strong> (Best Startup Award 2022, National Level) — Internship, 2 years hands-on. Admissions, fees, exams and results, attendance sync, house elections, Snap Talk, AI vector search, AWS deployment.</p>
 
         <h4>Skills</h4>
         <p>PHP, JavaScript, SQL, HTML5, CSS3 · MySQL, Microsoft SQL Server · REST APIs · VS Code, FileZilla, phpMyAdmin, SSMS</p>
@@ -1566,7 +1615,7 @@
     const sleep = ms => new Promise(r => setTimeout(r, ms));
 
     /* ============================================================
-       ENVELOPE MARKUP (used by resume + send animations)
+       ENVELOPE MARKUP (used by the contact send animation)
        ============================================================ */
     const ENV_HTML = `
       <div class="env-back"></div>
@@ -1626,11 +1675,6 @@
 
     const sigResume = sigs.find(s => s.mode === 'resume');
 
-    /* ============================================================
-       RESUME LETTER ANIMATION
-       envelope pops in → flap opens → letter rises → envelope drops
-       away → letter unfolds → signature is written
-       ============================================================ */
     /* ---------- shared web-animation helpers ---------- */
     const easeOut = k => 1 - Math.pow(1 - k, 3);
     const smooth  = k => k * k * (3 - 2 * k);
@@ -1914,12 +1958,18 @@
     /* ============================================================
        SCROLL: header, progress, spy
        ============================================================ */
-    const header = $('#header'), topbar = $('#progress-bar');
+    const header = $('#header'), topbar = $('#progress-bar'), toTop = $('#toTop');
     addEventListener('scroll', () => {
       const sy = scrollY;
       header.classList.toggle('scrolled', sy > 30);
+      toTop.classList.toggle('show', sy > 400);
       topbar.style.transform = `scaleX(${sy / (document.documentElement.scrollHeight - innerHeight)})`;
     }, { passive: true });
+
+    // click the label → smoothly back to the top of the page
+    toTop.addEventListener('click', () => {
+      scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+    });
 
     const links = $$('#menu a[href^="#"]');
     const spy = new IntersectionObserver(es => es.forEach(e => {
@@ -1931,17 +1981,17 @@
        MOMENTS & ACHIEVEMENTS
        ============================================================ */
     const MOMENTS = [
-      { img:"assets/moment-2.jpg", pos:"50% 40%", badge:"First salary", title:"My first month salary", text:"I received my first month salary at SkyneTBee Pvt Ltd Enterprises. The CEO gave it to me, and my mother was with me. It was a very proud day for my family and me." },
-      { img:"assets/moment-1.jpg", pos:"78% 40%", badge:"First project", title:"My first project presentation", text:"I presented my first project at SkyneTBee Pvt Ltd Enterprises. It was a big step for me, and I learned a lot from it." },
+      { img:"assets/moment-2.jpg", pos:"50% 40%", badge:"First salary", title:"My first month salary", text:"I received my first month salary at SkyneTBee Artificial Intelligence Enterprise Pvt Ltd. The CEO gave it to me, and my mother was with me. It was a very proud day for my family and me." },
+      { img:"assets/moment-1.jpg", pos:"78% 40%", badge:"First project", title:"My first project presentation", text:"I presented my first project at SkyneTBee Artificial Intelligence Enterprise Pvt Ltd. It was a big step for me, and I learned a lot from it." },
       { img:"assets/moment-4.jpg", pos:"50% 55%", badge:"Gold medal", title:"My first gold medal", text:"I received my first gold medal from the CEO of SkyneTBee. It made me want to work even harder." },
       { img:"assets/moment-5.jpg", pos:"50% 40%", badge:"Team visit", title:"NVIDIA Expo, Coimbatore", text:"Our SkyneTBee team visited the NVIDIA expo in Coimbatore. We learned about new technology and had a great day together." },
-      { img:"assets/moment-3.jpg", pos:"50% 35%", badge:"Gold medal", title:"Second gold medal: Most Promising Developer", text:"I won my second gold medal, the Most Promising Developer medal. It was given by the founder and chairman of the RD Institution, who is also the father of the SkyneTBee CEO." }
+      { img:"assets/moment-3.jpg", pos:"50% 35%", badge:"Gold medal", title:"Second gold medal: Most Promising Developer", text:"I won my second gold medal, the Most Promising Developer medal. It was given by the founder and chairman of the RD Institution." }
     ];
     const momentGrid = $('#momentGrid'), momentScroll = $('#momentScroll');
     const momentSticky = $('.moment-sticky', momentScroll);
     momentGrid.innerHTML = `
       <aside class="moment-root">
-        <b>SkyneTBee Pvt Ltd Enterprises</b>
+        <b>SkyneTBee Artificial Intelligence Enterprise Pvt Ltd</b>
         <span>🏆 Best Startup Award 2022 · National Level</span>
       </aside>
       <div class="mh-stub" id="mhStub"></div><div class="mh-stubfill" id="mhStubFill"></div>
@@ -1961,8 +2011,7 @@
 
     /* The tree is drawn while you scroll: the section stays pinned, the
        line grows left → right, each branch drops its card when the line
-       reaches it, and scrolling back up hides them again. On narrow
-       screens the "camera" pans sideways to follow the line. */
+       reaches it, and scrolling back up hides them again. */
     const mhStub = $('#mhStub'), mhStubFill = $('#mhStubFill'), mhTrunk = $('#mhTrunk'), mhFill = $('#mhFill');
     const momentNodes = $$('.moment-node', momentGrid), momentRoot = $('.moment-root', momentGrid);
     const clamp01 = v => Math.min(1, Math.max(0, v));
