@@ -964,51 +964,6 @@
       mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 360' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M360 0H0M360 0L0 130M360 0L0 280M360 0L110 360M360 0L250 360M360 0V360'/%3E%3Cpath d='M270 0Q250 90 360 90M180 0Q150 150 360 170M90 0Q60 210 360 260'/%3E%3C/svg%3E") no-repeat top right / contain;
     }
 
-    /* ===== HANGING SPIDER-MAN (upside down, realistic) ===== */
-    .hanging-spidey {
-      position: fixed;
-      top: 0;
-      left: 18px;
-      z-index: 95;
-      width: 70px;
-      height: 200px;
-      pointer-events: none;
-      transform-origin: top center;
-      animation: spideySway 5s ease-in-out infinite;
-    }
-    .hanging-spidey .strand {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: 1.5px;
-      height: 55px;
-      background: linear-gradient(to bottom, transparent 0%, color-mix(in srgb, var(--ink) 55%, transparent) 40%, var(--ink) 100%);
-      transform: translateX(-50%);
-      opacity: 0.55;
-    }
-    .hanging-spidey .figure {
-      position: absolute;
-      top: 48px;
-      left: 50%;
-      width: 56px;
-      height: 90px;
-      transform: translateX(-50%) scaleY(-1); /* upside down */
-      filter: drop-shadow(0 6px 14px var(--glow));
-    }
-    .hanging-spidey .figure svg { width: 100%; height: 100%; display: block; }
-    @keyframes spideySway {
-      0%, 100% { transform: rotate(-5deg); }
-      50% { transform: rotate(5deg); }
-    }
-    @media (max-width: 700px) {
-      .hanging-spidey { left: 4px; width: 48px; height: 140px; opacity: 0.85; }
-      .hanging-spidey .strand { height: 40px; }
-      .hanging-spidey .figure { top: 36px; width: 40px; height: 64px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hanging-spidey { animation: none; }
-    }
-
     /* photos follow the theme (see THEME PHOTOS below) */
     .avatar img, .logo-mark img { filter: var(--photo-filter); transition: filter .5s; }
 
@@ -1259,32 +1214,6 @@
   </div>
 
     <div id="progress-bar"></div>
-
-  <!-- HANGING SPIDER-MAN (upside down) -->
-  <div class="hanging-spidey" aria-hidden="true">
-    <div class="strand"></div>
-    <div class="figure">
-      <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" fill="none">
-        <ellipse cx="40" cy="62" rx="16" ry="22" fill="var(--accent)"/>
-        <circle cx="40" cy="28" r="15" fill="var(--accent)"/>
-        <ellipse cx="32" cy="26" rx="6.5" ry="8" fill="#fff"/>
-        <ellipse cx="48" cy="26" rx="6.5" ry="8" fill="#fff"/>
-        <path d="M27 26 Q32 20 37 26 Q32 33 27 26" fill="#0a0a14" opacity=".15"/>
-        <path d="M43 26 Q48 20 53 26 Q48 33 43 26" fill="#0a0a14" opacity=".15"/>
-        <path d="M40 44 L40 82 M26 55 Q40 50 54 55 M28 66 Q40 61 52 66 M30 76 Q40 72 50 76"
-              stroke="var(--accent-2)" stroke-width="1.4" opacity=".65"/>
-        <circle cx="40" cy="58" r="4" fill="var(--accent-2)" opacity=".5"/>
-        <path d="M24 52 Q10 68 12 88" stroke="var(--accent)" stroke-width="7" stroke-linecap="round"/>
-        <path d="M56 52 Q70 68 68 88" stroke="var(--accent)" stroke-width="7" stroke-linecap="round"/>
-        <circle cx="12" cy="90" r="4" fill="var(--accent)"/>
-        <circle cx="68" cy="90" r="4" fill="var(--accent)"/>
-        <path d="M32 82 Q26 100 24 112" stroke="var(--accent)" stroke-width="7" stroke-linecap="round"/>
-        <path d="M48 82 Q54 100 56 112" stroke="var(--accent)" stroke-width="7" stroke-linecap="round"/>
-        <ellipse cx="24" cy="114" rx="5" ry="3" fill="var(--accent-2)" opacity=".8"/>
-        <ellipse cx="56" cy="114" rx="5" ry="3" fill="var(--accent-2)" opacity=".8"/>
-      </svg>
-    </div>
-  </div>
 
 <!-- ===== NAV ===== -->
   <header id="header">
