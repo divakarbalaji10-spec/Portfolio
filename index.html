@@ -1741,12 +1741,9 @@
         if (splash.classList.contains('hidden')) return;
         splash.classList.add('hidden');
         document.body.style.overflow = '';
-        try { sessionStorage.setItem('splashSeen', '1'); } catch (e) {}
       };
 
-      let seen = false;
-      try { seen = sessionStorage.getItem('splashSeen') === '1'; } catch (e) {}
-      if (seen || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
         splash.style.transition = 'none';
         splash.classList.add('hidden');
         return;
