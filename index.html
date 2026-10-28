@@ -4,8 +4,21 @@
   <meta charset="utf-8">
   <meta name="color-scheme" content="light dark">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Divakar Balaji — Web Developer | Backend Developer</title>
-  <meta name="description" content="Portfolio of Divakar Balaji, a web developer focused on backend systems: admissions, fees, payments, attendance and AI search.">
+  <title>Divakar Balaji — Backend Developer | PHP &amp; MySQL Web Developer</title>
+  <meta name="description" content="Divakar Balaji is a PHP and MySQL backend developer who builds admission, fee payment, attendance and AI search systems for schools and colleges.">
+  <link rel="canonical" href="https://divakar.website/">
+  <meta name="theme-color" content="#0a0a14">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Divakar Balaji">
+  <meta property="og:title" content="Divakar Balaji — Backend Developer (PHP, MySQL)">
+  <meta property="og:description" content="Admission, fee payment, attendance and AI search systems for schools and colleges.">
+  <meta property="og:url" content="https://divakar.website/">
+  <meta property="og:image" content="https://divakar.website/assets/profile.jpg">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e62429'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='800' fill='white' text-anchor='middle'%3EDB%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Divakar Balaji","url":"https://divakar.website/","image":"https://divakar.website/assets/profile.jpg","jobTitle":"Backend Developer","knowsAbout":["PHP","MySQL","REST APIs","JavaScript","AWS","Vector search"],"sameAs":["https://github.com/divakarbalaji10-spec","https://www.linkedin.com/in/divakar-balaji-8233b7321"]}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -107,7 +120,7 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.82rem;
       color: var(--muted);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.02em;
       opacity: 0;
       animation: fadeUp 0.8s 1.9s ease forwards;
     }
@@ -278,11 +291,6 @@
       font-weight: 800; margin-bottom: 20px;
       line-height: 1.02;
     }
-    .hero h1 .gradient {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
     .hero .role {
       font-family: 'JetBrains Mono', monospace; font-size: 1rem;
       color: var(--accent-2); margin-bottom: 22px;
@@ -413,40 +421,27 @@
       font-family: 'Syne', sans-serif; font-weight: 700;
       font-size: 1.1rem; color: var(--muted);
       display: inline-flex; align-items: center; gap: 40px;
-      text-transform: uppercase; letter-spacing: 0.05em;
+      letter-spacing: 0.05em;
     }
     .marquee-track span::after { content: "◆"; color: var(--accent); font-size: 0.7rem; }
     @keyframes scroll { to { transform: translateX(-50%); } }
 
     /* ===== SECTION HEADS ===== */
     .sec-head { margin-bottom: 56px; }
-    .sec-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem; color: var(--accent-2);
-      letter-spacing: 0.15em; text-transform: uppercase;
-      margin-bottom: 12px; display: block;
-    }
-    .sec-head h2 .highlight {
-      background: linear-gradient(135deg, var(--accent), var(--accent-3));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
     .sec-head p { color: var(--muted); max-width: 60ch; margin-top: 16px; font-size: 1.05rem; }
 
     /* ===== ABOUT ===== */
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
     .about-text p { color: var(--muted); margin-bottom: 18px; font-size: 1.02rem; }
     .about-text p strong { color: var(--ink); font-weight: 600; }
-    .enjoy-list { list-style: none; display: grid; gap: 4px; margin-top: 8px; }
-    .enjoy-list li {
-      display: flex; align-items: center; gap: 12px;
-      padding: 8px 0; font-size: 1rem; color: var(--ink);
-      transition: transform .3s, color .3s;
+    .facts { display: grid; }
+    .facts > div {
+      display: grid; grid-template-columns: minmax(6.5rem, 9rem) 1fr; gap: 16px;
+      padding: 14px 0; border-bottom: 1px solid var(--line);
     }
-    .enjoy-list li:hover { transform: translateX(6px); color: var(--accent-2); }
-    .enjoy-list .check {
-      color: var(--accent); font-size: 0.9rem; font-weight: 700; flex-shrink: 0;
-    }
+    .facts > div:first-child { padding-top: 0; }
+    .facts dt { color: var(--muted); font-size: .88rem; }
+    .facts dd { color: var(--ink); font-size: .98rem; }
 
     /* ===== SKILLS ===== */
     .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
@@ -519,14 +514,8 @@
       display: flex; flex-direction: column; gap: 16px;
       position: relative; overflow: hidden; text-align: left;
     }
-    .proj-card::after {
-      content: "→"; position: absolute; top: 24px; right: 24px;
-      font-size: 1.3rem; color: var(--muted); transition: all .35s;
-    }
     .proj-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 30px 60px var(--glow); background: var(--surface-2); }
-    .proj-card:hover::after { color: var(--accent-2); transform: translate(4px, -4px); }
-    .proj-num { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--accent-2); letter-spacing: 0.1em; }
-    .proj-card h3 { font-size: 1.25rem; padding-right: 30px; }
+    .proj-card h3 { font-size: 1.25rem; }
     .proj-card .proj-desc { color: var(--muted); font-size: 0.92rem; }
     .proj-card .proj-problem {
       font-size: 0.85rem; color: var(--muted);
@@ -569,17 +558,7 @@
     }
     .timeline-item li::before { content: "▸"; position: absolute; left: 0; color: var(--accent); font-size: 0.9rem; }
 
-    /* ===== BUILD ===== */
-    .build-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-    .build-card {
-      padding: 26px; border-radius: var(--radius);
-      background: var(--surface); border: 1px solid var(--line);
-      transition: all .3s;
-    }
-    .build-card:hover { transform: translateY(-6px); border-color: var(--accent-2); box-shadow: 0 20px 40px var(--glow-2); }
-    .build-card .build-icon { font-size: 1.8rem; margin-bottom: 14px; display: block; }
-    .build-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
-    .build-card p { color: var(--muted); font-size: 0.88rem; }
+    
 
     /* ===== CONTACT ===== */
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
@@ -606,7 +585,7 @@
     .contact-list .label {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.72rem; color: var(--muted);
-      text-transform: uppercase; letter-spacing: 0.08em;
+      letter-spacing: 0.02em;
     }
     .contact-list .val { font-size: 0.95rem; font-weight: 500; }
 
@@ -621,7 +600,7 @@
     .field label {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.75rem; color: var(--muted);
-      text-transform: uppercase; letter-spacing: 0.08em;
+      letter-spacing: 0.02em;
     }
     .field input, .field textarea {
       width: 100%; padding: 14px 16px;
@@ -762,7 +741,7 @@
     }
     .sent-preview b {
       display: block; font-family: 'JetBrains Mono', monospace; font-size: .7rem;
-      color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px;
+      color: var(--accent); letter-spacing: .08em; margin-bottom: 4px;
     }
     .sent-preview span {
       display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
@@ -811,11 +790,11 @@
       padding: 12px; border-radius: 16px;
       background: var(--surface); border: 1px solid var(--line);
       box-shadow: 0 20px 50px rgba(0,0,0,.4);
-      max-height: 0; overflow: hidden; opacity: 0;
+      max-height: 0; overflow: hidden; opacity: 0; visibility: hidden;
       transition: all .35s cubic-bezier(.2,.8,.2,1);
       transform-origin: bottom right;
     }
-    .theme-panel.open .theme-drawer { max-height: 200px; opacity: 1; padding: 12px; }
+    .theme-panel.open .theme-drawer { max-height: 200px; opacity: 1; padding: 12px; visibility: visible; }
     .theme-swatch {
       width: 36px; height: 36px; border-radius: 10px;
       cursor: pointer; border: 2px solid transparent;
@@ -860,7 +839,7 @@
     .modal-content h4 {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.82rem; color: var(--accent);
-      text-transform: uppercase; letter-spacing: 0.1em;
+      letter-spacing: 0.02em;
       margin: 24px 0 10px;
     }
     .modal-content p, .modal-content li { color: var(--muted); font-size: 0.94rem; }
@@ -916,7 +895,7 @@
     }
     .letter-paper h4 {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
+      font-size: 0.8rem; letter-spacing: 0.02em;
       color: var(--accent-2); margin: 18px 0 6px;
       border-bottom: 1px solid var(--line); padding-bottom: 4px;
     }
@@ -1030,7 +1009,7 @@
       cursor: pointer; color: inherit; font: inherit; padding: 0;
     }
     .moment-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 24px 50px var(--glow); }
-    .moment-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .moment-card:has(.moment-open:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; }
     .moment-photo { position: relative; height: 150px; overflow: hidden; background: var(--surface-2); }
     .moment-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
     .moment-card:hover .moment-photo img { transform: scale(1.05); }
@@ -1145,16 +1124,16 @@
         flex-direction: column; gap: 4px;
         background: var(--surface); border: 1px solid var(--line);
         border-radius: 16px; padding: 12px;
-        max-height: 0; overflow: hidden; opacity: 0;
+        max-height: 0; overflow: hidden; opacity: 0; visibility: hidden;
         transition: all .35s;
         box-shadow: 0 20px 50px rgba(0,0,0,.4);
       }
-      nav ul.open { max-height: 500px; opacity: 1; padding: 12px; }
+      nav ul.open { max-height: 500px; opacity: 1; padding: 12px; visibility: visible; }
       nav ul li { width: 100%; }
       nav ul a { display: block; padding: 14px 18px; border-radius: 10px; }
       section { padding: 70px 0; }
       .modal-content { padding: 28px 22px; }
-      .resume-paper { padding: 28px 22px 24px; }
+      .letter-paper { padding: 28px 22px 24px; }
       .theme-panel { bottom: 16px; right: 16px; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -1197,9 +1176,48 @@
     @media (max-width: 900px) {
       .to-top { left: 16px; bottom: 16px; padding: 11px 16px; font-size: .74rem; }
     }
+
+    /* ===== ADDED: accessibility, icons, static project/moment cards ===== */
+    .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    .skip-link {
+      position: fixed; left: 12px; top: -64px; z-index: 10001;
+      padding: 10px 16px; border-radius: 10px; font-weight: 600;
+      background: var(--accent); color: var(--on-accent); transition: top .2s;
+    }
+    .skip-link:focus { top: 12px; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    .splash-skip {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      background: none; border: 1px solid var(--line); color: var(--muted);
+      font: 500 .8rem 'JetBrains Mono', monospace; padding: 8px 16px;
+      border-radius: 100px; cursor: pointer; transition: color .2s, border-color .2s;
+    }
+    .splash-skip:hover { color: var(--ink); border-color: var(--accent); }
+
+    .skill-icon, .contact-list .ico, .theme-toggle { color: var(--accent-2); }
+    .skill-icon svg, .contact-list .ico svg { width: 22px; height: 22px; }
+    .theme-toggle svg { width: 24px; height: 24px; }
+    svg.line { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    svg.solid { fill: currentColor; stroke: none; }
+    .theme-swatch { padding: 0; font: inherit; }
+
+    .proj-more {
+      align-self: flex-start; background: none; border: none; padding: 0;
+      font: inherit; font-weight: 600; font-size: .9rem; color: var(--accent-2); cursor: pointer;
+    }
+    .proj-more::before { content: ""; position: absolute; inset: 0; z-index: 1; }
+    .proj-more:focus-visible { outline: none; }
+    .proj-card:has(.proj-more:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .proj-card:hover .proj-more { text-decoration: underline; text-underline-offset: 4px; }
+
+    .moment-card { position: relative; }
+    .moment-open { position: absolute; inset: 0; z-index: 3; background: none; border: none; padding: 0; cursor: pointer; }
+    .moment-open:focus-visible { outline: none; }
   </style>
 </head>
 <body data-theme="0">
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- ========== SIGNATURE SPLASH OVERLAY ========== -->
   <div id="signature-splash">
@@ -1211,18 +1229,19 @@
       <div class="splash-tagline">// backend developer · php · mysql</div>
       <div class="splash-loader"><i></i></div>
     </div>
+    <button type="button" class="splash-skip" id="splashSkip">Skip intro</button>
   </div>
 
     <div id="progress-bar"></div>
 
 <!-- ===== NAV ===== -->
   <header id="header">
-    <nav class="wrap">
+    <nav class="wrap" aria-label="Main">
       <a href="#home" class="logo">
-        <span class="logo-mark"><img src="assets/profile.jpg" alt="Divakar Balaji" onerror="this.replaceWith('DB')"></span>
+        <span class="logo-mark"><img src="assets/profile.jpg" alt="" width="40" height="40" decoding="async" onerror="this.replaceWith('DB')"></span>
         <span>Divakar<span style="color:var(--accent-2)">.</span></span>
       </a>
-      <button class="burger" id="burger" aria-label="Menu">☰</button>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="menu">☰</button>
       <ul id="menu">
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
@@ -1235,25 +1254,22 @@
     </nav>
   </header>
 
-  <main>
+  <main id="main">
 
     <!-- ===== HERO ===== -->
     <section class="hero" id="home">
       <div class="wrap">
         <div class="hero-text">
-          <h1>
-            Building <span class="gradient">backend systems</span><br>
-            that solve real problems.
-          </h1>
+          <h1>I build the backend that schools and colleges run on.</h1>
           <p class="role" id="role">Web Developer | Backend Developer</p>
           <p class="intro">
-            I'm Divakar Balaji — a web developer focused on backend engineering.
-            I build admissions, fees, payments, attendance and AI search systems
-            that real institutions use every day.
+            I'm Divakar Balaji, a PHP and MySQL developer at SkyneTBee.
+            My work covers admissions, fee payments, exams and results,
+            biometric attendance sync and a vector-based page search.
           </p>
           <div class="cta-group">
-            <a href="#projects" class="btn btn-primary">View Projects →</a>
-            <button class="btn btn-ghost" data-resume>View Resume</button>
+            <a href="#projects" class="btn btn-primary">See projects</a>
+            <button class="btn btn-ghost" data-resume>View resume</button>
           </div>
           <div class="social-row">
             <a href="https://github.com/divakarbalaji10-spec" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
@@ -1264,7 +1280,7 @@
         <div class="hero-visual">
           <div class="flip-card" id="flipCard">
             <div class="flip-face flip-front">
-              <div class="avatar"><img src="assets/profile.jpg" alt="Divakar Balaji" onerror="this.replaceWith('DB')"></div>
+              <div class="avatar"><img src="assets/profile.jpg" alt="Divakar Balaji" width="300" height="300" fetchpriority="high" decoding="async" onerror="this.replaceWith('DB')"></div>
             </div>
           </div>
         </div>
@@ -1282,66 +1298,68 @@
     </div>
 
     <!-- ===== ABOUT ===== -->
-    <section id="about">
+    <section id="about" aria-labelledby="about-h">
       <div class="wrap">
         <div class="sec-head reveal">
-          <span class="sec-tag">// 01 — About</span>
-          <h2>Get to know <span class="highlight">me</span></h2>
+          <h2 id="about-h">About me</h2>
         </div>
         <div class="about-grid">
           <div class="about-text reveal">
-            <p>I'm a web developer with a strong interest in <strong>backend development</strong>. My main strength is the backend, but I also work with frontend technologies and build complete end-to-end web systems.</p>
-            <p>I believe mistakes help me learn and improve, and I'm happiest when I'm learning something new. I focus on practical systems that solve real problems — not just demo projects.</p>
-            <p>Outside of coding, I love <strong>Marvel and DC movies</strong>. I'm a big fan of them. My favourites are <strong>Iron Man</strong> and <strong>Spider-Man</strong>, because they learn from their mistakes and become stronger. I try to do the same in my work.</p>
+            <p>I'm a web developer who prefers the backend. At SkyneTBee I build the software a school runs on: admissions, fee payments, exams and results, and attendance synced from biometric devices. I also write the HTML, CSS and JavaScript around it, so I can take a feature from the database to the screen.</p>
+            <p>I learn fastest from my own mistakes, and I'd rather build systems that real people depend on than demo projects.</p>
+            <p>Off screen I'm a Marvel and DC fan. Iron Man and Spider-Man are my favourites because they get stronger by failing, which is how I try to work. The colour button at the bottom right of this page switches the site between Spider-Verse looks.</p>
           </div>
-          <ul class="enjoy-list reveal">
-            <li><span class="check">✓</span> Building real-world applications</li>
-            <li><span class="check">✓</span> Solving technical problems</li>
-            <li><span class="check">✓</span> Learning from mistakes</li>
-            <li><span class="check">✓</span> Improving my development skills</li>
-            <li><span class="check">✓</span> Working on practical systems</li>
-            <li><span class="check">✓</span> Watching Marvel and DC movies</li>
-          </ul>
+          <dl class="facts reveal">
+            <div><dt>Experience</dt><dd>2 years hands-on at SkyneTBee Artificial Intelligence Enterprise Pvt Ltd</dd></div>
+            <div><dt>Studying</dt><dd>B.Sc. Information Technology, RD National College of Arts &amp; Science, Erode (2024–2027)</dd></div>
+            <div><dt>Main stack</dt><dd>PHP, MySQL, REST APIs</dd></div>
+            <div><dt>Also uses</dt><dd>JavaScript, AWS, Cloudflare, Apache, Git</dd></div>
+          </dl>
         </div>
       </div>
     </section>
 
     <!-- ===== SKILLS ===== -->
-    <section id="skills">
+    <section id="skills" aria-labelledby="skills-h">
       <div class="wrap">
         <div class="sec-head reveal">
-          <span class="sec-tag">// 02 — Skills</span>
-          <h2>My <span class="highlight">toolbox</span></h2>
-          <p>Technologies I use to design, build and ship complete web systems.</p>
+          <h2 id="skills-h">Skills</h2>
+          <p>What I use to design, build and ship a complete web system.</p>
         </div>
         <div class="skills-grid">
           <div class="skill-card reveal">
-            <div class="skill-icon">🎨</div>
+            <div class="skill-icon"><svg class="line" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
             <h3>Frontend</h3>
             <div class="skill-tags">
-              <span class="skill-tag">HTML</span>
-              <span class="skill-tag">CSS</span>
+              <span class="skill-tag">HTML5</span>
+              <span class="skill-tag">CSS3</span>
               <span class="skill-tag">JavaScript</span>
             </div>
           </div>
           <div class="skill-card reveal">
-            <div class="skill-icon">⚙️</div>
-            <h3>Backend</h3>
+            <div class="skill-icon"><svg class="line" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></div>
+            <h3>Backend &amp; databases</h3>
             <div class="skill-tags">
               <span class="skill-tag">PHP</span>
+              <span class="skill-tag">SQL</span>
               <span class="skill-tag">MySQL</span>
-              <span class="skill-tag">API Development</span>
+              <span class="skill-tag">MS SQL Server</span>
+              <span class="skill-tag">REST APIs</span>
               <span class="skill-tag">Architecture</span>
             </div>
           </div>
           <div class="skill-card reveal">
-            <div class="skill-icon">🛠️</div>
-            <h3>Tools &amp; Tech</h3>
+            <div class="skill-icon"><svg class="line" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+            <h3>Tools &amp; deployment</h3>
             <div class="skill-tags">
               <span class="skill-tag">Git</span>
               <span class="skill-tag">AWS</span>
               <span class="skill-tag">Cloudflare</span>
               <span class="skill-tag">Apache</span>
+              <span class="skill-tag">VS Code</span>
+              <span class="skill-tag">FileZilla</span>
+              <span class="skill-tag">phpMyAdmin</span>
+              <span class="skill-tag">SSMS</span>
             </div>
           </div>
         </div>
@@ -1349,28 +1367,83 @@
     </section>
 
     <!-- ===== PROJECTS ===== -->
-    <section id="projects">
+    <section id="projects" aria-labelledby="projects-h">
       <div class="wrap">
         <div class="sec-head reveal">
-          <span class="sec-tag">// 03 — Projects</span>
-          <h2>Things I've <span class="highlight">built</span></h2>
-          <p>Systems built for real users. Open any project for the problem, the solution and my part in it.</p>
+          <h2 id="projects-h">Projects</h2>
+          <p>Systems built for real users. Open a project to see the problem, the solution and my part in it.</p>
         </div>
-        <div class="proj-timeline" id="projectGrid"></div>
+        <div class="proj-timeline" id="projectGrid">
+      <div class="proj-body">
+        <article class="proj-card">
+          <h3>Student House Voting &amp; Election Management System</h3>
+          <p class="proj-desc">Manages house elections end to end: candidates, student voting and results.</p>
+          <p class="proj-problem"><b>Problem:</b> Paper-based house elections are slow to run and hard to count accurately.</p>
+          <div class="proj-tags"><span class="proj-tag">PHP</span><span class="proj-tag">MySQL</span><span class="proj-tag">JavaScript</span><span class="proj-tag">HTML</span></div>
+          <button type="button" class="proj-more" data-i="0" aria-haspopup="dialog">View details<span class="sr-only">: Student House Voting &amp; Election Management System</span></button>
+        </article>
+      </div>
+      <div class="proj-body">
+        <article class="proj-card">
+          <h3>RD College / School Admission Management System</h3>
+          <p class="proj-desc">One workflow from first enquiry to a managed student record.</p>
+          <p class="proj-problem"><b>Problem:</b> Enquiries, admissions, fees and student records often live in separate places and fall out of sync.</p>
+          <div class="proj-tags"><span class="proj-tag">PHP</span><span class="proj-tag">MySQL</span><span class="proj-tag">JavaScript</span><span class="proj-tag">HTML</span></div>
+          <button type="button" class="proj-more" data-i="1" aria-haspopup="dialog">View details<span class="sr-only">: RD College / School Admission Management System</span></button>
+        </article>
+      </div>
+      <div class="proj-body">
+        <article class="proj-card">
+          <h3>School Fee Management &amp; Payment System</h3>
+          <p class="proj-desc">Fee generation and online payment, with PDF receipts.</p>
+          <p class="proj-problem"><b>Problem:</b> Manual fee collection makes it hard to know who has paid and to issue receipts quickly.</p>
+          <div class="proj-tags"><span class="proj-tag">PHP</span><span class="proj-tag">MySQL</span><span class="proj-tag">JavaScript</span><span class="proj-tag">Payment Gateway API</span></div>
+          <button type="button" class="proj-more" data-i="2" aria-haspopup="dialog">View details<span class="sr-only">: School Fee Management &amp; Payment System</span></button>
+        </article>
+      </div>
+      <div class="proj-body">
+        <article class="proj-card">
+          <h3>Snap Talk</h3>
+          <p class="proj-desc">A student explanation and evaluation system with audio proof.</p>
+          <p class="proj-problem"><b>Problem:</b> Teachers need a practical way to check whether a student truly understood a topic, and keep a record of it.</p>
+          <div class="proj-tags"><span class="proj-tag">PHP</span><span class="proj-tag">MySQL</span><span class="proj-tag">JavaScript</span><span class="proj-tag">Audio recording</span></div>
+          <button type="button" class="proj-more" data-i="3" aria-haspopup="dialog">View details<span class="sr-only">: Snap Talk</span></button>
+        </article>
+      </div>
+      <div class="proj-body">
+        <article class="proj-card">
+          <h3>AI Page Vector Search</h3>
+          <p class="proj-desc">Search that matches meaning, so pages are easier to find.</p>
+          <p class="proj-problem"><b>Problem:</b> Keyword search misses pages when the user&#x27;s words differ from the page names.</p>
+          <div class="proj-tags"><span class="proj-tag">Vector embeddings</span><span class="proj-tag">MySQL</span><span class="proj-tag">PHP / JavaScript</span></div>
+          <button type="button" class="proj-more" data-i="4" aria-haspopup="dialog">View details<span class="sr-only">: AI Page Vector Search</span></button>
+        </article>
+      </div>
+      <div class="proj-body">
+        <article class="proj-card">
+          <h3>Canteen Management System</h3>
+          <p class="proj-desc">A real-world management system for canteen operations.</p>
+          <p class="proj-problem"><b>Problem:</b> Manual canteen management causes order errors and slow billing.</p>
+          <div class="proj-tags"><span class="proj-tag">PHP</span><span class="proj-tag">MySQL</span><span class="proj-tag">JavaScript</span></div>
+          <button type="button" class="proj-more" data-i="5" aria-haspopup="dialog">View details<span class="sr-only">: Canteen Management System</span></button>
+        </article>
+      </div>
+        </div>
       </div>
     </section>
 
     <!-- ===== EXPERIENCE ===== -->
-    <section id="experience">
+    <section id="experience" aria-labelledby="exp-h">
       <div class="wrap">
         <div class="sec-head reveal">
-          <span class="sec-tag">// 04 — Experience</span>
-          <h2>Where I've <span class="highlight">worked</span></h2>
+          <h2 id="exp-h">Experience and education</h2>
         </div>
         <div class="timeline">
           <div class="timeline-item reveal">
             <h3>SkyneTBee Artificial Intelligence Enterprise Pvt Ltd</h3>
-            <p class="meta">Internship · 2 years hands-on experience · Best Startup Award 2022 (National Level)</p>
+            <!-- TODO: add your start and end dates here, e.g. "Jun 2022 – Present" -->
+            <p class="meta">Developer intern · 2 years hands-on</p>
+            <p class="meta">Company award: Best Startup Award 2022 (National Level)</p>
             <ul>
               <li>Developed and maintained student admission and member management modules (PHP, MySQL, JavaScript, HTML, CSS).</li>
               <li>Built online fee payment, receipt generation and fee management.</li>
@@ -1391,17 +1464,88 @@
     </section>
 
     <!-- ===== MOMENTS & ACHIEVEMENTS ===== -->
-    <section id="moments">
+    <section id="moments" aria-labelledby="moments-h">
       <div class="wrap">
         <div class="sec-head reveal">
-          <span class="sec-tag">// 05 — Moments</span>
-          <h2>Moments &amp; <span class="highlight">Achievements</span></h2>
-          <p>Proud moments from my journey at SkyneTBee Artificial Intelligence Enterprise Pvt Ltd. Tap any photo to see it bigger.</p>
+          <h2 id="moments-h">Moments and achievements</h2>
+          <p>Photos from my time at SkyneTBee. Tap a photo to enlarge it.</p>
         </div>
       </div>
       <div class="moment-scroll" id="momentScroll">
         <div class="moment-sticky">
-          <div class="moment-hz" id="momentGrid"></div>
+          <div class="moment-hz" id="momentGrid">
+        <aside class="moment-root">
+          <b>SkyneTBee Artificial Intelligence Enterprise Pvt Ltd</b>
+          <span>Best Startup Award 2022, National Level</span>
+        </aside>
+        <div class="mh-stub" id="mhStub"></div><div class="mh-stubfill" id="mhStubFill"></div>
+        <div class="mh-trunk" id="mhTrunk"></div><div class="mh-fill" id="mhFill"></div>
+        <div class="moment-node">
+          <article class="moment-card">
+            <div class="moment-photo">
+              <img src="assets/moment-2.jpg" alt="My first month salary" loading="lazy" style="object-position:50% 40%">
+              <span class="moment-badge">First salary</span>
+            </div>
+            <div class="moment-info">
+              <h3>My first month salary</h3>
+              <p>I received my first month salary at SkyneTBee Artificial Intelligence Enterprise Pvt Ltd. The CEO gave it to me, and my mother was with me. It was a very proud day for my family and me.</p>
+            </div>
+            <button type="button" class="moment-open" data-i="0" aria-haspopup="dialog" aria-label="Enlarge photo: My first month salary"></button>
+          </article>
+        </div>
+        <div class="moment-node">
+          <article class="moment-card">
+            <div class="moment-photo">
+              <img src="assets/moment-1.jpg" alt="My first project presentation" loading="lazy" style="object-position:78% 40%">
+              <span class="moment-badge">First project</span>
+            </div>
+            <div class="moment-info">
+              <h3>My first project presentation</h3>
+              <p>I presented my first project at SkyneTBee Artificial Intelligence Enterprise Pvt Ltd. It was a big step for me, and I learned a lot from it.</p>
+            </div>
+            <button type="button" class="moment-open" data-i="1" aria-haspopup="dialog" aria-label="Enlarge photo: My first project presentation"></button>
+          </article>
+        </div>
+        <div class="moment-node">
+          <article class="moment-card">
+            <div class="moment-photo">
+              <img src="assets/moment-4.jpg" alt="My first gold medal" loading="lazy" style="object-position:50% 55%">
+              <span class="moment-badge">Gold medal</span>
+            </div>
+            <div class="moment-info">
+              <h3>My first gold medal</h3>
+              <p>I received my first gold medal from the CEO of SkyneTBee. It made me want to work even harder.</p>
+            </div>
+            <button type="button" class="moment-open" data-i="2" aria-haspopup="dialog" aria-label="Enlarge photo: My first gold medal"></button>
+          </article>
+        </div>
+        <div class="moment-node">
+          <article class="moment-card">
+            <div class="moment-photo">
+              <img src="assets/moment-5.jpg" alt="NVIDIA Expo, Coimbatore" loading="lazy" style="object-position:50% 40%">
+              <span class="moment-badge">Team visit</span>
+            </div>
+            <div class="moment-info">
+              <h3>NVIDIA Expo, Coimbatore</h3>
+              <p>Our SkyneTBee team visited the NVIDIA expo in Coimbatore. We learned about new technology and had a great day together.</p>
+            </div>
+            <button type="button" class="moment-open" data-i="3" aria-haspopup="dialog" aria-label="Enlarge photo: NVIDIA Expo, Coimbatore"></button>
+          </article>
+        </div>
+        <div class="moment-node">
+          <article class="moment-card">
+            <div class="moment-photo">
+              <img src="assets/moment-3.jpg" alt="Second gold medal: Most Promising Developer" loading="lazy" style="object-position:50% 35%">
+              <span class="moment-badge">Gold medal</span>
+            </div>
+            <div class="moment-info">
+              <h3>Second gold medal: Most Promising Developer</h3>
+              <p>I won my second gold medal, the Most Promising Developer medal. It was given by the founder and chairman of the RD Institution.</p>
+            </div>
+            <button type="button" class="moment-open" data-i="4" aria-haspopup="dialog" aria-label="Enlarge photo: Second gold medal: Most Promising Developer"></button>
+          </article>
+        </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1411,14 +1555,14 @@
       <div class="wrap">
         <div class="contact-grid">
           <div class="contact-info reveal">
-            <span class="sec-tag">// 06 — Contact</span>
-            <h2>Let's build <span class="highlight">together.</span></h2>
+            <h2>Get in touch</h2>
             <p>Have a system in mind, or want to talk about backend work? Send a message.</p>
             <ul class="contact-list">
-              <li><a href="mailto:divakarbalaji10@gmail.com"><span class="ico">✉️</span><div><div class="label">Email</div><div class="val">divakarbalaji10@gmail.com</div></div></a></li>
-              <li><a href="tel:+916380054384"><span class="ico">📞</span><div><div class="label">Phone</div><div class="val">+91 63800 54384</div></div></a></li>
-              <li><a href="https://www.linkedin.com/in/divakar-balaji-8233b7321" target="_blank" rel="noopener"><span class="ico">💼</span><div><div class="label">LinkedIn</div><div class="val">divakar-balaji-8233b7321</div></div></a></li>
-              <li><a href="https://github.com/divakarbalaji10-spec" target="_blank" rel="noopener"><span class="ico">🐙</span><div><div class="label">GitHub</div><div class="val">divakarbalaji10-spec</div></div></a></li>
+              <!-- email and phone are filled in by script (see CONTACT DETAILS below) so bots can't scrape them from the HTML -->
+              <li><a href="#contact" id="emailLink"><span class="ico"><svg class="line" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><div><div class="label">Email</div><div class="val" id="emailVal">Use the form</div></div></a></li>
+              <li><a href="#contact" id="phoneLink"><span class="ico"><svg class="line" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span><div><div class="label">Phone</div><div class="val" id="phoneVal">Use the form</div></div></a></li>
+              <li><a href="https://www.linkedin.com/in/divakar-balaji-8233b7321" target="_blank" rel="noopener"><span class="ico"><svg class="solid" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg></span><div><div class="label">LinkedIn</div><div class="val">divakar-balaji-8233b7321</div></div></a></li>
+              <li><a href="https://github.com/divakarbalaji10-spec" target="_blank" rel="noopener"><span class="ico"><svg class="solid" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span><div><div class="label">GitHub</div><div class="val">divakarbalaji10-spec</div></div></a></li>
             </ul>
           </div>
 
@@ -1438,8 +1582,8 @@
               <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
             </div>
             <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off">
-            <p class="form-msg" id="formMsg"></p>
-            <button type="submit" class="btn btn-primary" id="sendBtn">Send message →</button>
+            <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+            <button type="submit" class="btn btn-primary" id="sendBtn">Send message</button>
 
             <!-- Sending / Sent overlay -->
             <div class="send-stage" id="sendStage" aria-live="polite">
@@ -1479,13 +1623,13 @@
       <div class="foot-sig sig" data-sig="footer"></div>
       <div class="foot-grid">
         <div class="foot-brand">
-          <span class="logo-mark"><img src="assets/profile.jpg" alt="Divakar Balaji" onerror="this.replaceWith('DB')"></span>
+          <span class="logo-mark"><img src="assets/profile.jpg" alt="" width="40" height="40" decoding="async" onerror="this.replaceWith('DB')"></span>
           <div>
             <h3>Divakar Balaji</h3>
             <p>Web Developer | Backend Developer</p>
           </div>
         </div>
-        <p class="foot-copy">© 2026 · built with care</p>
+        <p class="foot-copy">© 2026 Divakar Balaji</p>
       </div>
     </div>
   </footer>
@@ -1496,22 +1640,22 @@
   <!-- ===== THEME SWITCHER ===== -->
   <div class="theme-panel" id="themePanel">
     <div class="theme-drawer" id="themeDrawer">
-      <div class="theme-swatch active" data-theme="0" style="background:linear-gradient(135deg,#0a0a14,#e62429,#3b82f6);" title="Classic Spidey"></div>
-      <div class="theme-swatch" data-theme="1" style="background:linear-gradient(135deg,#f8f6fb,#e11d86,#0d9488);" title="Spider-Gwen"></div>
-      <div class="theme-swatch" data-theme="2" style="background:linear-gradient(135deg,#0a0a0a,#e8e8e8,#b5b5b5);" title="Spider-Noir"></div>
-      <div class="theme-swatch" data-theme="3" style="background:linear-gradient(135deg,#08080a,#ff1e3c,#a855f7);" title="Miles Morales"></div>
-      <div class="theme-swatch" data-theme="4" style="background:linear-gradient(135deg,#12080a,#d4161f,#f5b301);" title="Iron Spider"></div>
-      <div class="theme-swatch" data-theme="5" style="background:linear-gradient(135deg,#050507,#8b5cf6,#e5e7eb);" title="Symbiote"></div>
-      <div class="theme-swatch" data-theme="6" style="background:linear-gradient(135deg,#070b24,#ff2d55,#22d3ee);" title="Spider-Man 2099"></div>
-      <div class="theme-swatch" data-theme="7" style="background:linear-gradient(135deg,#f3ecd6,#d90429,#111111);" title="Spider-Punk"></div>
-      <div class="theme-swatch" data-theme="8" style="background:linear-gradient(135deg,#1a0707,#ef2b2b,#60a5fa);" title="Scarlet Spider"></div>
-      <div class="theme-swatch" data-theme="9" style="background:linear-gradient(135deg,#f4f7fc,#d90f1b,#1d4ed8);" title="Spidey Light"></div>
+      <button type="button" class="theme-swatch active" data-theme="0" style="background:linear-gradient(135deg,#0a0a14,#e62429,#3b82f6);" title="Classic Spidey" aria-label="Classic Spidey theme" aria-pressed="true"></button>
+      <button type="button" class="theme-swatch" data-theme="1" style="background:linear-gradient(135deg,#f8f6fb,#e11d86,#0d9488);" title="Spider-Gwen" aria-label="Spider-Gwen theme" aria-pressed="false"></button>
+      <button type="button" class="theme-swatch" data-theme="2" style="background:linear-gradient(135deg,#0a0a0a,#e8e8e8,#b5b5b5);" title="Spider-Noir" aria-label="Spider-Noir theme" aria-pressed="false"></button>
+      <button type="button" class="theme-swatch" data-theme="3" style="background:linear-gradient(135deg,#08080a,#ff1e3c,#a855f7);" title="Miles Morales" aria-label="Miles Morales theme" aria-pressed="false"></button>
+      <button type="button" class="theme-swatch" data-theme="4" style="background:linear-gradient(135deg,#12080a,#d4161f,#f5b301);" title="Iron Spider" aria-label="Iron Spider theme" aria-pressed="false"></button>
+      <button type="button" class="theme-swatch" data-theme="5" style="background:linear-gradient(135deg,#050507,#8b5cf6,#e5e7eb);" title="Symbiote" aria-label="Symbiote theme" aria-pressed="false"></button>
+      <button type="button" class="theme-swatch" data-theme="6" style="background:linear-gradient(135deg,#070b24,#ff2d55,#22d3ee);" title="Spider-Man 2099" aria-label="Spider-Man 2099 theme" aria-pressed="false"></button>
+      <button type="button" class="theme-swatch" data-theme="7" style="background:linear-gradient(135deg,#f3ecd6,#d90429,#111111);" title="Spider-Punk" aria-label="Spider-Punk theme" aria-pressed="false"></button>
+      <button type="button" class="theme-swatch" data-theme="8" style="background:linear-gradient(135deg,#1a0707,#ef2b2b,#60a5fa);" title="Scarlet Spider" aria-label="Scarlet Spider theme" aria-pressed="false"></button>
+      <button type="button" class="theme-swatch" data-theme="9" style="background:linear-gradient(135deg,#f4f7fc,#d90f1b,#1d4ed8);" title="Spidey Light" aria-label="Spidey Light theme" aria-pressed="false"></button>
     </div>
-    <button class="theme-toggle" id="themeToggle" aria-label="Change theme">🎨</button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Change colour theme" aria-expanded="false" aria-controls="themeDrawer"><svg class="line" viewBox="0 0 24 24" aria-hidden="true"><circle cx="13.5" cy="6.5" r="1"/><circle cx="17.5" cy="10.5" r="1"/><circle cx="8.5" cy="7.5" r="1"/><circle cx="6.5" cy="12.5" r="1"/><path d="M12 2a10 10 0 0 0 0 20c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.3-.5-.8-.5-1.3 0-1.1.9-2 2-2h2.4a4.7 4.7 0 0 0 4.7-4.7C22 6 17.5 2 12 2z"/></svg></button>
   </div>
 
   <!-- ===== MODAL ===== -->
-  <div class="modal" id="pmodal" role="dialog" aria-modal="true">
+  <div class="modal" id="pmodal" role="dialog" aria-modal="true" aria-labelledby="pTitle">
     <div class="modal-content">
       <button class="modal-close" data-close aria-label="Close">✕</button>
       <div id="pbody"></div>
@@ -1529,8 +1673,8 @@
           <div class="letter-crease b"></div>
           <div class="letter-seal">DB</div>
 
-          <h2>Divakar B</h2>
-          <p class="sub">Full-Stack Web Developer | PHP Backend Developer</p>
+          <h2>Divakar Balaji</h2>
+          <p class="sub">Web Developer | Backend Developer</p>
 
           <h4>Objective</h4>
           <p>To keep improving my technical skills, learn new technologies and grow into a better developer who contributes to the company's growth.</p>
@@ -1555,15 +1699,15 @@
           </ul>
 
           <h4>Contact</h4>
-          <p>divakarbalaji10@gmail.com · +91 6380054384<br>github.com/divakarbalaji10-spec</p>
+          <p><span data-mail>Use the contact form</span><br>github.com/divakarbalaji10-spec<br>Phone number is on the full resume.</p>
 
           <p class="close" style="margin-top:20px">Sincerely,</p>
           <div class="sig" data-sig="resume"></div>
         </div>
 
         <div class="letter-actions">
-          <a class="btn btn-primary" href="assets/Divakar-Balaji-Resume.pdf" target="_blank" rel="noopener">📄 View Full Resume</a>
-          <a class="btn btn-ghost" href="assets/Divakar-Balaji-Resume.pdf" download="Divakar-Balaji-Resume.pdf">⬇ Download Resume</a>
+          <a class="btn btn-primary" href="assets/Divakar-Balaji-Resume.pdf" target="_blank" rel="noopener">View full resume</a>
+          <a class="btn btn-ghost" href="assets/Divakar-Balaji-Resume.pdf" download="Divakar-Balaji-Resume.pdf">Download resume</a>
           <button class="btn btn-ghost" data-close>Close</button>
         </div>
       </div>
@@ -1593,6 +1737,21 @@
       const splash = document.getElementById('signature-splash');
       const splashSig = document.getElementById('splashSig');
 
+      const finish = () => {
+        if (splash.classList.contains('hidden')) return;
+        splash.classList.add('hidden');
+        document.body.style.overflow = '';
+        try { sessionStorage.setItem('splashSeen', '1'); } catch (e) {}
+      };
+
+      let seen = false;
+      try { seen = sessionStorage.getItem('splashSeen') === '1'; } catch (e) {}
+      if (seen || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        splash.style.transition = 'none';
+        splash.classList.add('hidden');
+        return;
+      }
+
       splashSig.innerHTML = SIG_PATHS.map(d => `<path d="${d}"/>`).join('');
       const paths = splashSig.querySelectorAll('path');
       let total = 0;
@@ -1603,23 +1762,17 @@
         total += len;
       });
 
-      const HOLD_MS = 3700;
-      setTimeout(() => {
-        splash.classList.add('hidden');
-        document.body.style.overflow = '';
-      }, HOLD_MS);
-
       document.body.style.overflow = 'hidden';
-
-      setTimeout(() => {
-        splash.classList.add('hidden');
-        document.body.style.overflow = '';
-      }, 6000);
+      setTimeout(finish, 3700);
+      splash.addEventListener('click', finish);   // click anywhere, or the Skip button
+      addEventListener('keydown', finish);        // or press any key
     })();
 
     /* ============================================================
        PROJECT DATA
        ============================================================ */
+    // Optional extra fields per project, shown in the details popup when present:
+    //   impact:"Used by 3 schools", live:"https://...", repo:"https://github.com/..."
     const PROJECTS = [
       { name:"Student House Voting & Election Management System", short:"Manages house elections end to end: candidates, student voting and results.", problem:"Paper-based house elections are slow to run and hard to count accurately.", solution:"A web system where admins set up the election, students vote once, and results are tallied house by house.", features:["Student voting","House-wise election management","Election administration","Result management"], tech:["PHP","MySQL","JavaScript","HTML","CSS"], role:"Developed the web-based student house election system covering candidates, voting and results." },
       { name:"RD College / School Admission Management System", short:"One workflow from first enquiry to a managed student record.", problem:"Enquiries, admissions, fees and student records often live in separate places and fall out of sync.", solution:"A connected flow: Enquiry → Admission Confirmation → Fee Management → Student/Member Management.", features:["Enquiry tracking","Admission confirmation","Fee management","Student and member records","Student ID card generation"], tech:["PHP","MySQL","JavaScript","HTML","CSS"], role:"Developed and maintained the admission and member management modules." },
@@ -1761,16 +1914,23 @@
        THEME SWITCHER
        ============================================================ */
     const themePanel = $('#themePanel'), themeToggle = $('#themeToggle');
+    const syncThemeUI = () => themeToggle.setAttribute('aria-expanded', themePanel.classList.contains('open'));
     themeToggle.addEventListener('click', e => {
       e.stopPropagation();
       themePanel.classList.toggle('open');
+      syncThemeUI();
     });
     document.addEventListener('click', e => {
-      if (!themePanel.contains(e.target)) themePanel.classList.remove('open');
+      if (!themePanel.contains(e.target)) { themePanel.classList.remove('open'); syncThemeUI(); }
+    });
+    addEventListener('keydown', e => {
+      if (e.key === 'Escape' && themePanel.classList.contains('open')) {
+        themePanel.classList.remove('open'); syncThemeUI(); themeToggle.focus();
+      }
     });
     $$('.theme-swatch').forEach(sw => sw.addEventListener('click', () => {
-      $$('.theme-swatch').forEach(s => s.classList.remove('active'));
-      sw.classList.add('active');
+      $$('.theme-swatch').forEach(s => { s.classList.remove('active'); s.setAttribute('aria-pressed', 'false'); });
+      sw.classList.add('active'); sw.setAttribute('aria-pressed', 'true');
       document.body.dataset.theme = sw.dataset.theme;
     }));
 
@@ -1793,17 +1953,7 @@
     /* ============================================================
        PROJECTS
        ============================================================ */
-    const grid = $('#projectGrid');
-    grid.innerHTML = PROJECTS.map((p,i) => `
-      <div class="proj-body">
-        <button class="proj-card" data-i="${i}">
-          <span class="proj-num">${String(i+1).padStart(2,'0')} /</span>
-          <h3>${p.name}</h3>
-          <p class="proj-desc">${p.short}</p>
-          <p class="proj-problem"><b>Problem:</b> ${p.problem}</p>
-          <div class="proj-tags">${p.tech.slice(0,4).map(t=>`<span class="proj-tag">${t}</span>`).join('')}</div>
-        </button>
-      </div>`).join('');
+    const grid = $('#projectGrid');   // cards are plain HTML (see #projects)
 
     /* ---- Timeline: wavy line drawn on scroll, one dot per project ---- */
     const tl = { fill:null, total:0, pts:[], dots:[], conns:[], bodies:[] };
@@ -1876,17 +2026,23 @@
     buildTimeline(); updateTimeline();
 
     grid.addEventListener('click', e => {
-      const c = e.target.closest('.proj-card'); if (!c) return;
+      const c = e.target.closest('.proj-more'); if (!c) return;
       const p = PROJECTS[c.dataset.i];
+      const links = [
+        p.live && `<a class="btn btn-primary" href="${p.live}" target="_blank" rel="noopener">View live</a>`,
+        p.repo && `<a class="btn btn-ghost" href="${p.repo}" target="_blank" rel="noopener">View code</a>`
+      ].filter(Boolean).join('');
       $('#pbody').innerHTML = `
-        <h2>${p.name}</h2>
+        <h2 id="pTitle">${p.name}</h2>
         <p class="modal-tag">${p.short}</p>
         <h4>Problem</h4><p>${p.problem}</p>
         <h4>Solution</h4><p>${p.solution}</p>
+        ${p.impact ? `<h4>Impact</h4><p>${p.impact}</p>` : ''}
         <h4>Features</h4><ul>${p.features.map(f=>`<li>${f}</li>`).join('')}</ul>
         <h4>Technologies</h4>
         <div class="modal-tags">${p.tech.map(t=>`<span class="modal-tag-chip">${t}</span>`).join('')}</div>
-        <h4>My Role</h4><p>${p.role}</p>`;
+        <h4>My Role</h4><p>${p.role}</p>
+        ${links ? `<div class="cta-group" style="margin:24px 0 0">${links}</div>` : ''}`;
       openModal($('#pmodal'));
     });
 
@@ -1914,6 +2070,16 @@
       m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) closeModal(m); });
     });
     addEventListener('keydown', e => { if (e.key === 'Escape') $$('.modal.show').forEach(closeModal); });
+    addEventListener('keydown', e => {
+      if (e.key !== 'Tab') return;
+      const m = $('.modal.show'); if (!m) return;
+      const f = $$('a[href], button:not([disabled])', m).filter(el => el.getClientRects().length);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (!m.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
 
     /* ============================================================
        RESUME
@@ -1928,8 +2094,9 @@
        NAV
        ============================================================ */
     const burger = $('#burger'), menu = $('#menu');
-    burger.addEventListener('click', () => menu.classList.toggle('open'));
-    $$('#menu a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+    const syncBurger = () => burger.setAttribute('aria-expanded', menu.classList.contains('open'));
+    burger.addEventListener('click', () => { menu.classList.toggle('open'); syncBurger(); });
+    $$('#menu a').forEach(a => a.addEventListener('click', () => { menu.classList.remove('open'); syncBurger(); }));
 
     /* ============================================================
        SCROLL: header, progress, spy
@@ -1965,25 +2132,7 @@
     ];
     const momentGrid = $('#momentGrid'), momentScroll = $('#momentScroll');
     const momentSticky = $('.moment-sticky', momentScroll);
-    momentGrid.innerHTML = `
-      <aside class="moment-root">
-        <b>SkyneTBee Artificial Intelligence Enterprise Pvt Ltd</b>
-        <span>🏆 Best Startup Award 2022 · National Level</span>
-      </aside>
-      <div class="mh-stub" id="mhStub"></div><div class="mh-stubfill" id="mhStubFill"></div>
-      <div class="mh-trunk" id="mhTrunk"></div><div class="mh-fill" id="mhFill"></div>` + MOMENTS.map((m,i) => `
-      <div class="moment-node">
-        <button class="moment-card" data-i="${i}" aria-label="Open photo: ${m.title}">
-          <div class="moment-photo">
-            <img src="${m.img}" alt="${m.title}" loading="lazy" style="object-position:${m.pos}">
-            <span class="moment-badge">${m.badge}</span>
-          </div>
-          <div class="moment-info">
-            <h3>${m.title}</h3>
-            <p>${m.text}</p>
-          </div>
-        </button>
-      </div>`).join('');
+    // cards, trunk and stubs are plain HTML (see #moments)
 
     /* The tree is drawn while you scroll: the section stays pinned, the
        line grows left → right, each branch drops its card when the line
@@ -2053,10 +2202,10 @@
     refreshMoments();
 
     momentGrid.addEventListener('click', e => {
-      const c = e.target.closest('.moment-card'); if (!c) return;
+      const c = e.target.closest('.moment-open'); if (!c) return;
       const m = MOMENTS[c.dataset.i];
       $('#pbody').innerHTML = `
-        <h2>${m.title}</h2>
+        <h2 id="pTitle">${m.title}</h2>
         <p class="modal-tag">${m.badge}</p>
         <img class="modal-photo" src="${m.img}" alt="${m.title}">
         <p>${m.text}</p>`;
@@ -2076,7 +2225,31 @@
        THWIP strands, slingshot launch, flash — then "Message sent!"
        and the form comes back by itself after 3 seconds
        ============================================================ */
-    const MAIL_TO = 'divakarbalaji10@gmail.com';
+    /* ---------- CONTACT DETAILS ----------
+       Kept in pieces and written into the page by script, so scrapers that
+       only read the HTML never see a clean email address or phone number.
+       The phone number is revealed only when someone clicks it. */
+    const MAIL_PARTS = ['divakarbalaji10', 'gmail.com'];
+    const PHONE_PARTS = ['+91', '63800', '54384'];
+    const MAIL_TO = MAIL_PARTS.join('@');
+    const pageLoadedAt = Date.now();
+
+    (function fillContacts() {
+      $$('[data-mail]').forEach(el => { el.textContent = MAIL_TO; });
+      $('#emailLink').href = 'mailto:' + MAIL_TO;
+      $('#emailVal').textContent = MAIL_TO;
+      const pl = $('#phoneLink'), pv = $('#phoneVal');
+      pv.textContent = 'Show phone number';
+      pl.setAttribute('role', 'button');
+      pl.addEventListener('click', e => {
+        if (pl.dataset.shown) return;          // second click dials
+        e.preventDefault();
+        pl.href = 'tel:' + PHONE_PARTS.join('');
+        pv.textContent = PHONE_PARTS.join(' ');
+        pl.dataset.shown = '1';
+        pl.removeAttribute('role');
+      });
+    })();
     const cform = $('#contactForm'), fmsg = $('#formMsg'), sendBtn = $('#sendBtn');
     const stage = $('#sendStage'), sendAnim = $('#sendAnim'), sendEnv = $('#sendEnv'), success = $('#formSuccess');
     const sendMail = f => fetch('https://formsubmit.co/ajax/'+MAIL_TO, {
@@ -2196,7 +2369,7 @@
       countTimers.push(setTimeout(() => {
         cform.reset();
         resetSendStage();
-        sendBtn.disabled = false; sendBtn.textContent = 'Send message →';
+        sendBtn.disabled = false; sendBtn.textContent = 'Send message';
         fmsg.textContent = '';
       }, 3000));
     }
@@ -2208,6 +2381,14 @@
       sendBtn.disabled = true; sendBtn.textContent = 'Sending...';
 
       const data = Object.fromEntries(new FormData(cform));
+
+      // bots fill the hidden field or submit instantly; real people don't
+      if (data._honey) { sendBtn.disabled = false; sendBtn.textContent = 'Send message'; return; }
+      if (Date.now() - pageLoadedAt < 3000) {
+        sendBtn.disabled = false; sendBtn.textContent = 'Send message';
+        fmsg.textContent = 'Please check your message and send again.';
+        return;
+      }
 
       resetSendStage();
       stage.classList.add('show');
@@ -2225,7 +2406,7 @@
         startCount();
       } else {
         resetSendStage();
-        sendBtn.disabled = false; sendBtn.textContent = 'Send message →';
+        sendBtn.disabled = false; sendBtn.textContent = 'Send message';
         fmsg.textContent = 'Could not send right now. Please email ' + MAIL_TO + ' directly.';
       }
     });
