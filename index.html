@@ -7,7 +7,7 @@
   <title>Divakar Balaji — Backend Developer | PHP &amp; MySQL Web Developer</title>
   <meta name="description" content="Divakar Balaji is a PHP and MySQL backend developer who builds admission, fee payment, attendance and AI search systems for schools and colleges.">
   <link rel="canonical" href="https://divakar.website/">
-  <meta name="theme-color" content="#0a0a14">
+  <meta name="theme-color" content="#f4f7fc">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Divakar Balaji">
   <meta property="og:title" content="Divakar Balaji — Backend Developer (PHP, MySQL)">
@@ -146,56 +146,18 @@
       to { transform: scaleX(1); }
     }
 
-    /* ========== 10 SPIDER-VERSE THEMES ========== */
-    [data-theme="0"] {
-      --bg:#0a0a14; --bg2:#10101e; --surface:#161628; --surface-2:#1f1f38;
-      --ink:#f4f6ff; --muted:#9aa0c0; --accent:#e62429; --accent-2:#3b82f6; --accent-3:#ffffff;
-      --line:#2a2a4a; --glow:rgba(230,36,41,.38); --glow-2:rgba(59,130,246,.3); --on-accent:#fff;
-    }
-    [data-theme="1"] {
-      --bg:#f8f6fb; --bg2:#ffffff; --surface:#ffffff; --surface-2:#f0eaf6;
-      --ink:#1a1030; --muted:#6b5b86; --accent:#e11d86; --accent-2:#0d9488; --accent-3:#7c3aed;
-      --line:#e3d8f0; --glow:rgba(225,29,134,.2); --glow-2:rgba(13,148,136,.15); --on-accent:#fff;
-    }
-    [data-theme="2"] {
-      --bg:#0a0a0a; --bg2:#121212; --surface:#1a1a1a; --surface-2:#242424;
-      --ink:#f2f2f2; --muted:#9b9b9b; --accent:#e8e8e8; --accent-2:#b5b5b5; --accent-3:#7a7a7a;
-      --line:#2e2e2e; --glow:rgba(255,255,255,.12); --glow-2:rgba(255,255,255,.08); --on-accent:#0a0a0a;
-    }
-    [data-theme="3"] {
-      --bg:#08080a; --bg2:#101014; --surface:#17171c; --surface-2:#212128;
-      --ink:#f5f5f7; --muted:#a1a1aa; --accent:#ff1e3c; --accent-2:#ff7a1a; --accent-3:#a855f7;
-      --line:#2a2a33; --glow:rgba(255,30,60,.35); --glow-2:rgba(168,85,247,.3); --on-accent:#fff;
-    }
-    [data-theme="4"] {
-      --bg:#12080a; --bg2:#1c0e11; --surface:#261418; --surface-2:#331c21;
-      --ink:#fff4e6; --muted:#c9a59a; --accent:#d4161f; --accent-2:#f5b301; --accent-3:#ffd98a;
-      --line:#4a2a2e; --glow:rgba(212,22,31,.35); --glow-2:rgba(245,179,1,.25); --on-accent:#fff;
-    }
-    [data-theme="5"] {
-      --bg:#050507; --bg2:#0b0b10; --surface:#121218; --surface-2:#1b1b24;
-      --ink:#f1f1f7; --muted:#8d8da5; --accent:#8b5cf6; --accent-2:#e5e7eb; --accent-3:#6366f1;
-      --line:#25253a; --glow:rgba(139,92,246,.35); --glow-2:rgba(229,231,235,.15); --on-accent:#fff;
-    }
-    [data-theme="6"] {
-      --bg:#070b24; --bg2:#0c1236; --surface:#121a48; --surface-2:#1a2460;
-      --ink:#e8f0ff; --muted:#8ea0d8; --accent:#ff2d55; --accent-2:#22d3ee; --accent-3:#3b82f6;
-      --line:#232f78; --glow:rgba(255,45,85,.3); --glow-2:rgba(34,211,238,.28); --on-accent:#fff;
-    }
-    [data-theme="7"] {
-      --bg:#f3ecd6; --bg2:#fbf6e6; --surface:#fffdf5; --surface-2:#ece3c4;
-      --ink:#111111; --muted:#5b5540; --accent:#d90429; --accent-2:#111111; --accent-3:#e6a100;
-      --line:#d6caa0; --glow:rgba(217,4,41,.18); --glow-2:rgba(17,17,17,.12); --on-accent:#fff;
-    }
-    [data-theme="8"] {
-      --bg:#1a0707; --bg2:#240b0b; --surface:#301010; --surface-2:#3d1717;
-      --ink:#ffecec; --muted:#c99a9a; --accent:#ef2b2b; --accent-2:#60a5fa; --accent-3:#fca5a5;
-      --line:#502020; --glow:rgba(239,43,43,.35); --glow-2:rgba(96,165,250,.25); --on-accent:#fff;
-    }
-    [data-theme="9"] {
+    /* ========== 2 THEMES: Spidey Light (main) + Symbiote (dark) ========== */
+    body[data-theme="light"] {
       --bg:#f4f7fc; --bg2:#ffffff; --surface:#ffffff; --surface-2:#e8eef9;
       --ink:#0b1230; --muted:#54607f; --accent:#d90f1b; --accent-2:#1d4ed8; --accent-3:#0b1230;
       --line:#d3dcee; --glow:rgba(217,15,27,.16); --glow-2:rgba(29,78,216,.14); --on-accent:#fff;
+      color-scheme: light;
+    }
+    body[data-theme="symbiote"] {
+      --bg:#050507; --bg2:#0b0b10; --surface:#121218; --surface-2:#1b1b24;
+      --ink:#f1f1f7; --muted:#8d8da5; --accent:#8b5cf6; --accent-2:#e5e7eb; --accent-3:#6366f1;
+      --line:#25253a; --glow:rgba(139,92,246,.35); --glow-2:rgba(229,231,235,.15); --on-accent:#fff;
+      color-scheme: dark;
     }
 
     a { color: inherit; text-decoration: none; }
@@ -772,39 +734,57 @@
       stroke-linecap: round; stroke-linejoin: round;
     }
 
-    /* ===== THEME SWITCHER ===== */
+    /* ===== THEME SWITCHER (one button: Light <-> Symbiote) ===== */
     .theme-panel {
       position: fixed; bottom: 24px; right: 24px; z-index: 200;
-      display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
     }
+    .theme-panel.goo-active { z-index: 9999; }
     .theme-toggle {
-      width: 52px; height: 52px; border-radius: 50%;
+      position: relative; overflow: hidden;
+      width: 54px; height: 54px; border-radius: 50%;
       background: var(--surface); border: 1px solid var(--line);
-      color: var(--ink); font-size: 1.3rem; cursor: pointer;
+      color: var(--ink); cursor: pointer;
       display: grid; place-items: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,.3); transition: all .3s;
+      box-shadow: 0 10px 30px rgba(0,0,0,.3), 0 0 0 0 var(--glow);
+      transition: transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s, box-shadow .3s, background .4s;
     }
-    .theme-toggle:hover { transform: scale(1.1) rotate(30deg); border-color: var(--accent); }
-    .theme-drawer {
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
-      padding: 12px; border-radius: 16px;
-      background: var(--surface); border: 1px solid var(--line);
-      box-shadow: 0 20px 50px rgba(0,0,0,.4);
-      max-height: 0; overflow: hidden; opacity: 0; visibility: hidden;
-      transition: all .35s cubic-bezier(.2,.8,.2,1);
-      transform-origin: bottom right;
+    .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,.3), 0 0 0 6px var(--glow); }
+    .theme-toggle:active { transform: scale(.94); }
+    .theme-toggle:disabled { cursor: progress; }
+    .theme-toggle .ti {
+      position: absolute; inset: 0; display: grid; place-items: center;
+      transition: transform .5s cubic-bezier(.2,.8,.2,1), opacity .35s;
     }
-    .theme-panel.open .theme-drawer { max-height: 200px; opacity: 1; padding: 12px; visibility: visible; }
-    .theme-swatch {
-      width: 36px; height: 36px; border-radius: 10px;
-      cursor: pointer; border: 2px solid transparent;
-      transition: all .25s; position: relative;
+    .theme-toggle .ti svg { width: 26px; height: 26px; }
+    /* light theme shows the symbiote icon (tap to go dark), symbiote theme shows the sun */
+    body[data-theme="light"] .ti-sun { transform: translateY(120%) rotate(90deg); opacity: 0; }
+    body[data-theme="symbiote"] .ti-goo { transform: translateY(-120%) scale(.6); opacity: 0; }
+    .ti-goo { color: #050507; }
+    body[data-theme="light"] .theme-toggle { background: #ffffff; }
+    body[data-theme="symbiote"] .theme-toggle { background: #0b0b10; color: #f1f1f7; }
+    .theme-toggle .ti-goo .eye { fill: #ffffff; }
+    .theme-toggle .ti-goo svg { animation: gooIdle 3.2s ease-in-out infinite; transform-origin: 50% 60%; }
+    @keyframes gooIdle {
+      0%, 100% { transform: scale(1, 1); }
+      50% { transform: scale(1.06, .95); }
     }
-    .theme-swatch:hover { transform: scale(1.15); }
-    .theme-swatch.active {
-      border-color: var(--ink);
-      box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--ink);
+    .theme-tip {
+      position: absolute; right: 64px; top: 50%; transform: translate(8px, -50%);
+      white-space: nowrap; pointer-events: none;
+      padding: 6px 12px; border-radius: 100px;
+      background: var(--surface); color: var(--ink); border: 1px solid var(--line);
+      font: 500 .74rem 'JetBrains Mono', monospace; letter-spacing: .04em;
+      opacity: 0; transition: opacity .25s, transform .25s;
     }
+    .theme-panel:hover .theme-tip, .theme-toggle:focus-visible + .theme-tip { opacity: 1; transform: translate(0, -50%); }
+    .theme-panel.goo-active .theme-tip { opacity: 0; }
+
+    /* Symbiote take-over canvas: covers the whole site during the switch */
+    #symbioteCanvas {
+      position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 9998;
+      pointer-events: none; display: none;
+    }
+    #symbioteCanvas.on { display: block; pointer-events: auto; cursor: progress; }
 
     /* ===== MODAL ===== */
     .modal {
@@ -1059,17 +1039,10 @@
     .count-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transform-origin: left; animation: countDrain 3s linear forwards; }
     @keyframes countDrain { to { transform: scaleX(0); } }
 
-    /* ===== THEME PHOTOS: every photo is re-coloured by the active theme ===== */
+    /* ===== THEME PHOTOS: photos follow the active theme ===== */
     :root { --photo-filter: none; --photo-tint: transparent; --photo-tint-a: 0; }
-    body[data-theme="1"] { --photo-filter: saturate(1.05) brightness(1.06); --photo-tint: #e11d86; --photo-tint-a: .16; }
-    body[data-theme="2"] { --photo-filter: grayscale(1) contrast(1.18) brightness(.95); --photo-tint: transparent; --photo-tint-a: 0; }
-    body[data-theme="3"] { --photo-filter: contrast(1.12) saturate(1.25); --photo-tint: #a855f7; --photo-tint-a: .18; }
-    body[data-theme="4"] { --photo-filter: sepia(.35) saturate(1.25) contrast(1.05); --photo-tint: #f5b301; --photo-tint-a: .22; }
-    /* Symbiote: pure black & white photo (no purple tint) */
-    body[data-theme="5"] { --photo-filter: grayscale(1) contrast(1.25) brightness(.9); --photo-tint: transparent; --photo-tint-a: 0; }
-    body[data-theme="6"] { --photo-filter: contrast(1.1) saturate(1.2); --photo-tint: #22d3ee; --photo-tint-a: .25; }
-    body[data-theme="7"] { --photo-filter: sepia(.25) contrast(1.25) saturate(1.2); --photo-tint: #d90429; --photo-tint-a: .12; }
-    body[data-theme="8"] { --photo-filter: grayscale(.5) contrast(1.1); --photo-tint: #ef2b2b; --photo-tint-a: .38; }
+    /* Symbiote: pure black & white photo */
+    body[data-theme="symbiote"] { --photo-filter: grayscale(1) contrast(1.25) brightness(.9); --photo-tint: transparent; --photo-tint-a: 0; }
     .moment-photo { isolation: isolate; }
     .moment-photo img { filter: var(--photo-filter); transition: transform .6s cubic-bezier(.2,.8,.2,1), filter .5s; }
     .moment-photo::after {
@@ -1195,12 +1168,10 @@
     }
     .splash-skip:hover { color: var(--ink); border-color: var(--accent); }
 
-    .skill-icon, .contact-list .ico, .theme-toggle { color: var(--accent-2); }
+    .skill-icon, .contact-list .ico { color: var(--accent-2); }
     .skill-icon svg, .contact-list .ico svg { width: 22px; height: 22px; }
-    .theme-toggle svg { width: 24px; height: 24px; }
     svg.line { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     svg.solid { fill: currentColor; stroke: none; }
-    .theme-swatch { padding: 0; font: inherit; }
 
     .proj-more {
       align-self: flex-start; background: none; border: none; padding: 0;
@@ -1216,7 +1187,19 @@
     .moment-open:focus-visible { outline: none; }
   </style>
 </head>
-<body data-theme="0">
+<body data-theme="light">
+  <script>
+    /* restore the saved theme before anything paints */
+    (function () {
+      try {
+        var t = localStorage.getItem('db-theme');
+        if (t === 'symbiote' || t === 'light') {
+          document.body.dataset.theme = t;
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', t === 'symbiote' ? '#050507' : '#f4f7fc');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- ========== SIGNATURE SPLASH OVERLAY ========== -->
@@ -1637,21 +1620,18 @@
   <!-- ===== BACK TO TOP LABEL (left corner) ===== -->
   <button class="to-top" id="toTop" aria-label="Back to top"><span class="arrow">↑</span><span>Back to top</span></button>
 
-  <!-- ===== THEME SWITCHER ===== -->
+  <!-- ===== THEME SWITCHER: one button, Light <-> Symbiote ===== -->
+  <canvas id="symbioteCanvas" aria-hidden="true"></canvas>
   <div class="theme-panel" id="themePanel">
-    <div class="theme-drawer" id="themeDrawer">
-      <button type="button" class="theme-swatch active" data-theme="0" style="background:linear-gradient(135deg,#0a0a14,#e62429,#3b82f6);" title="Classic Spidey" aria-label="Classic Spidey theme" aria-pressed="true"></button>
-      <button type="button" class="theme-swatch" data-theme="1" style="background:linear-gradient(135deg,#f8f6fb,#e11d86,#0d9488);" title="Spider-Gwen" aria-label="Spider-Gwen theme" aria-pressed="false"></button>
-      <button type="button" class="theme-swatch" data-theme="2" style="background:linear-gradient(135deg,#0a0a0a,#e8e8e8,#b5b5b5);" title="Spider-Noir" aria-label="Spider-Noir theme" aria-pressed="false"></button>
-      <button type="button" class="theme-swatch" data-theme="3" style="background:linear-gradient(135deg,#08080a,#ff1e3c,#a855f7);" title="Miles Morales" aria-label="Miles Morales theme" aria-pressed="false"></button>
-      <button type="button" class="theme-swatch" data-theme="4" style="background:linear-gradient(135deg,#12080a,#d4161f,#f5b301);" title="Iron Spider" aria-label="Iron Spider theme" aria-pressed="false"></button>
-      <button type="button" class="theme-swatch" data-theme="5" style="background:linear-gradient(135deg,#050507,#8b5cf6,#e5e7eb);" title="Symbiote" aria-label="Symbiote theme" aria-pressed="false"></button>
-      <button type="button" class="theme-swatch" data-theme="6" style="background:linear-gradient(135deg,#070b24,#ff2d55,#22d3ee);" title="Spider-Man 2099" aria-label="Spider-Man 2099 theme" aria-pressed="false"></button>
-      <button type="button" class="theme-swatch" data-theme="7" style="background:linear-gradient(135deg,#f3ecd6,#d90429,#111111);" title="Spider-Punk" aria-label="Spider-Punk theme" aria-pressed="false"></button>
-      <button type="button" class="theme-swatch" data-theme="8" style="background:linear-gradient(135deg,#1a0707,#ef2b2b,#60a5fa);" title="Scarlet Spider" aria-label="Scarlet Spider theme" aria-pressed="false"></button>
-      <button type="button" class="theme-swatch" data-theme="9" style="background:linear-gradient(135deg,#f4f7fc,#d90f1b,#1d4ed8);" title="Spidey Light" aria-label="Spidey Light theme" aria-pressed="false"></button>
-    </div>
-    <button class="theme-toggle" id="themeToggle" aria-label="Change colour theme" aria-expanded="false" aria-controls="themeDrawer"><svg class="line" viewBox="0 0 24 24" aria-hidden="true"><circle cx="13.5" cy="6.5" r="1"/><circle cx="17.5" cy="10.5" r="1"/><circle cx="8.5" cy="7.5" r="1"/><circle cx="6.5" cy="12.5" r="1"/><path d="M12 2a10 10 0 0 0 0 20c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.3-.5-.8-.5-1.3 0-1.1.9-2 2-2h2.4a4.7 4.7 0 0 0 4.7-4.7C22 6 17.5 2 12 2z"/></svg></button>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to symbiote theme" aria-pressed="false">
+      <span class="ti ti-goo" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2c-4.6 0-8.3 3.4-8.3 8 0 2.6 1.1 4.6 2.6 6.1-.3 1.3-1.1 2.4-2.1 3.3 1.9.2 3.4-.4 4.5-1.3.4.5.6 1.2.5 2.1 1.2-.5 1.9-1.4 2.1-2.4.3 0 .5.1.8.1s.5 0 .8-.1c.2 1 .9 1.9 2.1 2.4-.1-.9.1-1.6.5-2.1 1.1.9 2.6 1.5 4.5 1.3-1-.9-1.8-2-2.1-3.3 1.5-1.5 2.6-3.5 2.6-6.1 0-4.6-3.7-8-8.3-8Z"/><path class="eye" d="M6.3 9.3c1.6-.3 3.4.5 4.4 2.3-1.9.8-3.9.4-5-1 .1-.5.3-.9.6-1.3Zm11.4 0c.3.4.5.8.6 1.3-1.1 1.4-3.1 1.8-5 1 1-1.8 2.8-2.6 4.4-2.3Z"/></svg>
+      </span>
+      <span class="ti ti-sun" aria-hidden="true">
+        <svg class="line" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>
+      </span>
+    </button>
+    <span class="theme-tip" id="themeTip">Symbiote mode</span>
   </div>
 
   <!-- ===== MODAL ===== -->
@@ -1908,28 +1888,392 @@
     }
 
     /* ============================================================
-       THEME SWITCHER
+       THEME SWITCHER — one button: Spidey Light (main) <-> Symbiote (dark)
+       The symbiote is rendered as a real liquid: a network of branching
+       veins and the membrane between them are drawn into a low-res mask, blurred so blobs merge
+       like goo, then lit in WebGL (wet specular highlights, rim light,
+       moving surface, soft shadow on the page). Falls back to flat 2D.
        ============================================================ */
-    const themePanel = $('#themePanel'), themeToggle = $('#themeToggle');
-    const syncThemeUI = () => themeToggle.setAttribute('aria-expanded', themePanel.classList.contains('open'));
-    themeToggle.addEventListener('click', e => {
-      e.stopPropagation();
-      themePanel.classList.toggle('open');
-      syncThemeUI();
-    });
-    document.addEventListener('click', e => {
-      if (!themePanel.contains(e.target)) { themePanel.classList.remove('open'); syncThemeUI(); }
-    });
-    addEventListener('keydown', e => {
-      if (e.key === 'Escape' && themePanel.classList.contains('open')) {
-        themePanel.classList.remove('open'); syncThemeUI(); themeToggle.focus();
+    const themePanel = $('#themePanel'), themeToggle = $('#themeToggle'), themeTip = $('#themeTip');
+    const metaTheme = $('meta[name="theme-color"]');
+    const THEME_COLORS = { light: '#f4f7fc', symbiote: '#050507' };
+    let gooBusy = false;
+
+    function syncThemeUI(t) {
+      const dark = t === 'symbiote';
+      themeToggle.setAttribute('aria-pressed', String(dark));
+      themeToggle.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to symbiote theme');
+      themeTip.textContent = dark ? 'Light mode' : 'Symbiote mode';
+      metaTheme?.setAttribute('content', THEME_COLORS[t]);
+    }
+    function applyTheme(t) {
+      document.body.dataset.theme = t;
+      syncThemeUI(t);
+      try { localStorage.setItem('db-theme', t); } catch (e) {}
+    }
+    syncThemeUI(document.body.dataset.theme === 'symbiote' ? 'symbiote' : 'light');
+
+    const TAU = Math.PI * 2;
+    const clampG = (v, a, b) => Math.min(b, Math.max(a, v));
+    const rndG = (a, b) => a + Math.random() * (b - a);
+    const easeInOutG = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+    const spreadEase = k => .55 * k + .45 * (k * k * (3 - 2 * k));
+    const easeInOutQ = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+
+    /* ---------- renderer setup ---------- */
+    let gooCv = $('#symbioteCanvas');
+    const GOO = { gl: null, c2d: null, dpr: 1, ms: .5, mask: document.createElement('canvas') };
+    GOO.mctx = GOO.mask.getContext('2d');
+
+    (function initGooGL() {
+      const cv = document.createElement('canvas');
+      cv.id = 'symbioteCanvas'; cv.setAttribute('aria-hidden', 'true');
+      let gl = null;
+      try { gl = cv.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false, depth: false, stencil: false }); } catch (e) {}
+      if (!gl) { GOO.c2d = gooCv.getContext('2d'); return; }
+
+      const VS = 'attribute vec2 aPos;varying vec2 vUv;void main(){vUv=aPos*.5+.5;gl_Position=vec4(aPos,0.,1.);}';
+      const BLUR = `precision mediump float;
+        uniform sampler2D uTex; uniform vec2 uDir; varying vec2 vUv;
+        void main(){
+          vec4 c = texture2D(uTex, vUv) * .227027;
+          c += (texture2D(uTex, vUv + uDir)       + texture2D(uTex, vUv - uDir))       * .1945946;
+          c += (texture2D(uTex, vUv + uDir * 2.)  + texture2D(uTex, vUv - uDir * 2.))  * .1216216;
+          c += (texture2D(uTex, vUv + uDir * 3.)  + texture2D(uTex, vUv - uDir * 3.))  * .054054;
+          c += (texture2D(uTex, vUv + uDir * 4.)  + texture2D(uTex, vUv - uDir * 4.))  * .016216;
+          gl_FragColor = c;
+        }`;
+      const SHADE = `
+        #ifdef GL_FRAGMENT_PRECISION_HIGH
+        precision highp float;
+        #else
+        precision mediump float;
+        #endif
+        uniform sampler2D uA;      // lightly blurred mask -> silhouette
+        uniform sampler2D uH;      // heavily blurred mask -> height / normals / shadow
+        uniform vec2 uPx; uniform float uAspect; uniform float uTime;
+        uniform vec2 uOrigin; uniform float uRing; uniform float uPulse;
+        varying vec2 vUv;
+        float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+        float noise(vec2 p){
+          vec2 i = floor(p), f = fract(p); vec2 u = f * f * (3. - 2. * f);
+          return mix(mix(hash(i), hash(i + vec2(1., 0.)), u.x), mix(hash(i + vec2(0., 1.)), hash(i + vec2(1., 1.)), u.x), u.y);
+        }
+        float fbm(vec2 p){ float v = 0., a = .5; for (int i = 0; i < 4; i++){ v += a * noise(p); p = p * 2.03 + vec2(1.7, 9.2); a *= .5; } return v; }
+        float hgt(vec2 uv){
+          float f = texture2D(uH, uv).r;
+          float dome = smoothstep(0., .92, f);
+          vec2 q = vec2(uv.x * uAspect, uv.y);
+          // broad, slow undulations (no fine grain) = thick wet liquid, not texture
+          float n  = fbm(q * 2.4 + vec2(uTime * .12, uTime * .07));
+          float n2 = noise(q * 6. + vec2(-uTime * .35, uTime * .25) + n * 2.);
+          float d = length((uv - uOrigin) * vec2(uAspect, 1.));
+          float wave = uPulse * exp(-pow((d - uRing) * 7., 2.));
+          return dome + dome * (n * .9 + n2 * .18 + wave * .8);
+        }
+        void main(){
+          float a  = smoothstep(.40, .52, texture2D(uA, vUv).r);
+          float sh = texture2D(uH, vUv + vec2(-.005, .009)).r;      // light from top-left, shadow falls down-right
+          float sa = smoothstep(.02, .7, sh) * .38 * (1. - a);
+          if (a < .002) { gl_FragColor = vec4(0., 0., 0., sa); return; }
+          vec2 e = uPx * 2.;
+          float hl = hgt(vUv - vec2(e.x, 0.)), hr = hgt(vUv + vec2(e.x, 0.));
+          float hd = hgt(vUv - vec2(0., e.y)), hu = hgt(vUv + vec2(0., e.y));
+          vec2 g = vec2((hr - hl) / (2. * e.x * uAspect), (hu - hd) / (2. * e.y));
+          vec3 n = normalize(vec3(-g * .018, 1.));
+          vec3 L = normalize(vec3(-.45, .55, .7));
+          vec3 H = normalize(L + vec3(0., 0., 1.));
+          float nh = max(dot(n, H), 0.);
+          float spec = pow(nh, 140.) * 1.5 + pow(nh, 26.) * .2;
+          float diff = max(dot(n, L), 0.);
+          float fres = pow(1. - clamp(n.z, 0., 1.), 3.);
+          vec3 R = reflect(vec3(0., 0., -1.), n);
+          float band = smoothstep(.45, .7, R.y) * (1. - smoothstep(.8, .97, R.y));   // soft "window" reflection
+          vec3 col = vec3(.008, .009, .014)
+                   + vec3(.022, .024, .034) * diff
+                   + vec3(.82, .87, 1.) * spec
+                   + vec3(.16, .19, .28) * fres
+                   + vec3(.07, .075, .095) * band;
+          gl_FragColor = vec4(col * a, a + sa);
+        }`;
+      try {
+        const mk = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
+        const prog = fs => {
+          const p = gl.createProgram();
+          gl.attachShader(p, mk(gl.VERTEX_SHADER, VS)); gl.attachShader(p, mk(gl.FRAGMENT_SHADER, fs));
+          gl.bindAttribLocation(p, 0, 'aPos'); gl.linkProgram(p);
+          if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
+          const u = {}, n = gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS);
+          for (let i = 0; i < n; i++) { const nm = gl.getActiveUniform(p, i).name; u[nm] = gl.getUniformLocation(p, nm); }
+          return { p, u };
+        };
+        GOO.blur = prog(BLUR); GOO.shade = prog(SHADE);
+      } catch (e) { console.warn('Symbiote shader fallback:', e); GOO.c2d = gooCv.getContext('2d'); return; }
+
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+      gl.enableVertexAttribArray(0);
+      gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+      const tex = () => {
+        const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        return t;
+      };
+      GOO.tm = tex(); GOO.ta = tex(); GOO.tb = tex(); GOO.tc = tex();
+      GOO.fbo = {};
+      GOO.gl = gl;
+      gooCv.replaceWith(cv); gooCv = cv;
+    })();
+
+    function sizeGoo() {
+      GOO.dpr = Math.min(window.devicePixelRatio || 1, GOO.gl ? 1.25 : 2);
+      gooCv.width = Math.round(innerWidth * GOO.dpr);
+      gooCv.height = Math.round(innerHeight * GOO.dpr);
+      GOO.mw = GOO.mask.width = Math.max(64, Math.round(innerWidth * GOO.ms));
+      GOO.mh = GOO.mask.height = Math.max(64, Math.round(innerHeight * GOO.ms));
+      const gl = GOO.gl; if (!gl) return;
+      for (const k of ['ta', 'tb', 'tc']) {
+        gl.bindTexture(gl.TEXTURE_2D, GOO[k]);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, GOO.mw, GOO.mh, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+        if (!GOO.fbo[k]) {
+          GOO.fbo[k] = gl.createFramebuffer();
+          gl.bindFramebuffer(gl.FRAMEBUFFER, GOO.fbo[k]);
+          gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, GOO[k], 0);
+        }
       }
-    });
-    $$('.theme-swatch').forEach(sw => sw.addEventListener('click', () => {
-      $$('.theme-swatch').forEach(s => { s.classList.remove('active'); s.setAttribute('aria-pressed', 'false'); });
-      sw.classList.add('active'); sw.setAttribute('aria-pressed', 'true');
-      document.body.dataset.theme = sw.dataset.theme;
-    }));
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    }
+
+    /* ---------- the symbiote: a network of veins that laces across the screen ---------- */
+    function makeGoo(ox, oy) {
+      const W = innerWidth, H = innerHeight;
+      const maxR = Math.hypot(Math.max(ox, W - ox), Math.max(oy, H - oy));
+      const small = W < 700;
+      const branches = [], STEP = 12;
+      function grow(x, y, a, w, birth, speed, depth, lenPx) {
+        const b = { pts: [[x, y]], nrm: [], w, birth, speed, step: STEP, ph: rndG(0, TAU), drops: [] };
+        const n = Math.max(3, Math.round(lenPx / STEP));
+        let turn = 0;
+        for (let i = 1; i <= n; i++) {
+          turn = turn * .82 + rndG(-.17, .17);                       // wandering like a vein, never straight
+          let d = Math.atan2(y - oy, x - ox) - a;
+          d = Math.atan2(Math.sin(d), Math.cos(d));
+          a += turn + d * (depth ? .012 : .028);                      // ...but always crawling outward
+          x += Math.cos(a) * STEP; y += Math.sin(a) * STEP;
+          b.pts.push([x, y]);
+          if (x < -60 || x > W + 60 || y < -60 || y > H + 60) break;  // stop once it has left the screen
+          if (depth < 3 && i > 3 && i < n - 2 && Math.random() < [.13, .11, .08][depth]) {
+            const side = Math.random() < .5 ? -1 : 1;
+            grow(x, y, a + side * rndG(.5, 1.2), w * rndG(.5, .68), birth + i * STEP / speed + rndG(0, .03),
+                 speed * rndG(.6, .9), depth + 1, lenPx * rndG(.3, .6));
+          }
+          if (Math.random() < .035) b.drops.push({ at: i * STEP, x: x + rndG(-1, 1) * w * 1.6, y: y + rndG(-1, 1) * w * 1.6, r: rndG(2.5, 6) });
+        }
+        b.len = (b.pts.length - 1) * STEP;
+        for (let i = 0; i < b.pts.length; i++) {
+          const p0 = b.pts[Math.max(0, i - 1)], p1 = b.pts[Math.min(b.pts.length - 1, i + 1)];
+          const dx = p1[0] - p0[0], dy = p1[1] - p0[1], l = Math.hypot(dx, dy) || 1;
+          b.nrm.push([-dy / l, dx / l]);
+        }
+        branches.push(b);
+      }
+      const toCenter = Math.atan2(H / 2 - oy, W / 2 - ox);
+      const mainCount = small ? 12 : 20;
+      for (let i = 0; i < mainCount; i++) {
+        const a = toCenter + (i / (mainCount - 1) - .5) * 3.6 + rndG(-.14, .14);
+        const len = maxR * rndG(.8, 1.2), reachAt = rndG(.45, .72), birth = rndG(0, .08);
+        grow(ox, oy, a, rndG(9, 18), birth, len / (reachAt - birth), 0, len);
+      }
+
+      // time-normalise: (almost) every vein has finished crawling by p = .72
+      const ends = branches.map(b => b.birth + b.len / b.speed).sort((x, y) => x - y);
+      const f = .72 / ends[Math.floor(ends.length * .9)];
+      for (const b of branches) { b.birth *= f; b.speed /= f; }
+
+      // membrane: goo seeps sideways out of the veins until every gap between them is closed
+      const S = small ? 72 : 90;
+      const all = [];
+      for (const b of branches) for (let i = 0; i < b.pts.length; i += 2) all.push([b.pts[i][0], b.pts[i][1], b.birth + i * STEP / b.speed]);
+      const blobs = [];
+      for (let gy = -S * .3; gy < H + S * .5; gy += S) {
+        for (let gx = -S * .3; gx < W + S * .5; gx += S) {
+          const x = gx + rndG(-.15, .15) * S, y = gy + rndG(-.15, .15) * S;
+          let best = all[0], bd = Infinity;
+          for (const q of all) { const d = (q[0] - x) ** 2 + (q[1] - y) ** 2; if (d < bd) { bd = d; best = q; } }
+          const t0 = Math.min(.82, best[2] + .06 + Math.sqrt(bd) / maxR * .2 + rndG(0, .05));
+          const shape = [[2, rndG(.06, .14), rndG(0, TAU)], [3, rndG(.05, .1), rndG(0, TAU)], [5, rndG(.03, .06), rndG(0, TAU)]];
+          blobs.push({ x, y, sx: best[0], sy: best[1], t0, dur: Math.min(rndG(.14, .2), .98 - t0), r: S * rndG(.85, 1.0), shape, ph: rndG(0, TAU) });
+        }
+      }
+      return { ox, oy, W, H, maxR, branches, blobs };
+    }
+
+    // p = how far the symbiote has spread (0..1): veins grow, thicken, then the membrane closes
+    function drawGooShapes(c, sc, g, p, t, ts, mask) {
+      c.setTransform(1, 0, 0, 1, 0, 0);
+      if (mask) { c.fillStyle = '#000'; c.fillRect(0, 0, c.canvas.width, c.canvas.height); }
+      else c.clearRect(0, 0, c.canvas.width, c.canvas.height);
+      if (p <= .001) return;
+      const ink = mask ? '#fff' : '#050507';
+      c.setTransform(sc, 0, 0, sc, 0, 0);
+      c.fillStyle = ink; c.strokeStyle = ink; c.lineCap = 'round'; c.lineJoin = 'round';
+      if (p >= .995) { c.fillRect(0, 0, g.W, g.H); return; }
+
+      // the small puddle at the button the veins pour out of
+      c.beginPath(); c.arc(g.ox, g.oy, 26 * Math.min(1, p / .06), 0, TAU); c.fill();
+
+      // veins: tips crawl forward, older parts swell
+      for (const b of g.branches) {
+        const vis = Math.min(b.len, (p - b.birth) * b.speed);
+        if (vis <= 2) continue;
+        const segs = vis / b.step, nFull = Math.floor(segs), frac = segs - nFull;
+        const P = i => {
+          const pt = b.pts[i], nr = b.nrm[i], s = i * b.step / vis;
+          const wob = Math.sin(i * .42 - t * 6.5 + b.ph) * 3.4 * s;   // writhing, stronger toward the tip
+          return [pt[0] + nr[0] * wob, pt[1] + nr[1] * wob];
+        };
+        let prev = P(0);
+        for (let i = 0; i <= nFull && i < b.pts.length - 1; i++) {
+          let nxt = P(i + 1);
+          if (i === nFull) nxt = [prev[0] + (nxt[0] - prev[0]) * frac, prev[1] + (nxt[1] - prev[1]) * frac];
+          const s = i * b.step / vis;
+          const age = p - (b.birth + i * b.step / b.speed);
+          const swell = 1 + 2.4 * clampG(age / .45, 0, 1);
+          c.lineWidth = Math.max(1.5, b.w * ts * (1 - .7 * s) * swell);
+          c.beginPath(); c.moveTo(prev[0], prev[1]); c.lineTo(nxt[0], nxt[1]); c.stroke();
+          prev = nxt;
+        }
+        const br = b.w * ts * .34 * (1 + .2 * Math.sin(t * 8 + b.ph));  // swollen, pulsing tip
+        c.beginPath(); c.arc(prev[0], prev[1], br, 0, TAU); c.fill();
+        for (const d of b.drops) {
+          if (vis < d.at) continue;
+          c.beginPath(); c.arc(d.x, d.y, d.r * ts * Math.min(1, (vis - d.at) / 30), 0, TAU); c.fill();
+        }
+      }
+
+      // membrane seeping out of the veins, closing the gaps
+      for (const bl of g.blobs) {
+        const e = clampG((p - bl.t0) / bl.dur, 0, 1);
+        if (e <= 0) continue;
+        const k = e * e * (3 - 2 * e);
+        const cx = bl.sx + (bl.x - bl.sx) * k, cy = bl.sy + (bl.y - bl.sy) * k;
+        const r = bl.r * k;
+        c.lineWidth = r * 1.1;
+        c.beginPath(); c.moveTo(bl.sx, bl.sy); c.lineTo(cx, cy); c.stroke();
+        c.beginPath();
+        for (let i = 0; i <= 28; i++) {
+          const a = i / 28 * TAU;
+          let n = 1;
+          for (const [fq, amp, ph] of bl.shape) n += amp * Math.sin(fq * a + ph + t * 1.5);
+          const x = cx + Math.cos(a) * r * n, y = cy + Math.sin(a) * r * n;
+          i ? c.lineTo(x, y) : c.moveTo(x, y);
+        }
+        c.fill();
+      }
+    }
+
+    function renderGoo(g, p, t, ts, pulse, ring) {
+      const gl = GOO.gl;
+      if (!gl) { drawGooShapes(GOO.c2d, GOO.dpr, g, p, t, ts, false); return; }
+      drawGooShapes(GOO.mctx, GOO.ms, g, p, t, ts, true);
+      gl.disable(gl.BLEND);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+      gl.bindTexture(gl.TEXTURE_2D, GOO.tm);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, GOO.mask);
+
+      const B = GOO.blur;
+      gl.useProgram(B.p); gl.uniform1i(B.u.uTex, 0);
+      gl.viewport(0, 0, GOO.mw, GOO.mh);
+      const pass = (src, dst, dx, dy) => {
+        gl.bindFramebuffer(gl.FRAMEBUFFER, GOO.fbo[dst]);
+        gl.bindTexture(gl.TEXTURE_2D, GOO[src]);
+        gl.uniform2f(B.u.uDir, dx / GOO.mw, dy / GOO.mh);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      };
+      pass('tm', 'ta', .8, 0);  pass('ta', 'tb', 0, .8);       // light blur  -> silhouette (blobs merge like goo)
+      pass('tb', 'ta', 2.6, 0); pass('ta', 'tc', 0, 2.6);      // heavy blur  -> rounded, wet surface
+
+      const S = GOO.shade;
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.viewport(0, 0, gooCv.width, gooCv.height);
+      gl.useProgram(S.p);
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, GOO.tb); gl.uniform1i(S.u.uA, 0);
+      gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, GOO.tc); gl.uniform1i(S.u.uH, 1);
+      gl.uniform2f(S.u.uPx, 1 / gooCv.width, 1 / gooCv.height);
+      gl.uniform1f(S.u.uAspect, g.W / g.H);
+      gl.uniform1f(S.u.uTime, t % 1000);
+      gl.uniform2f(S.u.uOrigin, g.ox / g.W, 1 - g.oy / g.H);
+      gl.uniform1f(S.u.uRing, ring);
+      gl.uniform1f(S.u.uPulse, pulse);
+      gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      gl.activeTexture(gl.TEXTURE0);
+    }
+
+    function clearGoo() {
+      if (GOO.gl) { GOO.gl.clearColor(0, 0, 0, 0); GOO.gl.clear(GOO.gl.COLOR_BUFFER_BIT); }
+      else GOO.c2d.clearRect(0, 0, gooCv.width, gooCv.height);
+    }
+
+    function tweenG(ms, fn) {
+      return new Promise(res => {
+        const t0 = performance.now();
+        const step = now => {
+          const k = Math.min(1, (now - t0) / ms);
+          fn(k, now / 1000);
+          if (k < 1) requestAnimationFrame(step); else res();
+        };
+        requestAnimationFrame(step);
+      });
+    }
+
+    async function switchTheme() {
+      if (gooBusy) return;
+      const next = document.body.dataset.theme === 'symbiote' ? 'light' : 'symbiote';
+      if (reduced) { applyTheme(next); return; }
+
+      gooBusy = true;
+      themeToggle.setAttribute('aria-busy', 'true');
+      themePanel.classList.add('goo-active');
+      sizeGoo();
+      const r = themeToggle.getBoundingClientRect();
+      const g = makeGoo(r.left + r.width / 2, r.top + r.height / 2);
+      const SPREAD = 2400, HOLD = 300, SINK = 500;
+
+      if (next === 'symbiote') {
+        gooCv.style.opacity = '1';
+        gooCv.classList.add('on');
+        // 1) veins pour out of the button and lace across the site until it is completely covered
+        await tweenG(SPREAD, (k, t) => renderGoo(g, spreadEase(k), t, 1, 0, 0));
+        // 2) fully covered: the dark theme switches on underneath while the surface heaves once
+        applyTheme(next);
+        await tweenG(HOLD, (k, t) => renderGoo(g, 1, t, 1, Math.sin(Math.PI * k), k * 1.8));
+        // 3) the symbiote sinks into the page and the dark theme appears
+        await tweenG(SINK, (k, t) => { gooCv.style.opacity = String(1 - easeInOutQ(k)); renderGoo(g, 1, t, 1, 0, 0); });
+      } else {
+        // exact reverse of the above
+        gooCv.style.opacity = '0';
+        gooCv.classList.add('on');
+        await tweenG(SINK, (k, t) => { gooCv.style.opacity = String(easeInOutQ(k)); renderGoo(g, 1, t, 1, 0, 0); });
+        await tweenG(HOLD, (k, t) => renderGoo(g, 1, t, 1, Math.sin(Math.PI * (1 - k)), (1 - k) * 1.8));
+        applyTheme(next);
+        // veins let go of the site and retract into the button, revealing the light theme
+        await tweenG(SPREAD, (k, t) => renderGoo(g, spreadEase(1 - k), t, 1, 0, 0));
+      }
+
+      clearGoo();
+      gooCv.classList.remove('on');
+      gooCv.style.opacity = '';
+      themePanel.classList.remove('goo-active');
+      themeToggle.removeAttribute('aria-busy');
+      gooBusy = false;
+    }
+    themeToggle.addEventListener('click', switchTheme);
 
     /* ============================================================
        HERO ROLE TYPING
