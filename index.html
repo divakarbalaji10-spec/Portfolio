@@ -163,7 +163,7 @@
     a { color: inherit; text-decoration: none; }
     h1, h2, h3, h4 { font-family: 'Syne', sans-serif; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
     h2 { font-size: clamp(2rem, 5vw, 3rem); }
-    section { padding: 100px 0; position: relative; contain: layout style; }
+    section { padding: 100px 0; position: relative; }
     .wrap { width: min(1200px, 92%); margin: auto; }
 
     #progress-bar {
@@ -171,20 +171,18 @@
       background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
       transform-origin: left; transform: scaleX(0); z-index: 999;
       transition: transform .1s linear;
-      will-change: transform;
     }
 
     /* ===== NAV ===== */
     header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       padding: 16px 0;
-      transition: padding .3s, background .3s;
+      transition: padding .3s, background .3s, backdrop-filter .3s;
     }
     header.scrolled {
       padding: 8px 0;
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--line);
     }
     nav { display: flex; align-items: center; justify-content: space-between; }
@@ -224,14 +222,12 @@
       width: 600px; height: 600px; border-radius: 50%;
       background: radial-gradient(circle, var(--glow), transparent 70%);
       filter: blur(60px); pointer-events: none; z-index: 0;
-      will-change: transform; transform: translateZ(0);
     }
     .hero::after {
       content: ""; position: absolute; bottom: -20%; left: -10%;
       width: 500px; height: 500px; border-radius: 50%;
       background: radial-gradient(circle, var(--glow-2), transparent 70%);
       filter: blur(60px); pointer-events: none; z-index: 0;
-      will-change: transform; transform: translateZ(0);
     }
     .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 60px; align-items: center; }
 
@@ -312,7 +308,6 @@
       position: relative;
       transform-style: preserve-3d;
       transition: transform 0.9s cubic-bezier(.4,.2,.2,1);
-      will-change: transform;
     }
     .flip-face {
       position: absolute; inset: 0;
@@ -345,7 +340,6 @@
       content: ""; position: absolute; inset: -12px;
       border-radius: 50%; border: 2px dashed var(--accent-2);
       animation: spin 20s linear infinite; opacity: .5;
-      will-change: transform;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     .flip-front .front-label {
@@ -384,7 +378,6 @@
       display: flex; gap: 40px;
       animation: scroll 30s linear infinite;
       white-space: nowrap;
-      will-change: transform;
     }
     .marquee-track span {
       font-family: 'Syne', sans-serif; font-weight: 700;
@@ -444,14 +437,13 @@
     /* ===== PROJECTS ===== */
     /* Projects timeline: wavy graph line with a dot per project */
     .proj-timeline { position: relative; display: grid; gap: 64px; }
-    .proj-svg { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; z-index: 0; will-change: transform; }
+    .proj-svg { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; z-index: 0; }
     .proj-svg path { fill: none; stroke-linecap: round; }
     .proj-svg .pl-base { stroke: var(--line); stroke-width: 3; stroke-dasharray: 2 9; }
     .proj-svg .pl-fill { stroke-width: 3.5; filter: drop-shadow(0 0 6px var(--glow)); }
     .proj-body {
       position: relative; z-index: 1; width: calc(50% - 70px); opacity: 0;
       transition: opacity .7s, transform .8s cubic-bezier(.2,.8,.2,1);
-      will-change: transform, opacity;
     }
     .proj-body:nth-of-type(odd) { justify-self: start; transform: translateX(-60px); }
     .proj-body:nth-of-type(even) { justify-self: end; transform: translateX(60px); }
@@ -929,8 +921,6 @@
       opacity: .12; pointer-events: none; background: var(--ink);
       -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 360' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M360 0H0M360 0L0 130M360 0L0 280M360 0L110 360M360 0L250 360M360 0V360'/%3E%3Cpath d='M270 0Q250 90 360 90M180 0Q150 150 360 170M90 0Q60 210 360 260'/%3E%3C/svg%3E") no-repeat top right / contain;
       mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 360' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M360 0H0M360 0L0 130M360 0L0 280M360 0L110 360M360 0L250 360M360 0V360'/%3E%3Cpath d='M270 0Q250 90 360 90M180 0Q150 150 360 170M90 0Q60 210 360 260'/%3E%3C/svg%3E") no-repeat top right / contain;
-      will-change: transform; transform: translateZ(0);
-      contain: strict;
     }
 
     /* photos follow the theme (see THEME PHOTOS below) */
@@ -975,7 +965,6 @@
       grid-row: 2; position: relative; align-self: start;
       opacity: 0; transform: translateY(-26px);
       transition: opacity .6s, transform .7s cubic-bezier(.2,.8,.2,1);
-      will-change: transform, opacity;
     }
     .moment-node.on { opacity: 1; transform: none; }
     .moment-node::before {            /* branch hanging from the trunk */
@@ -1759,6 +1748,8 @@
     /* ============================================================
        PROJECT DATA
        ============================================================ */
+    // Optional extra fields per project, shown in the details popup when present:
+    //   impact:"Used by 3 schools", live:"https://...", repo:"https://github.com/..."
     const PROJECTS = [
       { name:"Student House Voting & Election Management System", short:"Manages house elections end to end: candidates, student voting and results.", problem:"Paper-based house elections are slow to run and hard to count accurately.", solution:"A web system where admins set up the election, students vote once, and results are tallied house by house.", features:["Student voting","House-wise election management","Election administration","Result management"], tech:["PHP","MySQL","JavaScript","HTML","CSS"], role:"Developed the web-based student house election system covering candidates, voting and results." },
       { name:"RD College / School Admission Management System", short:"One workflow from first enquiry to a managed student record.", problem:"Enquiries, admissions, fees and student records often live in separate places and fall out of sync.", solution:"A connected flow: Enquiry → Admission Confirmation → Fee Management → Student/Member Management.", features:["Enquiry tracking","Admission confirmation","Fee management","Student and member records","Student ID card generation"], tech:["PHP","MySQL","JavaScript","HTML","CSS"], role:"Developed and maintained the admission and member management modules." },
@@ -1898,6 +1889,10 @@
 
     /* ============================================================
        THEME SWITCHER — one button: Spidey Light (main) <-> Symbiote (dark)
+       The symbiote is rendered as a real liquid: a network of branching
+       veins and the membrane between them are drawn into a low-res mask, blurred so blobs merge
+       like goo, then lit in WebGL (wet specular highlights, rim light,
+       moving surface, soft shadow on the page). Falls back to flat 2D.
        ============================================================ */
     const themePanel = $('#themePanel'), themeToggle = $('#themeToggle'), themeTip = $('#themeTip');
     const metaTheme = $('meta[name="theme-color"]');
@@ -1921,6 +1916,7 @@
     const TAU = Math.PI * 2;
     const clampG = (v, a, b) => Math.min(b, Math.max(a, v));
     const rndG = (a, b) => a + Math.random() * (b - a);
+    const easeInOutG = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
     const spreadEase = k => .55 * k + .45 * (k * k * (3 - 2 * k));
     const easeInOutQ = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
 
@@ -1968,6 +1964,7 @@
           float f = texture2D(uH, uv).r;
           float dome = smoothstep(0., .92, f);
           vec2 q = vec2(uv.x * uAspect, uv.y);
+          // broad, slow undulations (no fine grain) = thick wet liquid, not texture
           float n  = fbm(q * 2.4 + vec2(uTime * .12, uTime * .07));
           float n2 = noise(q * 6. + vec2(-uTime * .35, uTime * .25) + n * 2.);
           float d = length((uv - uOrigin) * vec2(uAspect, 1.));
@@ -1976,7 +1973,7 @@
         }
         void main(){
           float a  = smoothstep(.40, .52, texture2D(uA, vUv).r);
-          float sh = texture2D(uH, vUv + vec2(-.005, .009)).r;
+          float sh = texture2D(uH, vUv + vec2(-.005, .009)).r;      // light from top-left, shadow falls down-right
           float sa = smoothstep(.02, .7, sh) * .38 * (1. - a);
           if (a < .002) { gl_FragColor = vec4(0., 0., 0., sa); return; }
           vec2 e = uPx * 2.;
@@ -1991,7 +1988,7 @@
           float diff = max(dot(n, L), 0.);
           float fres = pow(1. - clamp(n.z, 0., 1.), 3.);
           vec3 R = reflect(vec3(0., 0., -1.), n);
-          float band = smoothstep(.45, .7, R.y) * (1. - smoothstep(.8, .97, R.y));
+          float band = smoothstep(.45, .7, R.y) * (1. - smoothstep(.8, .97, R.y));   // soft "window" reflection
           vec3 col = vec3(.008, .009, .014)
                    + vec3(.022, .024, .034) * diff
                    + vec3(.82, .87, 1.) * spec
@@ -2062,13 +2059,13 @@
         const n = Math.max(3, Math.round(lenPx / STEP));
         let turn = 0;
         for (let i = 1; i <= n; i++) {
-          turn = turn * .82 + rndG(-.17, .17);
+          turn = turn * .82 + rndG(-.17, .17);                       // wandering like a vein, never straight
           let d = Math.atan2(y - oy, x - ox) - a;
           d = Math.atan2(Math.sin(d), Math.cos(d));
-          a += turn + d * (depth ? .012 : .028);
+          a += turn + d * (depth ? .012 : .028);                      // ...but always crawling outward
           x += Math.cos(a) * STEP; y += Math.sin(a) * STEP;
           b.pts.push([x, y]);
-          if (x < -60 || x > W + 60 || y < -60 || y > H + 60) break;
+          if (x < -60 || x > W + 60 || y < -60 || y > H + 60) break;  // stop once it has left the screen
           if (depth < 3 && i > 3 && i < n - 2 && Math.random() < [.13, .11, .08][depth]) {
             const side = Math.random() < .5 ? -1 : 1;
             grow(x, y, a + side * rndG(.5, 1.2), w * rndG(.5, .68), birth + i * STEP / speed + rndG(0, .03),
@@ -2092,10 +2089,12 @@
         grow(ox, oy, a, rndG(9, 18), birth, len / (reachAt - birth), 0, len);
       }
 
+      // time-normalise: (almost) every vein has finished crawling by p = .72
       const ends = branches.map(b => b.birth + b.len / b.speed).sort((x, y) => x - y);
       const f = .72 / ends[Math.floor(ends.length * .9)];
       for (const b of branches) { b.birth *= f; b.speed /= f; }
 
+      // membrane: goo seeps sideways out of the veins until every gap between them is closed
       const S = small ? 72 : 90;
       const all = [];
       for (const b of branches) for (let i = 0; i < b.pts.length; i += 2) all.push([b.pts[i][0], b.pts[i][1], b.birth + i * STEP / b.speed]);
@@ -2113,6 +2112,7 @@
       return { ox, oy, W, H, maxR, branches, blobs };
     }
 
+    // p = how far the symbiote has spread (0..1): veins grow, thicken, then the membrane closes
     function drawGooShapes(c, sc, g, p, t, ts, mask) {
       c.setTransform(1, 0, 0, 1, 0, 0);
       if (mask) { c.fillStyle = '#000'; c.fillRect(0, 0, c.canvas.width, c.canvas.height); }
@@ -2123,15 +2123,17 @@
       c.fillStyle = ink; c.strokeStyle = ink; c.lineCap = 'round'; c.lineJoin = 'round';
       if (p >= .995) { c.fillRect(0, 0, g.W, g.H); return; }
 
+      // the small puddle at the button the veins pour out of
       c.beginPath(); c.arc(g.ox, g.oy, 26 * Math.min(1, p / .06), 0, TAU); c.fill();
 
+      // veins: tips crawl forward, older parts swell
       for (const b of g.branches) {
         const vis = Math.min(b.len, (p - b.birth) * b.speed);
         if (vis <= 2) continue;
         const segs = vis / b.step, nFull = Math.floor(segs), frac = segs - nFull;
         const P = i => {
           const pt = b.pts[i], nr = b.nrm[i], s = i * b.step / vis;
-          const wob = Math.sin(i * .42 - t * 6.5 + b.ph) * 3.4 * s;
+          const wob = Math.sin(i * .42 - t * 6.5 + b.ph) * 3.4 * s;   // writhing, stronger toward the tip
           return [pt[0] + nr[0] * wob, pt[1] + nr[1] * wob];
         };
         let prev = P(0);
@@ -2145,7 +2147,7 @@
           c.beginPath(); c.moveTo(prev[0], prev[1]); c.lineTo(nxt[0], nxt[1]); c.stroke();
           prev = nxt;
         }
-        const br = b.w * ts * .34 * (1 + .2 * Math.sin(t * 8 + b.ph));
+        const br = b.w * ts * .34 * (1 + .2 * Math.sin(t * 8 + b.ph));  // swollen, pulsing tip
         c.beginPath(); c.arc(prev[0], prev[1], br, 0, TAU); c.fill();
         for (const d of b.drops) {
           if (vis < d.at) continue;
@@ -2153,6 +2155,7 @@
         }
       }
 
+      // membrane seeping out of the veins, closing the gaps
       for (const bl of g.blobs) {
         const e = clampG((p - bl.t0) / bl.dur, 0, 1);
         if (e <= 0) continue;
@@ -2192,8 +2195,8 @@
         gl.uniform2f(B.u.uDir, dx / GOO.mw, dy / GOO.mh);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       };
-      pass('tm', 'ta', .8, 0);  pass('ta', 'tb', 0, .8);
-      pass('tb', 'ta', 2.6, 0); pass('ta', 'tc', 0, 2.6);
+      pass('tm', 'ta', .8, 0);  pass('ta', 'tb', 0, .8);       // light blur  -> silhouette (blobs merge like goo)
+      pass('tb', 'ta', 2.6, 0); pass('ta', 'tc', 0, 2.6);      // heavy blur  -> rounded, wet surface
 
       const S = GOO.shade;
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
@@ -2245,16 +2248,21 @@
       if (next === 'symbiote') {
         gooCv.style.opacity = '1';
         gooCv.classList.add('on');
+        // 1) veins pour out of the button and lace across the site until it is completely covered
         await tweenG(SPREAD, (k, t) => renderGoo(g, spreadEase(k), t, 1, 0, 0));
+        // 2) fully covered: the dark theme switches on underneath while the surface heaves once
         applyTheme(next);
         await tweenG(HOLD, (k, t) => renderGoo(g, 1, t, 1, Math.sin(Math.PI * k), k * 1.8));
+        // 3) the symbiote sinks into the page and the dark theme appears
         await tweenG(SINK, (k, t) => { gooCv.style.opacity = String(1 - easeInOutQ(k)); renderGoo(g, 1, t, 1, 0, 0); });
       } else {
+        // exact reverse of the above
         gooCv.style.opacity = '0';
         gooCv.classList.add('on');
         await tweenG(SINK, (k, t) => { gooCv.style.opacity = String(easeInOutQ(k)); renderGoo(g, 1, t, 1, 0, 0); });
         await tweenG(HOLD, (k, t) => renderGoo(g, 1, t, 1, Math.sin(Math.PI * (1 - k)), (1 - k) * 1.8));
         applyTheme(next);
+        // veins let go of the site and retract into the button, revealing the light theme
         await tweenG(SPREAD, (k, t) => renderGoo(g, spreadEase(1 - k), t, 1, 0, 0));
       }
 
@@ -2286,10 +2294,10 @@
     /* ============================================================
        PROJECTS
        ============================================================ */
-    const grid = $('#projectGrid');
+    const grid = $('#projectGrid');   // cards are plain HTML (see #projects)
 
     /* ---- Timeline: wavy line drawn on scroll, one dot per project ---- */
-    const tl = { fill:null, total:0, pts:[], dots:[], conns:[], bodies:[], yCache:[] };
+    const tl = { fill:null, total:0, pts:[], dots:[], conns:[], bodies:[] };
     function buildTimeline() {
       $$('.proj-svg, .proj-dot, .proj-conn', grid).forEach(n => n.remove());
       const W = grid.offsetWidth, H = grid.offsetHeight;
@@ -2314,15 +2322,6 @@
       fill.style.strokeDasharray = total;
       fill.style.strokeDashoffset = total;
 
-      /* Precompute y values along the path for fast lookup (avoids
-         calling getPointAtLength on every scroll frame) */
-      const SAMPLES = 120;
-      const yCache = new Float32Array(SAMPLES + 1);
-      for (let i = 0; i <= SAMPLES; i++) {
-        const pt = fill.getPointAtLength(i / SAMPLES * total);
-        yCache[i] = pt.y;
-      }
-
       const dots = [], conns = [];
       pts.forEach((p,i) => {
         const b = bodies[i];
@@ -2335,20 +2334,16 @@
           `<span class="proj-conn" style="left:${left}px;top:${p.y}px;width:${width}px;transform-origin:${right ? 'left' : 'right'} center"></span>`);
         conns.push(grid.lastElementChild);
       });
-      Object.assign(tl, { fill, total, pts, dots, conns, bodies, yCache });
+      Object.assign(tl, { fill, total, pts, dots, conns, bodies });
     }
 
-    /* Binary search on precomputed y values — no SVG layout thrashing */
     function lenAtY(y) {
-      const yc = tl.yCache;
-      const n = yc.length - 1;
-      let lo = 0, hi = n;
-      while (lo < hi) {
-        const m = (lo + hi) >> 1;
-        if (yc[m] < y) lo = m + 1; else hi = m;
+      let lo = 0, hi = tl.total;
+      for (let k = 0; k < 22; k++) {
+        const m = (lo + hi) / 2;
+        if (tl.fill.getPointAtLength(m).y < y) lo = m; else hi = m;
       }
-      const idx = Math.min(lo, n);
-      return (idx / n) * tl.total;
+      return hi;
     }
 
     function updateTimeline() {
@@ -2448,15 +2443,14 @@
        SCROLL: header, progress, spy
        ============================================================ */
     const header = $('#header'), topbar = $('#progress-bar'), toTop = $('#toTop');
-    let scrollRaf = 0;
-    function onScroll() {
+    addEventListener('scroll', () => {
       const sy = scrollY;
       header.classList.toggle('scrolled', sy > 30);
       toTop.classList.toggle('show', sy > 400);
       topbar.style.transform = `scaleX(${sy / (document.documentElement.scrollHeight - innerHeight)})`;
-    }
-    addEventListener('scroll', () => { cancelAnimationFrame(scrollRaf); scrollRaf = requestAnimationFrame(onScroll); }, { passive: true });
+    }, { passive: true });
 
+    // click the label → smoothly back to the top of the page
     toTop.addEventListener('click', () => {
       scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
     });
@@ -2479,7 +2473,11 @@
     ];
     const momentGrid = $('#momentGrid'), momentScroll = $('#momentScroll');
     const momentSticky = $('.moment-sticky', momentScroll);
+    // cards, trunk and stubs are plain HTML (see #moments)
 
+    /* The tree is drawn while you scroll: the section stays pinned, the
+       line grows left → right, each branch drops its card when the line
+       reaches it, and scrolling back up hides them again. */
     const mhStub = $('#mhStub'), mhStubFill = $('#mhStubFill'), mhTrunk = $('#mhTrunk'), mhFill = $('#mhFill');
     const momentNodes = $$('.moment-node', momentGrid), momentRoot = $('.moment-root', momentGrid);
     const clamp01 = v => Math.min(1, Math.max(0, v));
@@ -2490,7 +2488,7 @@
     function layoutMoments() {
       const f = momentNodes[0], l = momentNodes[momentNodes.length - 1];
       HZ.nodeX = momentNodes.map(n => n.offsetLeft + n.offsetWidth / 2);
-      if (momentMQ.matches {
+      if (momentMQ.matches) {                          // mobile: vertical trunk down the left side
         const top = momentRoot.offsetTop + momentRoot.offsetHeight / 2;
         HZ.vTop = top; HZ.vH = (l.offsetTop + 44) - top;
         HZ.nodeY = momentNodes.map(n => n.offsetTop + 44);
@@ -2499,7 +2497,7 @@
         mhStub.style.cssText = ''; mhStubFill.style.cssText = '';
         return;
       }
-      HZ.ty = f.offsetTop - 44;
+      HZ.ty = f.offsetTop - 44;                        // desktop: horizontal trunk, branches hang down
       HZ.x0 = f.offsetLeft + f.offsetWidth / 2;
       HZ.x1 = l.offsetLeft + l.offsetWidth / 2;
       HZ.cx = momentGrid.offsetWidth / 2;
@@ -2512,7 +2510,7 @@
     }
 
     function updateMoments() {
-      if (momentMQ.matches {
+      if (momentMQ.matches) {                          // mobile: line grows down as you scroll, cards slide in
         const r = momentGrid.getBoundingClientRect();
         const y = Math.max(0, innerHeight * 0.65 - r.top);
         mhFill.style.height = Math.min(HZ.vH, Math.max(0, y - HZ.vTop)) + 'px';
@@ -2522,15 +2520,15 @@
       }
       const r = momentScroll.getBoundingClientRect();
       const total = r.height - momentSticky.offsetHeight;
-      const p = total > 0 ? clamp01((70 - r.top) / total) : 0;
-      mhStubFill.style.height = HZ.stubH * clamp01(p / .08) + 'px';
+      const p = total > 0 ? clamp01((70 - r.top) / total) : 0;           // 0 → 1 while pinned
+      mhStubFill.style.height = HZ.stubH * clamp01(p / .08) + 'px';      // root drops its stem first
       const trunkP = clamp01((p - .06) / .86);
       const fw = (HZ.x1 - HZ.x0) * trunkP;
-      mhFill.style.width = fw + 'px';
+      mhFill.style.width = fw + 'px';                                    // line grows to the right
       momentNodes.forEach((n, i) => n.classList.toggle('on', trunkP > 0 && fw >= HZ.nodeX[i] - HZ.x0 - 1));
 
       const vw = momentSticky.clientWidth, hzW = momentGrid.offsetWidth;
-      if (hzW > vw + 1) {
+      if (hzW > vw + 1) {                                                // narrow desktop window: pan with the line
         const camHead = HZ.x0 + fw + vw * .12;
         const camX = HZ.cx + (camHead - HZ.cx) * smooth(clamp01((p - .05) / .12));
         momentGrid.style.transform = `translateX(${-Math.min(hzW - vw, Math.max(0, camX - vw / 2))}px)`;
@@ -2564,8 +2562,14 @@
     $$('.reveal').forEach(el => rv.observe(el));
 
     /* ============================================================
-       CONTACT FORM — cinematic send
+       CONTACT FORM — cinematic send: letter packed, sealed with web,
+       THWIP strands, slingshot launch, flash — then "Message sent!"
+       and the form comes back by itself after 3 seconds
        ============================================================ */
+    /* ---------- CONTACT DETAILS ----------
+       Kept in pieces and written into the page by script, so scrapers that
+       only read the HTML never see a clean email address or phone number.
+       The phone number is revealed only when someone clicks it. */
     const MAIL_PARTS = ['divakarbalaji10', 'gmail.com'];
     const PHONE_PARTS = ['+91', '63800', '54384'];
     const MAIL_TO = MAIL_PARTS.join('@');
@@ -2579,7 +2583,7 @@
       pv.textContent = 'Show phone number';
       pl.setAttribute('role', 'button');
       pl.addEventListener('click', e => {
-        if (pl.dataset.shown) return;
+        if (pl.dataset.shown) return;          // second click dials
         e.preventDefault();
         pl.href = 'tel:' + PHONE_PARTS.join('');
         pv.textContent = PHONE_PARTS.join(' ');
@@ -2599,7 +2603,7 @@
       })
     }).then(r=>r.json()).then(d=>d.success===true||d.success==='true').catch(()=>false);
 
-    const WO = { x:316, y:4 }, WB = { x:4, y:216 }, WC = { x:160, y:110 };
+    const WO = { x:316, y:4 }, WB = { x:4, y:216 }, WC = { x:160, y:110 };   // web origin, anchor, envelope centre
     const webLine = $('#webLine'), webLine2 = $('#webLine2'), webBlob = $('#webBlob'), thwip = $('#thwip');
     const speedG = $('#speed'), scene = $('#webScene'), flashEl = $('#flash'), statusEl = $('#sendStatus');
     fillBlob(webBlob);
@@ -2624,14 +2628,17 @@
       resetWeb(); void sendEnv.offsetWidth;
       stage.classList.add('cine');
 
+      // 1) letter drops into the envelope, flap closes
       sendEnv.classList.add('sending');
       statusEl.textContent = 'Packing your letter';
       if (!await sleepT(1500, alive)) return;
 
+      // 2) sealed with web
       statusEl.textContent = 'Sealing with web';
       $$('.wrap-line', sendEnv).forEach((l, i) => { l.style.transitionDelay = (i * 0.12) + 's'; l.classList.add('on'); });
       if (!await sleepT(750, alive)) return;
 
+      // 3) THWIP — two strands attach
       statusEl.textContent = 'THWIP!';
       thwip.classList.add('show');
       await tweenT(280, k => {
@@ -2647,6 +2654,7 @@
       }, alive);
       if (!alive()) return;
 
+      // 4) tension — pulled back like a slingshot, camera shakes
       statusEl.textContent = 'Hold tight';
       const P0 = { x:-24, y:16 };
       await tweenT(500, k => {
@@ -2658,6 +2666,7 @@
       }, alive);
       if (!alive()) return;
 
+      // 5) release — launched toward the corner with speed lines and motion blur
       statusEl.textContent = 'Delivering';
       const S = { x:WC.x + P0.x, y:WC.y + P0.y }, T = { x:352, y:-34 };
       const ang = Math.atan2(T.y - S.y, T.x - S.x) * 180 / Math.PI;
@@ -2676,6 +2685,7 @@
       }, alive);
       if (!alive()) return;
 
+      // 6) impact flash
       scene.style.transform = '';
       flashEl.classList.add('go');
       thwip.classList.remove('show'); webBlob.style.opacity = 0; speedG.style.opacity = 0;
@@ -2692,6 +2702,7 @@
       sendAnim.classList.remove('hide');
     }
 
+    // after "Message sent!", wait 3 seconds then bring the form back automatically
     function startCount() {
       let n = 3;
       $('#countNum').textContent = n;
@@ -2712,6 +2723,7 @@
 
       const data = Object.fromEntries(new FormData(cform));
 
+      // bots fill the hidden field or submit instantly; real people don't
       if (data._honey) { sendBtn.disabled = false; sendBtn.textContent = 'Send message'; return; }
       if (Date.now() - pageLoadedAt < 3000) {
         sendBtn.disabled = false; sendBtn.textContent = 'Send message';
@@ -2723,6 +2735,7 @@
       stage.classList.add('show');
       const anim = reduced ? sleep(300) : playWebSend();
 
+      // wait for BOTH the real request and the full animation
       const [ok] = await Promise.all([sendMail(data), anim]);
 
       if (ok) {
